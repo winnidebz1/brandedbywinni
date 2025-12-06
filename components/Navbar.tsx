@@ -36,7 +36,7 @@ const Navbar: React.FC = () => {
         {/* Logo Area */}
         <Link to="/" className="flex items-center gap-2 group">
           <img
-            src="/logo.png"
+            src="/Mainlogo.png"
             alt="Branded By Winni Logo"
             className="h-12 md:h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
           />
