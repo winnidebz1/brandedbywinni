@@ -1,17 +1,18 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Instagram, Twitter, Mail, Phone } from 'lucide-react';
 
 // Custom TikTok Icon since lucide-react might vary in availability
 const TikTokIcon = ({ size = 18, className = "" }) => (
-  <svg 
-    width={size} 
-    height={size} 
-    viewBox="0 0 24 24" 
-    fill="none" 
-    stroke="currentColor" 
-    strokeWidth="2" 
-    strokeLinecap="round" 
-    strokeLinejoin="round" 
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
     className={className}
   >
     <path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5" />
@@ -20,10 +21,10 @@ const TikTokIcon = ({ size = 18, className = "" }) => (
 
 const Footer: React.FC = () => {
   return (
-    <footer id="contact" className="bg-brand-pink/10 pt-24 pb-12 px-6 md:px-12 border-t border-brand-pink/20">
+    <footer className="bg-brand-pink/10 pt-24 pb-12 px-6 md:px-12 border-t border-brand-pink/20">
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
-          
+
           {/* Brand Info */}
           <div className="col-span-1 md:col-span-2">
             <h3 className="font-serif text-2xl text-brand-dark mb-6">Branded By Winni</h3>
@@ -44,10 +45,10 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="text-sm uppercase tracking-widest text-brand-dark mb-6 font-medium border-b border-brand-dark/20 pb-2 inline-block">Menu</h4>
             <ul className="space-y-4">
-              <li><a href="#" className="text-brand-text hover:text-brand-pink transition-colors font-light">Home</a></li>
-              <li><a href="#about" className="text-brand-text hover:text-brand-pink transition-colors font-light">About</a></li>
-              <li><a href="#portfolio" className="text-brand-text hover:text-brand-pink transition-colors font-light">Portfolio</a></li>
-              <li><a href="#services" className="text-brand-text hover:text-brand-pink transition-colors font-light">Services</a></li>
+              <li><Link to="/" className="text-brand-text hover:text-brand-pink transition-colors font-light">Home</Link></li>
+              <li><Link to="/about" className="text-brand-text hover:text-brand-pink transition-colors font-light">About</Link></li>
+              <li><Link to="/portfolio" className="text-brand-text hover:text-brand-pink transition-colors font-light">Portfolio</Link></li>
+              <li><Link to="/services" className="text-brand-text hover:text-brand-pink transition-colors font-light">Services</Link></li>
             </ul>
           </div>
 
@@ -72,8 +73,8 @@ const Footer: React.FC = () => {
             &copy; {new Date().getFullYear()} Branded By Winni. All rights reserved.
           </p>
           <div className="flex gap-6 text-sm text-brand-muted">
-            <a href="#" className="hover:text-brand-pink">Privacy Policy</a>
-            <a href="#" className="hover:text-brand-pink">Terms of Service</a>
+            <Link to="/privacy" className="hover:text-brand-pink">Privacy Policy</Link>
+            <Link to="/terms" className="hover:text-brand-pink">Terms of Service</Link>
           </div>
         </div>
       </div>
