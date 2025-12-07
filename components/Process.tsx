@@ -33,9 +33,9 @@ const Process: React.FC = () => {
     return (
         <section className="py-24 bg-brand-ivory relative">
             <div className="container mx-auto px-6 md:px-12">
-                <div className="flex flex-col md:flex-row gap-16 items-start">
+                <div className="flex flex-col md:flex-row gap-8 md:gap-16 items-start">
 
-                    <div className="md:w-1/3 sticky top-32">
+                    <div className="w-full md:w-1/3 md:sticky md:top-32">
                         <motion.h2
                             initial={{ opacity: 0, x: -20 }}
                             whileInView={{ opacity: 1, x: 0 }}
@@ -67,7 +67,7 @@ const Process: React.FC = () => {
                         </motion.a>
                     </div>
 
-                    <div className="md:w-2/3 grid gap-8">
+                    <div className="w-full md:w-2/3 grid gap-6 md:gap-8">
                         {steps.map((item, index) => (
                             <motion.div
                                 key={index}
