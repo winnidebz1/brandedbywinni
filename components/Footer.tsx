@@ -29,13 +29,13 @@ const Footer: React.FC = () => {
           <div className="col-span-1 md:col-span-2">
             <h3 className="font-serif text-2xl text-brand-dark mb-6">Branded By Winni</h3>
             <div className="flex gap-4 mt-6">
-              <a href="#" className="w-10 h-10 rounded-full border border-brand-pink/40 flex items-center justify-center text-brand-pink hover:bg-brand-pink hover:text-white transition-all">
+              <a href="https://instagram.com/brandedbywinni_" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-brand-pink/40 flex items-center justify-center text-brand-pink hover:bg-brand-pink hover:text-white transition-all">
                 <Instagram size={18} />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full border border-brand-pink/40 flex items-center justify-center text-brand-pink hover:bg-brand-pink hover:text-white transition-all">
+              <a href="https://tiktok.com/@brandedbywinnistudioo" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-brand-pink/40 flex items-center justify-center text-brand-pink hover:bg-brand-pink hover:text-white transition-all">
                 <TikTokIcon size={18} />
               </a>
-              <a href="#" className="w-10 h-10 rounded-full border border-brand-pink/40 flex items-center justify-center text-brand-pink hover:bg-brand-pink hover:text-white transition-all">
+              <a href="https://x.com/brandedbywinni" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-brand-pink/40 flex items-center justify-center text-brand-pink hover:bg-brand-pink hover:text-white transition-all">
                 <Twitter size={18} />
               </a>
             </div>
@@ -58,7 +58,7 @@ const Footer: React.FC = () => {
             <ul className="space-y-4">
               <li className="flex items-center gap-3 text-brand-text font-light">
                 <Mail size={16} className="text-brand-pink" />
-                <a href="mailto:brandedbywinni@gmail.com" className="hover:text-brand-pink transition-colors">brandedbywinni@gmail.com</a>
+                <a href="mailto:brandedbywinnistudio@gmail.com" className="hover:text-brand-pink transition-colors">brandedbywinnistudio@gmail.com</a>
               </li>
               <li className="flex items-center gap-3 text-brand-text font-light">
                 <Phone size={16} className="text-brand-pink" />

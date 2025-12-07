@@ -9,19 +9,19 @@ const faqs = [
     },
     {
         question: "Do you offer payment plans?",
-        answer: "Yes! I understand a website is an investment. Typically, I require a 50% deposit to start, with the remaining 50% due upon completion. For larger projects, we can discuss a milestone-based payment schedule."
+        answer: "Yes! We understand a website is an investment. Typically, we require a 50% deposit to start, with the remaining 50% due upon completion. For larger projects, we can discuss a milestone-based payment schedule."
     },
     {
         question: "Will I look good on mobile phones?",
-        answer: "Absolutely. I design with a 'Mobile-First' approach. This means your website will be fully responsive and optimized for smartphones, tablets, and desktops."
+        answer: "Absolutely. We design with a 'Mobile-First' approach. This means your website will be fully responsive and optimized for smartphones, tablets, and desktops."
     },
     {
         question: "Do you write the content for the site?",
-        answer: "I can assist with copywriting as an add-on service. However, nobody knows your business better than you! I usually recommend you provide the core text, and I tweak it for SEO and flow."
+        answer: "We can assist with copywriting as an add-on service. However, nobody knows your business better than you! We usually recommend you provide the core text, and we tweak it for SEO and flow."
     },
     {
         question: "What happens after the site launches?",
-        answer: "You won't be left alone! I offer post-launch support packages to keep your site updated, secure, and running smoothly. I also provide a training session so you can make minor edits yourself."
+        answer: "You won't be left alone! We offer post-launch support packages to keep your site updated, secure, and running smoothly. We also provide a training session so you can make minor edits yourself."
     }
 ];
 
@@ -33,7 +33,7 @@ const FAQ: React.FC = () => {
             <div className="container mx-auto px-6 md:px-12 max-w-4xl">
                 <div className="text-center mb-16">
                     <h2 className="text-4xl md:text-5xl font-serif text-brand-dark mb-6">Frequently Asked Questions</h2>
-                    <p className="text-brand-muted">Everything you need to know about working with me.</p>
+                    <p className="text-brand-muted">Everything you need to know about working with us.</p>
                 </div>
 
                 <div className="space-y-4">

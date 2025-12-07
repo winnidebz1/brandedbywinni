@@ -1,6 +1,5 @@
 import React from 'react';
 import Hero from '../components/Hero';
-import Credentials from '../components/Credentials';
 import WhyWebsite from '../components/WhyWebsite';
 import Services from '../components/Services';
 import Process from '../components/Process';
@@ -13,7 +12,6 @@ const Home: React.FC = () => {
     return (
         <>
             <Hero />
-            <Credentials />
             <WhyWebsite />
             <Services />
             <Process />
