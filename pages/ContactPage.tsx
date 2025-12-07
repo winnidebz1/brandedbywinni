@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Instagram, Twitter } from 'lucide-react';
 import FinalCTA from '../components/FinalCTA';
 
@@ -19,13 +19,57 @@ const TikTokIcon = ({ size = 18, className = "" }) => (
 );
 
 const ContactPage: React.FC = () => {
+    const [formData, setFormData] = useState({
+        name: '',
+        email: '',
+        message: ''
+    });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setFormData({
+            ...formData,
+            [e.target.id]: e.target.value
+        });
+    };
+
+    const handleSubmit = (e: React.FormEvent) => {
+        e.preventDefault();
+
+        const { name, email, message } = formData;
+
+        // Create email body
+        const emailSubject = `New Contact Form Submission from ${name}`;
+        const emailBody = `Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0AMessage:%0D%0A${message}`;
+
+        // Create WhatsApp message
+        const whatsappMessage = `*New Contact Form Submission*%0A%0A*Name:* ${name}%0A*Email:* ${email}%0A%0A*Message:*%0A${message}`;
+
+        // Open email client
+        window.open(`mailto:brandedbywinnistudio@gmail.com?subject=${emailSubject}&body=${emailBody}`, '_blank');
+
+        // Open WhatsApp after a short delay
+        setTimeout(() => {
+            window.open(`https://wa.me/233202326851?text=${whatsappMessage}`, '_blank');
+        }, 500);
+
+        // Reset form
+        setFormData({
+            name: '',
+            email: '',
+            message: ''
+        });
+
+        // Show success message
+        alert('Thank you! Your message has been sent. We will get back to you soon!');
+    };
+
     return (
         <div className="pt-32 pb-20 bg-brand-ivory min-h-screen">
             <div className="container mx-auto px-6 md:px-12">
                 <div className="max-w-4xl mx-auto text-center mb-16">
                     <h1 className="text-4xl md:text-5xl font-serif text-brand-dark mb-6">Get in Touch</h1>
                     <p className="text-lg text-brand-muted max-w-2xl mx-auto">
-                        Ready to elevate your brand? I'd love to hear from you. Fill out the form below or reach out directly.
+                        Ready to elevate your brand? We'd love to hear from you. Fill out the form below or reach out directly.
                     </p>
                 </div>
 
@@ -41,8 +85,8 @@ const ContactPage: React.FC = () => {
                                 </div>
                                 <div>
                                     <h4 className="text-sm uppercase tracking-wider text-brand-muted mb-1">Email</h4>
-                                    <a href="mailto:brandedbywinni@gmail.com" className="text-lg text-brand-dark hover:text-brand-pink transition-colors">
-                                        brandedbywinni@gmail.com
+                                    <a href="mailto:brandedbywinnistudio@gmail.com" className="text-lg text-brand-dark hover:text-brand-pink transition-colors">
+                                        brandedbywinnistudio@gmail.com
                                     </a>
                                 </div>
                             </div>
@@ -74,15 +118,15 @@ const ContactPage: React.FC = () => {
                         </div>
 
                         <div className="mt-12 pt-8 border-t border-gray-100">
-                            <h4 className="text-sm uppercase tracking-wider text-brand-muted mb-6">Follow Me</h4>
+                            <h4 className="text-sm uppercase tracking-wider text-brand-muted mb-6">Follow Us</h4>
                             <div className="flex gap-4">
-                                <a href="#" className="w-10 h-10 rounded-full border border-brand-pink/40 flex items-center justify-center text-brand-pink hover:bg-brand-pink hover:text-white transition-all">
+                                <a href="https://instagram.com/brandedbywinni_" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-brand-pink/40 flex items-center justify-center text-brand-pink hover:bg-brand-pink hover:text-white transition-all">
                                     <Instagram size={18} />
                                 </a>
-                                <a href="#" className="w-10 h-10 rounded-full border border-brand-pink/40 flex items-center justify-center text-brand-pink hover:bg-brand-pink hover:text-white transition-all">
+                                <a href="https://tiktok.com/@brandedbywinnistudioo" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-brand-pink/40 flex items-center justify-center text-brand-pink hover:bg-brand-pink hover:text-white transition-all">
                                     <TikTokIcon size={18} />
                                 </a>
-                                <a href="#" className="w-10 h-10 rounded-full border border-brand-pink/40 flex items-center justify-center text-brand-pink hover:bg-brand-pink hover:text-white transition-all">
+                                <a href="https://x.com/brandedbywinni" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-brand-pink/40 flex items-center justify-center text-brand-pink hover:bg-brand-pink hover:text-white transition-all">
                                     <Twitter size={18} />
                                 </a>
                             </div>
@@ -92,12 +136,15 @@ const ContactPage: React.FC = () => {
                     {/* Contact Form */}
                     <div className="bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-brand-pink/10">
                         <h3 className="text-2xl font-serif text-brand-dark mb-8">Send a Message</h3>
-                        <form className="space-y-6">
+                        <form className="space-y-6" onSubmit={handleSubmit}>
                             <div>
                                 <label htmlFor="name" className="block text-sm uppercase tracking-wider text-brand-muted mb-2">Name</label>
                                 <input
                                     type="text"
                                     id="name"
+                                    value={formData.name}
+                                    onChange={handleChange}
+                                    required
                                     className="w-full px-4 py-3 bg-brand-ivory border border-gray-200 rounded-lg focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition-all"
                                     placeholder="Your Name"
                                 />
@@ -107,6 +154,9 @@ const ContactPage: React.FC = () => {
                                 <input
                                     type="email"
                                     id="email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    required
                                     className="w-full px-4 py-3 bg-brand-ivory border border-gray-200 rounded-lg focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition-all"
                                     placeholder="your@email.com"
                                 />
@@ -116,8 +166,11 @@ const ContactPage: React.FC = () => {
                                 <textarea
                                     id="message"
                                     rows={4}
+                                    value={formData.message}
+                                    onChange={handleChange}
+                                    required
                                     className="w-full px-4 py-3 bg-brand-ivory border border-gray-200 rounded-lg focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition-all resize-none"
-                                    placeholder="Tell me about your project..."
+                                    placeholder="Tell us about your project..."
                                 />
                             </div>
                             <button
