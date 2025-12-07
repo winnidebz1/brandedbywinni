@@ -58,7 +58,9 @@ const Process: React.FC = () => {
                             whileInView={{ opacity: 1 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.4 }}
-                            href="/contact"
+                            href="https://wa.me/233202326851"
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="inline-block px-8 py-3 bg-brand-dark text-white rounded-full hover:bg-brand-pink transition-colors duration-300"
                         >
                             Start Your Project
