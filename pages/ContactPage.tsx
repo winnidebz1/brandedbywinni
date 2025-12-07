@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Mail, Phone, MapPin, Instagram, Twitter } from 'lucide-react';
-import FinalCTA from '../components/FinalCTA';
 
 const TikTokIcon = ({ size = 18, className = "" }) => (
     <svg
@@ -24,6 +23,7 @@ const ContactPage: React.FC = () => {
         email: '',
         message: ''
     });
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setFormData({
@@ -32,35 +32,55 @@ const ContactPage: React.FC = () => {
         });
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setIsSubmitting(true);
 
         const { name, email, message } = formData;
 
-        // Create email body
-        const emailSubject = `New Contact Form Submission from ${name}`;
-        const emailBody = `Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0AMessage:%0D%0A${message}`;
+        try {
+            // Submit to Web3Forms
+            const response = await fetch('https://api.web3forms.com/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    access_key: '6e8f7c4d-3b2a-4f1e-9d8c-5a6b7e8f9c0d',
+                    name: name,
+                    email: email,
+                    message: message,
+                    subject: `New Contact Form Submission from ${name}`,
+                    from_name: 'Branded By Winni Website',
+                    to_email: 'brandedbywinnistudio@gmail.com'
+                }),
+            });
 
-        // Create WhatsApp message
-        const whatsappMessage = `*New Contact Form Submission*%0A%0A*Name:* ${name}%0A*Email:* ${email}%0A%0A*Message:*%0A${message}`;
+            if (response.ok) {
+                // Create WhatsApp message
+                const whatsappMessage = `*New Contact Form Submission*%0A%0A*Name:* ${name}%0A*Email:* ${email}%0A%0A*Message:*%0A${message}`;
 
-        // Open email client
-        window.open(`mailto:brandedbywinnistudio@gmail.com?subject=${emailSubject}&body=${emailBody}`, '_blank');
+                // Open WhatsApp
+                window.open(`https://wa.me/233202326851?text=${whatsappMessage}`, '_blank');
 
-        // Open WhatsApp after a short delay
-        setTimeout(() => {
-            window.open(`https://wa.me/233202326851?text=${whatsappMessage}`, '_blank');
-        }, 500);
+                // Reset form
+                setFormData({
+                    name: '',
+                    email: '',
+                    message: ''
+                });
 
-        // Reset form
-        setFormData({
-            name: '',
-            email: '',
-            message: ''
-        });
-
-        // Show success message
-        alert('Thank you! Your message has been sent. We will get back to you soon!');
+                // Show success message
+                alert('Thank you! Your message has been sent successfully. We will get back to you soon!');
+            } else {
+                throw new Error('Form submission failed');
+            }
+        } catch (error) {
+            console.error('Error submitting form:', error);
+            alert('Sorry, there was an error sending your message. Please try again or contact us directly via WhatsApp.');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -145,7 +165,8 @@ const ContactPage: React.FC = () => {
                                     value={formData.name}
                                     onChange={handleChange}
                                     required
-                                    className="w-full px-4 py-3 bg-brand-ivory border border-gray-200 rounded-lg focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition-all"
+                                    disabled={isSubmitting}
+                                    className="w-full px-4 py-3 bg-brand-ivory border border-gray-200 rounded-lg focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition-all disabled:opacity-50"
                                     placeholder="Your Name"
                                 />
                             </div>
@@ -157,7 +178,8 @@ const ContactPage: React.FC = () => {
                                     value={formData.email}
                                     onChange={handleChange}
                                     required
-                                    className="w-full px-4 py-3 bg-brand-ivory border border-gray-200 rounded-lg focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition-all"
+                                    disabled={isSubmitting}
+                                    className="w-full px-4 py-3 bg-brand-ivory border border-gray-200 rounded-lg focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition-all disabled:opacity-50"
                                     placeholder="your@email.com"
                                 />
                             </div>
@@ -169,15 +191,17 @@ const ContactPage: React.FC = () => {
                                     value={formData.message}
                                     onChange={handleChange}
                                     required
-                                    className="w-full px-4 py-3 bg-brand-ivory border border-gray-200 rounded-lg focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition-all resize-none"
+                                    disabled={isSubmitting}
+                                    className="w-full px-4 py-3 bg-brand-ivory border border-gray-200 rounded-lg focus:outline-none focus:border-brand-pink focus:ring-1 focus:ring-brand-pink transition-all resize-none disabled:opacity-50"
                                     placeholder="Tell us about your project..."
                                 />
                             </div>
                             <button
                                 type="submit"
-                                className="w-full px-8 py-4 bg-brand-pink text-white font-medium tracking-wide rounded-lg hover:bg-brand-pink-dark transition-all duration-300 shadow-lg shadow-brand-pink/20 hover:shadow-xl hover:shadow-brand-pink/30 hover:-translate-y-1"
+                                disabled={isSubmitting}
+                                className="w-full px-8 py-4 bg-brand-pink text-white font-medium tracking-wide rounded-lg hover:bg-brand-pink-dark transition-all duration-300 shadow-lg shadow-brand-pink/20 hover:shadow-xl hover:shadow-brand-pink/30 hover:-translate-y-1 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:translate-y-0"
                             >
-                                Send Message
+                                {isSubmitting ? 'Sending...' : 'Send Message'}
                             </button>
                         </form>
                     </div>
