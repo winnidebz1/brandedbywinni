@@ -37,7 +37,7 @@ const Hero: React.FC = () => {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.2 }}
-          className="lg:col-span-4 relative hidden lg:block h-[600px] w-full"
+          className="lg:col-span-4 relative block h-[500px] lg:h-[600px] w-full mt-8 lg:mt-0"
         >
           {/* Decorative collage using simple divs and images */}
           <div className="absolute top-10 right-0 w-64 h-80 bg-gray-200 overflow-hidden rounded-lg shadow-xl rotate-3 hover:rotate-0 transition-transform duration-700">
