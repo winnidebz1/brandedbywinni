@@ -26,7 +26,7 @@ const Hero: React.FC = () => {
               View Our Work
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </a>
-            <a href="#contact" className="px-8 py-3 bg-brand-dark text-white font-light tracking-wide rounded-sm hover:bg-brand-pink transition-colors duration-300 w-fit">
+            <a href="https://wa.me/233202326851" target="_blank" rel="noopener noreferrer" className="px-8 py-3 bg-brand-dark text-white font-light tracking-wide rounded-sm hover:bg-brand-pink transition-colors duration-300 w-fit">
               Let's Talk
             </a>
           </div>
