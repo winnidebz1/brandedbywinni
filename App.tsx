@@ -5,7 +5,6 @@ import Footer from './components/Footer';
 import Home from './pages/Home';
 import AboutPage from './pages/AboutPage';
 import ServicesPage from './pages/ServicesPage';
-import PortfolioPage from './pages/PortfolioPage';
 import ContactPage from './pages/ContactPage';
 
 const ScrollToTop = () => {
@@ -29,7 +28,6 @@ const App: React.FC = () => {
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/services" element={<ServicesPage />} />
-            <Route path="/portfolio" element={<PortfolioPage />} />
             <Route path="/contact" element={<ContactPage />} />
           </Routes>
         </main>

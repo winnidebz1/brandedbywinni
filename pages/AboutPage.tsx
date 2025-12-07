@@ -1,6 +1,6 @@
 
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useEffect, useRef } from 'react';
+import { motion, useInView, animate } from 'framer-motion';
 import { Heart, Globe, Zap, Instagram, Twitter } from 'lucide-react';
 import FinalCTA from '../components/FinalCTA';
 
@@ -40,6 +40,24 @@ const values = [
 ];
 
 const AboutPage: React.FC = () => {
+    const countRef = useRef<HTMLSpanElement>(null);
+    const inView = useInView(countRef, { once: true });
+
+    useEffect(() => {
+        if (inView && countRef.current) {
+            const controls = animate(0, 205, {
+                duration: 2.5,
+                ease: "easeOut",
+                onUpdate(value) {
+                    if (countRef.current) {
+                        countRef.current.textContent = value.toFixed(0) + "+";
+                    }
+                }
+            });
+            return () => controls.stop();
+        }
+    }, [inView]);
+
     return (
         <div className="pt-24 bg-brand-ivory min-h-screen">
 
@@ -60,11 +78,13 @@ const AboutPage: React.FC = () => {
                         </p>
                         <div className="flex gap-4">
                             <div className="px-6 py-4 bg-white rounded-xl shadow-sm border border-brand-pink/10">
-                                <div className="text-3xl font-bold text-brand-pink mb-1">3+</div>
+                                <div className="text-3xl font-bold text-brand-pink mb-1">5+</div>
                                 <div className="text-xs uppercase tracking-wider text-brand-muted">Years Exp</div>
                             </div>
                             <div className="px-6 py-4 bg-white rounded-xl shadow-sm border border-brand-pink/10">
-                                <div className="text-3xl font-bold text-brand-pink mb-1">205+</div>
+                                <div className="text-3xl font-bold text-brand-pink mb-1">
+                                    <span ref={countRef}>0+</span>
+                                </div>
                                 <div className="text-xs uppercase tracking-wider text-brand-muted">Brands Served</div>
                             </div>
                             <div className="px-6 py-4 bg-white rounded-xl shadow-sm border border-brand-pink/10">

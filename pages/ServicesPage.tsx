@@ -1,55 +1,39 @@
 
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Check, ArrowRight } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Monitor, TrendingUp, PenTool, Database, ArrowRight, ChevronUp } from 'lucide-react';
 import FinalCTA from '../components/FinalCTA';
 
-const servicesList = [
+const services = [
     {
-        title: "Custom Web Design",
-        description: "Tailor-made designs that reflect your brand's personality. No cookie-cutter templates—just unique, effective design.",
-        features: ["UI/UX Design", "Responsive Layouts", "Interactive Prototyping", "Brand Integration"]
+        icon: <Monitor strokeWidth={1.5} />,
+        title: "Website Design",
+        details: "Custom, responsive, and aesthetic website designs that capture your brand identity and convert visitors into loyal clients."
     },
     {
-        title: "Web Development",
-        description: "Robust, scalable, and fast code. I build websites that perform flawlessly across all devices and browsers.",
-        features: ["React / Next.js", "CMS Integration", "E-commerce Solutions", "Performance Optimization"]
+        icon: <TrendingUp strokeWidth={1.5} />,
+        title: "SEO Ranking",
+        details: "Strategic search engine optimization to improve your visibility, drive organic traffic, and rank higher on Google search results."
     },
     {
-        title: "SEO & Content",
-        description: "Strategies to increase your visibility. I optimize your site's structure and content to rank higher on search engines.",
-        features: ["Keyword Research", "On-Page SEO", "Speed Optimization", "Copywriting Support"]
+        icon: <PenTool strokeWidth={1.5} />,
+        title: "Branding",
+        details: "Comprehensive branding services including logo design, color palettes, and typography to create a cohesive and memorable brand image."
     },
     {
-        title: "Brand Identity",
-        description: "More than just a logo. I help define your visual language to create a cohesive brand experience.",
-        features: ["Logo Design", "Color Palettes", "Typography Selection", "Brand Guidelines"]
-    }
-];
-
-const packages = [
-    {
-        name: "Starter",
-        price: "$999",
-        description: "Perfect for personal brands and small portfolios.",
-        features: ["1-3 Page Website", "Mobile Responsive", "Contact Form", "Basic SEO Setup", "1 Round of Revisions"]
-    },
-    {
-        name: "Business",
-        price: "$2,499",
-        description: "Ideal for growing businesses needing more presence.",
-        popular: true,
-        features: ["5-8 Page Website", "CMS Integration (Blog)", "Advanced SEO", "Social Media Integration", "Speed Optimization", "3 Rounds of Revisions"]
-    },
-    {
-        name: "E-Commerce",
-        price: "$4,999+",
-        description: "Full online store setup to sell your products.",
-        features: ["Product Management", "Payment Gateway Setup", "Customer Accounts", "Inventory System", "Advanced Analytics", "Priority Support"]
+        icon: <Database strokeWidth={1.5} />,
+        title: "CRM",
+        details: "Customer Relationship Management solutions to streamline your interactions, improve customer service, and boost sales efficiency."
     }
 ];
 
 const ServicesPage: React.FC = () => {
+    const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+
+    const toggleService = (index: number) => {
+        setExpandedIndex(expandedIndex === index ? null : index);
+    };
+
     return (
         <div className="pt-24 bg-brand-ivory min-h-screen">
 
@@ -60,7 +44,7 @@ const ServicesPage: React.FC = () => {
                     animate={{ opacity: 1, y: 0 }}
                     className="text-4xl md:text-6xl font-serif text-brand-dark mb-6"
                 >
-                    Expert Services
+                    Our Expertise
                 </motion.h1>
                 <motion.p
                     initial={{ opacity: 0, y: 20 }}
@@ -72,81 +56,74 @@ const ServicesPage: React.FC = () => {
                 </motion.p>
             </div>
 
-            {/* Detailed Services Grid */}
+            {/* Services Grid */}
             <div className="container mx-auto px-6 md:px-12 mb-32">
-                <div className="grid md:grid-cols-2 gap-8">
-                    {servicesList.map((service, index) => (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    {services.map((service, index) => (
                         <motion.div
                             key={index}
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{ delay: index * 0.1 }}
-                            className="bg-white p-8 rounded-2xl border border-brand-pink/10 shadow-sm hover:shadow-md transition-all"
+                            transition={{ delay: index * 0.1, duration: 0.5 }}
+                            onClick={() => toggleService(index)}
+                            className={`group p-8 border border-brand-dark/10 hover:border-brand-pink rounded-lg transition-all duration-500 hover:shadow-lg hover:shadow-brand-pink/5 flex flex-col items-center text-center bg-white cursor-pointer ${expandedIndex === index ? 'border-brand-pink shadow-lg shadow-brand-pink/5' : ''}`}
                         >
-                            <h3 className="text-2xl font-serif text-brand-dark mb-4">{service.title}</h3>
-                            <p className="text-brand-muted mb-6">{service.description}</p>
-                            <ul className="grid grid-cols-2 gap-3">
-                                {service.features.map((feature, i) => (
-                                    <li key={i} className="flex items-center gap-2 text-sm text-brand-dark/80">
-                                        <span className="w-1.5 h-1.5 bg-brand-pink rounded-full"></span>
-                                        {feature}
-                                    </li>
-                                ))}
-                            </ul>
+                            <div className="w-16 h-16 bg-brand-ivory text-brand-pink rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-sm group-hover:bg-brand-pink group-hover:text-white">
+                                {service.icon}
+                            </div>
+                            <h3 className="font-serif text-2xl text-brand-dark group-hover:text-brand-pink transition-colors mb-4">{service.title}</h3>
+
+                            <AnimatePresence>
+                                {expandedIndex === index && (
+                                    <motion.div
+                                        initial={{ opacity: 0, height: 0, paddingBottom: 0 }}
+                                        animate={{ opacity: 1, height: 'auto', paddingBottom: 16 }}
+                                        exit={{ opacity: 0, height: 0, paddingBottom: 0 }}
+                                        className="overflow-hidden"
+                                    >
+                                        <p className="text-brand-muted text-sm leading-relaxed">
+                                            {service.details}
+                                        </p>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
+
+                            <div className="mt-auto transition-opacity duration-300 transform">
+                                <span className="flex items-center gap-2 text-sm text-brand-pink font-medium uppercase tracking-wider">
+                                    {expandedIndex === index ? (
+                                        <>Show less <ChevronUp size={14} /></>
+                                    ) : (
+                                        <>Learn more <ArrowRight size={14} /></>
+                                    )}
+                                </span>
+                            </div>
                         </motion.div>
                     ))}
                 </div>
             </div>
 
-            {/* Pricing Section */}
+            {/* Get Quote Section */}
             <div className="bg-white py-24">
-                <div className="container mx-auto px-6 md:px-12">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl font-serif text-brand-dark mb-4">Investment Packages</h2>
-                        <p className="text-brand-muted">Transparent pricing for every stage of your business.</p>
-                    </div>
-
-                    <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-                        {packages.map((pkg, index) => (
-                            <motion.div
-                                key={index}
-                                initial={{ opacity: 0, y: 30 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: index * 0.1 }}
-                                className={`relative p - 8 rounded - 2xl border ${pkg.popular ? 'border-brand-pink shadow-lg shadow-brand-pink/10' : 'border-gray-200'} bg - white flex flex - col`}
-                            >
-                                {pkg.popular && (
-                                    <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-brand-pink text-white px-4 py-1 rounded-full text-xs font-bold tracking-widest uppercase">
-                                        Most Popular
-                                    </div>
-                                )}
-                                <h3 className="text-xl font-serif text-brand-dark mb-2">{pkg.name}</h3>
-                                <div className="text-4xl font-bold text-brand-dark mb-4">{pkg.price}</div>
-                                <p className="text-sm text-brand-muted mb-8 pb-8 border-b border-gray-100">{pkg.description}</p>
-
-                                <ul className="space-y-4 mb-8 flex-grow">
-                                    {pkg.features.map((feat, i) => (
-                                        <li key={i} className="flex items-start gap-3 text-sm text-brand-dark">
-                                            <Check size={16} className="text-brand-pink shrink-0 mt-0.5" />
-                                            {feat}
-                                        </li>
-                                    ))}
-                                </ul>
-
-                                <a
-                                    href="/contact"
-                                    className={`block w - full py - 3 rounded - lg text - center font - medium transition - all ${pkg.popular
-                                            ? 'bg-brand-pink text-white hover:bg-brand-pink-dark'
-                                            : 'bg-brand-ivory text-brand-dark hover:bg-gray-200'
-                                        } `}
-                                >
-                                    Choose {pkg.name}
-                                </a>
-                            </motion.div>
-                        ))}
-                    </div>
+                <div className="container mx-auto px-6 md:px-12 text-center max-w-3xl">
+                    <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                    >
+                        <h2 className="text-4xl font-serif text-brand-dark mb-6">Ready to Get Started?</h2>
+                        <p className="text-lg text-brand-muted mb-10">
+                            Every project is unique. Let's discuss your specific needs and create a custom solution that fits your budget and goals.
+                        </p>
+                        <a
+                            href="https://wa.me/233202326851"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-block px-12 py-4 bg-brand-pink text-white font-medium tracking-wide rounded-full hover:bg-brand-dark transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1"
+                        >
+                            Get a Quote
+                        </a>
+                    </motion.div>
                 </div>
             </div>
 
