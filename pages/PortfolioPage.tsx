@@ -1,7 +1,8 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, ArrowRight } from 'lucide-react';
+import { useSearchParams } from 'react-router-dom';
 import FinalCTA from '../components/FinalCTA';
 
 const categories = ["All", "Web Design", "Development", "Branding"];
@@ -52,11 +53,28 @@ const projects = [
 ];
 
 const PortfolioPage: React.FC = () => {
+    const [searchParams] = useSearchParams();
     const [activeCategory, setActiveCategory] = useState("All");
+
+    useEffect(() => {
+        const categoryParam = searchParams.get('category');
+        if (categoryParam) {
+            if (categoryParam === 'websites') {
+                setActiveCategory('Web Design'); // Or you might want to show both Web Design and Development?
+            } else if (categoryParam === 'branding') {
+                setActiveCategory('Branding');
+            }
+        }
+    }, [searchParams]);
 
     const filteredProjects = activeCategory === "All"
         ? projects
-        : projects.filter(p => p.category === activeCategory);
+        : projects.filter(p => {
+            if (activeCategory === 'Web Design') {
+                return p.category === 'Web Design' || p.category === 'Development';
+            }
+            return p.category === activeCategory;
+        });
 
     return (
         <div className="pt-24 bg-brand-ivory min-h-screen">
@@ -75,8 +93,8 @@ const PortfolioPage: React.FC = () => {
                             key={cat}
                             onClick={() => setActiveCategory(cat)}
                             className={`px - 6 py - 2 rounded - full text - sm uppercase tracking - wider transition - all duration - 300 ${activeCategory === cat
-                                    ? 'bg-brand-dark text-white shadow-lg'
-                                    : 'bg-white text-brand-muted hover:bg-gray-100 border border-gray-200'
+                                ? 'bg-brand-dark text-white shadow-lg'
+                                : 'bg-white text-brand-muted hover:bg-gray-100 border border-gray-200'
                                 } `}
                         >
                             {cat}
