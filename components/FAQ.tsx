@@ -5,7 +5,7 @@ import { Plus, Minus } from 'lucide-react';
 const faqs = [
     {
         question: "How long does a typical website project take?",
-        answer: "Timeline varies based on complexity. A standard 5-page business site usually takes 2-4 weeks from concept to launch, provided we have all your content ready."
+        answer: "Project duration varies from 1 week to 4 weeks depending on the complexity of the project. Simple websites can be completed in about a week, while more complex projects with custom features may take up to 4 weeks."
     },
     {
         question: "Do you offer payment plans?",

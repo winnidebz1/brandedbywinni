@@ -1,12 +1,17 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Monitor, TrendingUp, PenTool, Database, ArrowRight, ChevronUp } from 'lucide-react';
+import { Monitor, TrendingUp, PenTool, Settings, ArrowRight, ChevronUp } from 'lucide-react';
 
 const services = [
   {
     icon: <Monitor strokeWidth={1.5} />,
     title: "Website Design",
     details: "Custom, responsive, and aesthetic website designs that capture your brand identity and convert visitors into loyal clients."
+  },
+  {
+    icon: <Settings strokeWidth={1.5} />,
+    title: "Website Maintenance & Optimization",
+    details: "Keep your website running smoothly with regular updates, performance optimization, security patches, and technical support to ensure peak performance."
   },
   {
     icon: <TrendingUp strokeWidth={1.5} />,
@@ -17,11 +22,6 @@ const services = [
     icon: <PenTool strokeWidth={1.5} />,
     title: "Branding",
     details: "Comprehensive branding services including logo design, color palettes, and typography to create a cohesive and memorable brand image."
-  },
-  {
-    icon: <Database strokeWidth={1.5} />,
-    title: "CRM",
-    details: "Customer Relationship Management solutions to streamline your interactions, improve customer service, and boost sales efficiency."
   }
 ];
 

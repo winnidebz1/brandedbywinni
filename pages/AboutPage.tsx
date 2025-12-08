@@ -70,8 +70,7 @@ const AboutPage: React.FC = () => {
                         transition={{ duration: 0.6 }}
                     >
                         <h1 className="text-4xl md:text-6xl font-serif text-brand-dark mb-6 leading-tight">
-                            Hello, We're <span className="text-brand-pink">Branded By Winni</span>. <br />
-                            Your Digital Growth Partner.
+                            <span className="text-brand-pink">Branded By Winni</span> is your digital growth partner.
                         </h1>
                         <p className="text-xl text-brand-muted leading-relaxed mb-8">
                             We help visionaries and businesses translate their ideas into stunning digital reality. Our mission is to empower brands with websites that don't just look good—they convert, engage, and grow your business.
@@ -117,7 +116,7 @@ const AboutPage: React.FC = () => {
                 <div className="container mx-auto px-6 md:px-12 max-w-4xl">
                     <div className="text-center mb-12">
                         <h3 className="text-sm uppercase tracking-widest text-brand-pink mb-3 font-semibold">Our Journey</h3>
-                        <h2 className="text-3xl md:text-4xl font-serif text-brand-dark">More Than Just Code</h2>
+                        <h2 className="text-3xl md:text-4xl font-serif text-brand-dark">More Than Just Code and Colors</h2>
                     </div>
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
