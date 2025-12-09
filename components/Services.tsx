@@ -6,22 +6,30 @@ const services = [
   {
     icon: <Monitor strokeWidth={1.5} />,
     title: "Website Design",
-    details: "Custom, responsive, and aesthetic website designs that capture your brand identity and convert visitors into loyal clients."
+    description: "Your website is often the first interaction a potential client has with your business. If it's clunky, outdated, or hard to navigate, you're losing money. We create bespoke, user-friendly websites that not only look incredible but are built to convert. We focus on storytelling and intuitive user flows to ensure your visitors stay longer and take action.",
+    whatYouGet: "A fully responsive, custom-designed website that elevates your credibility and turns visitors into clients.",
+    components: ["Strategic UI/UX Design", "Mobile & Tablet Responsiveness", "Conversion-Focused Layouts", "CMS Integration"]
   },
   {
     icon: <Settings strokeWidth={1.5} />,
     title: "Website Maintenance & Optimization",
-    details: "Keep your website running smoothly with regular updates, performance optimization, security patches, and technical support to ensure peak performance."
+    description: "Nothing kills a sale faster than a broken link or a slow-loading page. But keeping up with technical updates, security patches, and backups is a headache you don't have time for. We handle all the technical details—keeping your site secure, fast, and glitch-free—so you can focus on running your business.",
+    whatYouGet: "Total peace of mind with a website that is always secure, up-to-date, and running at lightning speed.",
+    components: ["24/7 Security Monitoring", "Regular Software Updates", "Performance Speed Tuning", "Daily Cloud Backups"]
   },
   {
     icon: <TrendingUp strokeWidth={1.5} />,
     title: "SEO Ranking",
-    details: "Strategic search engine optimization to improve your visibility, drive organic traffic, and rank higher on Google search results."
+    description: "You have an amazing business, but does Google know that? Being buried on page 2 (or 10) means your ideal clients never find you. Invisibility is costing you growth. We implement data-driven SEO strategies to help your business climb the search rankings and dominate your local market. Stop being the best-kept secret in your industry.",
+    whatYouGet: "Increased visibility and a steady stream of organic traffic from people actively searching for your services.",
+    components: ["Advanced Keyword Research", "On-Page Optimization", "Technical SEO Audits", "Competitor Analysis"]
   },
   {
     icon: <PenTool strokeWidth={1.5} />,
     title: "Branding",
-    details: "Comprehensive branding services including logo design, color palettes, and typography to create a cohesive and memorable brand image."
+    description: "First impressions stick. If your visual identity looks amateurish or inconsistent, customers will trust you less. A logo is not a brand; a brand is a feeling. We craft unique brand identities that resonate with your target audience and tell your unique story. From logos to color palettes, we ensure every touchpoint communicates professionalism and trust.",
+    whatYouGet: "A polished, professional brand identity that commands authority and builds immediate trust with your audience.",
+    components: ["Logo Design & Variations", "Curated Color Palettes", "Typography Systems", "Brand Style Guidelines"]
   }
 ];
 
@@ -61,11 +69,30 @@ const Services: React.FC = () => {
                     initial={{ opacity: 0, height: 0, paddingBottom: 0 }}
                     animate={{ opacity: 1, height: 'auto', paddingBottom: 16 }}
                     exit={{ opacity: 0, height: 0, paddingBottom: 0 }}
-                    className="overflow-hidden"
+                    className="overflow-hidden w-full text-left"
                   >
-                    <p className="text-brand-muted text-sm leading-relaxed">
-                      {service.details}
-                    </p>
+                    <div className="space-y-4">
+                      <p className="text-brand-muted text-sm leading-relaxed">
+                        {service.description}
+                      </p>
+
+                      <div>
+                        <h4 className="font-semibold text-brand-dark text-sm mb-1">What You Get:</h4>
+                        <p className="text-brand-muted text-sm">{service.whatYouGet}</p>
+                      </div>
+
+                      <div>
+                        <h4 className="font-semibold text-brand-dark text-sm mb-1">Components:</h4>
+                        <ul className="text-brand-muted text-sm space-y-1">
+                          {service.components.map((c, i) => (
+                            <li key={i} className="flex items-start gap-2">
+                              <span className="text-brand-pink mt-1.5 w-1 h-1 rounded-full bg-current shrink-0" />
+                              {c}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>
