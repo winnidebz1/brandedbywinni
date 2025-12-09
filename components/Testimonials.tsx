@@ -63,7 +63,7 @@ const Testimonials: React.FC = () => {
             { name: 'Jollof Empire', src: '/logos/jollof-empire.png' },
             { name: 'Portia Martey', src: '/logos/portia-martey-updated.png' }
           ].map((logo, idx) => (
-            <div key={idx} className="h-16 md:h-20 flex items-center justify-center">
+            <div key={idx} className="h-24 md:h-32 flex items-center justify-center">
               <img
                 src={logo.src}
                 alt={`${logo.name} logo`}
