@@ -13,7 +13,7 @@ const ChatWidget = () => {
     const [messages, setMessages] = useState<Message[]>([
         {
             sender: 'bot',
-            text: 'Hi, welcome to Branded by Winni! How can I help you today?',
+            text: 'Hi! I\'m Myles, your personal assistant at Branded by Winni. We help businesses like yours stand out with stunning design and digital solutions. How can we help you today?',
             options: ['Website Design', 'Website Maintenance', 'SEO Ranking', 'Branding', 'General Enquiry']
         }
     ]);
@@ -41,7 +41,7 @@ const ChatWidget = () => {
         setTimeout(() => {
             setMessages(prev => [...prev, {
                 sender: 'bot',
-                text: `Great choice! I specialize in ${option}. What is your name?`
+                text: `Great choice! We specialize in ${option}. What is your name?`
             }]);
         }, 600);
     };
@@ -74,7 +74,7 @@ const ChatWidget = () => {
             setTimeout(() => {
                 setMessages(prev => [...prev, {
                     sender: 'bot',
-                    text: 'Thanks! I have received your details. Would you like to chat with me directly on WhatsApp now for a faster response?',
+                    text: 'Thanks! We have received your details. Would you like to chat with us directly on WhatsApp now for a faster response?',
                     options: ['Yes, Open WhatsApp', 'No, I\'m done']
                 }]);
                 setStep('finished');
@@ -116,7 +116,7 @@ const ChatWidget = () => {
                     <div className="bg-[#4A3B40] p-4 text-[#FAF9F6] flex items-center justify-between">
                         <div className="flex items-center space-x-2">
                             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                            <span className="font-semibold font-serif">Winni Assistant</span>
+                            <span className="font-semibold font-serif">Myles</span>
                         </div>
                         <span className="text-xs opacity-75">Online</span>
                     </div>
