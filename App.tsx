@@ -11,6 +11,8 @@ const Home = React.lazy(() => import('./pages/Home'));
 const AboutPage = React.lazy(() => import('./pages/AboutPage'));
 const ServicesPage = React.lazy(() => import('./pages/ServicesPage'));
 const ContactPage = React.lazy(() => import('./pages/ContactPage'));
+const PrivacyPolicy = React.lazy(() => import('./pages/PrivacyPolicy'));
+const TermsOfService = React.lazy(() => import('./pages/TermsOfService'));
 
 // Admin Pages & Components
 const Login = React.lazy(() => import('./pages/admin/Login'));
@@ -65,6 +67,8 @@ const App: React.FC = () => {
               <Route path="/about" element={<AboutPage />} />
               <Route path="/services" element={<ServicesPage />} />
               <Route path="/contact" element={<ContactPage />} />
+              <Route path="/privacy" element={<PrivacyPolicy />} />
+              <Route path="/terms" element={<TermsOfService />} />
             </Route>
 
             {/* Admin Routes */}
