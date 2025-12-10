@@ -6,8 +6,8 @@ import { supabase } from '../lib/supabase';
 type Testimonial = {
   id: string;
   client_name: string;
-  company: string;
-  testimonial: string;
+  role: string;
+  content: string;
   rating: number;
 };
 
@@ -60,10 +60,10 @@ const Testimonials: React.FC = () => {
               className="p-8 md:p-10 bg-brand-ivory rounded-2xl relative group hover:bg-white hover:shadow-xl hover:shadow-brand-pink/10 transition-all duration-500 border border-transparent hover:border-brand-pink/10"
             >
               <Quote className="text-brand-pink mb-6 opacity-50" size={32} />
-              <p className="text-brand-text italic font-light leading-relaxed mb-8">"{t.testimonial}"</p>
+              <p className="text-brand-text italic font-light leading-relaxed mb-8">"{t.content}"</p>
               <div>
                 <h4 className="font-serif text-lg text-brand-dark">{t.client_name}</h4>
-                <p className="text-xs uppercase tracking-widest text-brand-muted">{t.company}</p>
+                <p className="text-xs uppercase tracking-widest text-brand-muted">{t.role}</p>
               </div>
             </motion.div>
           ))}
