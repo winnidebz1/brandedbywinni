@@ -1,26 +1,44 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Quote } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 
-const testimonials = [
-  {
-    name: "Sarah Jenkins",
-    brand: "Glow Botanics",
-    text: "Branded By Winni completely transformed our online presence. The design is elegant, functional, and our sales increased by 40% in the first month."
-  },
-  {
-    name: "Kwame Asante",
-    brand: "Asante Architecture",
-    text: "Professional, timely, and incredibly talented. They understood our vision for a high-end corporate site perfectly. Highly recommended."
-  },
-  {
-    name: "Elise Dubois",
-    brand: "Maison De Mode",
-    text: "The branding strategy provided was invaluable. Our new identity feels premium and confident, exactly what we needed to scale globally."
-  }
-];
+type Testimonial = {
+  id: string;
+  client_name: string;
+  company: string;
+  testimonial: string;
+  rating: number;
+};
 
 const Testimonials: React.FC = () => {
+  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchTestimonials();
+  }, []);
+
+  const fetchTestimonials = async () => {
+    const { data } = await supabase
+      .from('testimonials')
+      .select('*')
+      .order('created_at', { ascending: false })
+      .limit(3);
+
+    if (data) setTestimonials(data);
+    setLoading(false);
+  };
+
+  if (loading) {
+    return (
+      <section className="py-32 px-6 md:px-12 bg-white">
+        <div className="container mx-auto text-center">
+          <p className="text-brand-text">Loading testimonials...</p>
+        </div>
+      </section>
+    );
+  }
   return (
     <section className="py-32 px-6 md:px-12 bg-white relative overflow-hidden">
       {/* Decorative background element */}
@@ -34,7 +52,7 @@ const Testimonials: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {testimonials.map((t, i) => (
             <motion.div
-              key={i}
+              key={t.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -42,10 +60,10 @@ const Testimonials: React.FC = () => {
               className="p-8 md:p-10 bg-brand-ivory rounded-2xl relative group hover:bg-white hover:shadow-xl hover:shadow-brand-pink/10 transition-all duration-500 border border-transparent hover:border-brand-pink/10"
             >
               <Quote className="text-brand-pink mb-6 opacity-50" size={32} />
-              <p className="text-brand-text italic font-light leading-relaxed mb-8">"{t.text}"</p>
+              <p className="text-brand-text italic font-light leading-relaxed mb-8">"{t.testimonial}"</p>
               <div>
-                <h4 className="font-serif text-lg text-brand-dark">{t.name}</h4>
-                <p className="text-xs uppercase tracking-widest text-brand-muted">{t.brand}</p>
+                <h4 className="font-serif text-lg text-brand-dark">{t.client_name}</h4>
+                <p className="text-xs uppercase tracking-widest text-brand-muted">{t.company}</p>
               </div>
             </motion.div>
           ))}
