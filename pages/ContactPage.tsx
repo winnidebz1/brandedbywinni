@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import SEO from '../components/seo/SEO';
 import { Mail, Phone, MapPin, Instagram, Twitter } from 'lucide-react';
+import { supabase } from '../lib/supabase';
 
 const TikTokIcon = ({ size = 18, className = "" }) => (
     <svg
@@ -40,6 +41,21 @@ const ContactPage: React.FC = () => {
         const { name, email, message } = formData;
 
         try {
+            // Save to Supabase leads table for admin portal
+            const { error: supabaseError } = await supabase
+                .from('leads')
+                .insert([{
+                    name,
+                    email,
+                    message,
+                    service: 'Contact Form',
+                    status: 'new'
+                }]);
+
+            if (supabaseError) {
+                console.error('Supabase error:', supabaseError);
+            }
+
             // Submit to Web3Forms
             const response = await fetch('https://api.web3forms.com/submit', {
                 method: 'POST',
@@ -78,7 +94,7 @@ const ContactPage: React.FC = () => {
             }
         } catch (error) {
             console.error('Error submitting form:', error);
-            alert('Sorry, there was an error sending your message. Please try again or contact us directly via WhatsApp.');
+            alert('Oops! Something went wrong. Please try again or contact us directly via WhatsApp.');
         } finally {
             setIsSubmitting(false);
         }
