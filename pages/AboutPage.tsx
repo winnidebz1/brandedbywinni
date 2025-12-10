@@ -1,5 +1,6 @@
 
 import React, { useEffect, useRef } from 'react';
+import SEO from '../components/seo/SEO';
 import { motion, useInView, animate } from 'framer-motion';
 import { Heart, Globe, Zap, Instagram, Twitter } from 'lucide-react';
 import FinalCTA from '../components/FinalCTA';
@@ -60,6 +61,11 @@ const AboutPage: React.FC = () => {
 
     return (
         <div className="pt-24 bg-brand-ivory min-h-screen">
+            <SEO
+                title="About Us"
+                description="Learn about Branded By Winni's journey and passion for digital design and branding."
+                url="/about"
+            />
 
             {/* Hero Section */}
             <div className="container mx-auto px-6 md:px-12 mb-24">

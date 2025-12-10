@@ -1,12 +1,32 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation, Outlet } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import AnalyticsTracker from './components/AnalyticsTracker';
-import Home from './pages/Home';
-import AboutPage from './pages/AboutPage';
-import ServicesPage from './pages/ServicesPage';
-import ContactPage from './pages/ContactPage';
+import ChatWidget from './components/ChatWidget';
+
+// Public Pages
+const Home = React.lazy(() => import('./pages/Home'));
+const AboutPage = React.lazy(() => import('./pages/AboutPage'));
+const ServicesPage = React.lazy(() => import('./pages/ServicesPage'));
+const ContactPage = React.lazy(() => import('./pages/ContactPage'));
+
+// Admin Pages & Components
+const Login = React.lazy(() => import('./pages/admin/Login'));
+const Dashboard = React.lazy(() => import('./pages/admin/Dashboard'));
+const Projects = React.lazy(() => import('./pages/admin/Projects'));
+const Leads = React.lazy(() => import('./pages/admin/Leads'));
+const Testimonials = React.lazy(() => import('./pages/admin/Testimonials'));
+const AdminLayout = React.lazy(() => import('./components/admin/AdminLayout'));
+const ProtectedRoute = React.lazy(() => import('./components/admin/ProtectedRoute'));
+const TestConnection = React.lazy(() => import('./pages/admin/TestConnection'));
+
+const LoadingSpinner = () => (
+  <div className="flex items-center justify-center min-h-screen bg-[#F7D9C9]">
+    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#644B52]"></div>
+  </div>
+);
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -18,24 +38,51 @@ const ScrollToTop = () => {
   return null;
 };
 
+const PublicLayout = () => {
+  return (
+    <div className="font-sans antialiased text-brand-text bg-brand-ivory selection:bg-brand-pink selection:text-white">
+      <Navbar />
+      <main className="w-full flex-grow min-h-screen">
+        <Outlet />
+      </main>
+      <Footer />
+      <ChatWidget />
+    </div>
+  );
+};
+
 const App: React.FC = () => {
   return (
-    <Router>
-      <ScrollToTop />
-      <AnalyticsTracker />
-      <div className="font-sans antialiased text-brand-text bg-brand-ivory selection:bg-brand-pink selection:text-white">
-        <Navbar />
-        <main className="w-full flex-grow min-h-screen">
+    <HelmetProvider>
+      <Router>
+        <ScrollToTop />
+        <AnalyticsTracker />
+        <React.Suspense fallback={<LoadingSpinner />}>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/services" element={<ServicesPage />} />
-            <Route path="/contact" element={<ContactPage />} />
+            {/* Public Routes */}
+            <Route element={<PublicLayout />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/services" element={<ServicesPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+            </Route>
+
+            {/* Admin Routes */}
+            <Route path="/admin/login" element={<Login />} />
+            <Route path="/admin/test" element={<TestConnection />} />
+
+            <Route path="/admin" element={<ProtectedRoute />}>
+              <Route element={<AdminLayout />}>
+                <Route index element={<Dashboard />} />
+                <Route path="projects" element={<Projects />} />
+                <Route path="leads" element={<Leads />} />
+                <Route path="testimonials" element={<Testimonials />} />
+              </Route>
+            </Route>
           </Routes>
-        </main>
-        <Footer />
-      </div>
-    </Router>
+        </React.Suspense>
+      </Router>
+    </HelmetProvider>
   );
 };
 

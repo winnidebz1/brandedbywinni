@@ -1,4 +1,5 @@
 import React from 'react';
+import SEO from '../components/seo/SEO';
 import Hero from '../components/Hero';
 import WhyWebsite from '../components/WhyWebsite';
 import Services from '../components/Services';
@@ -11,6 +12,11 @@ import FinalCTA from '../components/FinalCTA';
 const Home: React.FC = () => {
     return (
         <>
+            <SEO
+                title="Home"
+                description="Branded By Winni - Creative agency for branding, web design, and digital marketing."
+                keywords={['branding', 'web design', 'creative agency', 'seo']}
+            />
             <Hero />
             <WhyWebsite />
             <Services />

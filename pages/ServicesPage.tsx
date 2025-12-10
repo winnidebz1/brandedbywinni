@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import SEO from '../components/seo/SEO';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Monitor, TrendingUp, PenTool, Settings, ArrowRight, ChevronUp } from 'lucide-react';
 import FinalCTA from '../components/FinalCTA';
@@ -44,7 +45,11 @@ const ServicesPage: React.FC = () => {
 
     return (
         <div className="pt-24 bg-brand-ivory min-h-screen">
-
+            <SEO
+                title="Our Services"
+                description="Professional web design, branding, and SEO services tailored for your business growth."
+                url="/services"
+            />
             {/* Header */}
             <div className="container mx-auto px-6 md:px-12 mb-20 text-center">
                 <motion.h1

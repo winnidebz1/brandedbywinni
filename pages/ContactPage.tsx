@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import SEO from '../components/seo/SEO';
 import { Mail, Phone, MapPin, Instagram, Twitter } from 'lucide-react';
 
 const TikTokIcon = ({ size = 18, className = "" }) => (
@@ -85,6 +86,11 @@ const ContactPage: React.FC = () => {
 
     return (
         <div className="pt-32 pb-20 bg-brand-ivory min-h-screen">
+            <SEO
+                title="Contact Us"
+                description="Get in touch with Branded By Winni for your creative projects. We are ready to elevate your brand."
+                url="/contact"
+            />
             <div className="container mx-auto px-6 md:px-12">
                 <div className="max-w-4xl mx-auto text-center mb-16">
                     <h1 className="text-4xl md:text-5xl font-serif text-brand-dark mb-6">Get in Touch</h1>
