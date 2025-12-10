@@ -77,12 +77,6 @@ const ContactPage: React.FC = () => {
                 console.log('Email notification failed, but message was saved');
             }
 
-            // Create WhatsApp message
-            const whatsappMessage = `*New Contact Form Submission*%0A%0A*Name:* ${name}%0A*Email:* ${email}%0A%0A*Message:*%0A${message}`;
-
-            // Open WhatsApp
-            window.open(`https://wa.me/233202326851?text=${whatsappMessage}`, '_blank');
-
             // Reset form
             setFormData({
                 name: '',
