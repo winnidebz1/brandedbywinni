@@ -41,7 +41,7 @@ const ContactPage: React.FC = () => {
         const { name, email, message } = formData;
 
         try {
-            // Save to Supabase leads table for admin portal
+            // Save to Supabase leads table for admin portal (PRIORITY)
             const { error: supabaseError } = await supabase
                 .from('leads')
                 .insert([{
@@ -53,48 +53,49 @@ const ContactPage: React.FC = () => {
                 }]);
 
             if (supabaseError) {
-                console.error('Supabase error:', supabaseError);
+                throw new Error('Failed to save your message. Please try again.');
             }
 
-            // Submit to Web3Forms
-            const response = await fetch('https://api.web3forms.com/submit', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    access_key: '6e8f7c4d-3b2a-4f1e-9d8c-5a6b7e8f9c0d',
-                    name: name,
-                    email: email,
-                    message: message,
-                    subject: `New Contact Form Submission from ${name}`,
-                    from_name: 'Branded By Winni Website',
-                    to_email: 'brandedbywinnistudio@gmail.com'
-                }),
+            // Try to submit to Web3Forms (optional - don't fail if this doesn't work)
+            try {
+                await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        access_key: '6e8f7c4d-3b2a-4f1e-9d8c-5a6b7e8f9c0d',
+                        name: name,
+                        email: email,
+                        message: message,
+                        subject: `New Contact Form Submission from ${name}`,
+                        from_name: 'Branded By Winni Website',
+                        to_email: 'brandedbywinnistudio@gmail.com'
+                    }),
+                });
+            } catch (emailError) {
+                console.log('Email notification failed, but message was saved');
+            }
+
+            // Create WhatsApp message
+            const whatsappMessage = `*New Contact Form Submission*%0A%0A*Name:* ${name}%0A*Email:* ${email}%0A%0A*Message:*%0A${message}`;
+
+            // Open WhatsApp
+            window.open(`https://wa.me/233202326851?text=${whatsappMessage}`, '_blank');
+
+            // Reset form
+            setFormData({
+                name: '',
+                email: '',
+                message: ''
             });
 
-            if (response.ok) {
-                // Create WhatsApp message
-                const whatsappMessage = `*New Contact Form Submission*%0A%0A*Name:* ${name}%0A*Email:* ${email}%0A%0A*Message:*%0A${message}`;
+            // Show success message
+            alert('Thank you! Your message has been sent successfully. We will get back to you soon!');
 
-                // Open WhatsApp
-                window.open(`https://wa.me/233202326851?text=${whatsappMessage}`, '_blank');
-
-                // Reset form
-                setFormData({
-                    name: '',
-                    email: '',
-                    message: ''
-                });
-
-                // Show success message
-                alert('Thank you! Your message has been sent successfully. We will get back to you soon!');
-            } else {
-                throw new Error('Form submission failed');
-            }
-        } catch (error) {
+        } catch (error: any) {
             console.error('Error submitting form:', error);
-            alert('Oops! Something went wrong. Please try again or contact us directly via WhatsApp.');
+            alert(error.message || 'Oops! Something went wrong. Please try again or contact us directly via WhatsApp.');
         } finally {
             setIsSubmitting(false);
         }
