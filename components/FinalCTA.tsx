@@ -19,7 +19,7 @@ const FinalCTA: React.FC = () => {
             Get a modern website that speaks for your brand. Stop competing and starting dominating your niche with a custom digital presence.
           </p>
           <a
-            href="https://wa.me/233202326851"
+            href="https://calendly.com/brandedbywinni/45min"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block px-10 py-4 bg-brand-ivory text-brand-pink font-medium tracking-wide rounded-sm hover:bg-white hover:text-brand-dark transition-all duration-300 shadow-xl shadow-brand-dark/10 hover:shadow-2xl hover:-translate-y-1"
