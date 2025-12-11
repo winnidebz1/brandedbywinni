@@ -13,7 +13,7 @@ const Dashboard = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchStats = async () => {
+        const loadData = async () => {
             // Fetch counts
             const { count: leadsCount } = await supabase.from('leads').select('*', { count: 'exact', head: true });
             const { count: projectsCount } = await supabase.from('projects').select('*', { count: 'exact', head: true });
@@ -55,7 +55,19 @@ const Dashboard = () => {
             setLoading(false);
         };
 
-        fetchStats();
+        loadData();
+
+        // Subscribe to changes on KEY tables
+        const subscription = supabase
+            .channel('dashboard-db-changes')
+            .on('postgres_changes', { event: '*', schema: 'public' }, () => {
+                loadData();
+            })
+            .subscribe();
+
+        return () => {
+            supabase.removeChannel(subscription);
+        };
     }, []);
 
     if (loading) return <div className="p-8">Loading stats...</div>;
