@@ -33,11 +33,11 @@ const Portfolio: React.FC = () => {
 
   const websiteProjects = projects.filter(p =>
     p.category === 'Web Design' || p.category === 'Website Design'
-  ).slice(0, 2);
+  ).slice(0, 1);
 
   const brandingProjects = projects.filter(p =>
     p.category === 'Brand Identity' || p.category === 'Branding' || p.category === 'Packaging Design'
-  ).slice(0, 2);
+  ).slice(0, 1);
 
   if (loading) {
     return (
@@ -68,7 +68,7 @@ const Portfolio: React.FC = () => {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+          <div className="grid grid-cols-1 gap-8 md:gap-12">
             {websiteProjects.map((project, index) => (
               <motion.div
                 key={project.id}
@@ -116,7 +116,7 @@ const Portfolio: React.FC = () => {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
+          <div className="grid grid-cols-1 gap-8 md:gap-12">
             {brandingProjects.map((project, index) => (
               <motion.div
                 key={project.id}
