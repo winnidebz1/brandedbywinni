@@ -64,6 +64,16 @@
 
 <body>
   <script>
+    // Catch and display errors visibly
+    window.addEventListener('error', function (e) {
+      document.body.innerHTML = '<div style="padding: 20px; font-family: monospace; color: red; white-space: pre-wrap;">' +
+        'ERROR: ' + e.message + '\n\n' +
+        'File: ' + e.filename + '\n' +
+        'Line: ' + e.lineno + '\n' +
+        'Stack: ' + (e.error ? e.error.stack : 'N/A') +
+        '</div>';
+    });
+
     // Force unregister Service Worker immediately
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.getRegistrations().then(function (registrations) {
