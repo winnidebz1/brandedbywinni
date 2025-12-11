@@ -51,13 +51,13 @@ const Portfolio: React.FC = () => {
   return (
     <section id="portfolio" className="py-32 px-6 md:px-12 bg-brand-ivory">
       <div className="container mx-auto">
-        <div className="mb-20">
+        <div className="mb-20 text-center md:text-left">
           <h2 className="font-serif text-4xl md:text-5xl text-brand-dark">Selected Works</h2>
         </div>
 
         {/* Website Designs Section */}
         <div className="mb-24">
-          <div className="flex justify-between items-center mb-12">
+          <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-4 text-center md:text-left">
             <h3 className="font-serif text-3xl text-brand-dark">Website Designs</h3>
             <Link
               to="/portfolio?category=websites"
@@ -105,7 +105,7 @@ const Portfolio: React.FC = () => {
 
         {/* Branding/Graphic Design Section */}
         <div>
-          <div className="flex justify-between items-center mb-12">
+          <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-4 text-center md:text-left">
             <h3 className="font-serif text-3xl text-brand-dark">Branding & Graphic Design</h3>
             <Link
               to="/portfolio?category=branding"

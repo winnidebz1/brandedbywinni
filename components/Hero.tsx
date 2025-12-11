@@ -12,7 +12,7 @@ const Hero: React.FC = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="lg:col-span-8 flex flex-col justify-center"
+          className="lg:col-span-8 flex flex-col justify-center items-center lg:items-start text-center lg:text-left"
         >
           <h1 className="font-serif text-4xl md:text-6xl lg:text-7xl leading-[1.1] text-brand-dark mb-8">
             Elevating Brands with Elegant Strategy for Maximum <span className="italic text-brand-pink/90">Efficiency</span> & Profit
@@ -21,7 +21,7 @@ const Hero: React.FC = () => {
             We build modern, conversion-focused websites and branding systems that help businesses communicate beautifully, sell seamlessly and scale globally.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-6">
+          <div className="flex flex-col sm:flex-row gap-6 items-center">
             <a href="#portfolio" className="group flex items-center gap-3 text-brand-dark font-medium pb-1 border-b border-brand-dark hover:border-brand-pink hover:text-brand-pink transition-all duration-300 w-fit">
               View Our Work
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
