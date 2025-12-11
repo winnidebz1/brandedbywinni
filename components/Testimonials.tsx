@@ -10,6 +10,7 @@ type Testimonial = {
   content: string;
   rating: number;
   profile_image?: string;
+  screenshot?: string;
 };
 
 const Testimonials: React.FC = () => {
@@ -61,7 +62,20 @@ const Testimonials: React.FC = () => {
               className="p-8 md:p-10 bg-brand-ivory rounded-2xl relative group hover:bg-white hover:shadow-xl hover:shadow-brand-pink/10 transition-all duration-500 border border-transparent hover:border-brand-pink/10"
             >
               <Quote className="text-brand-pink mb-6 opacity-50" size={32} />
-              <p className="text-brand-text italic font-light leading-relaxed mb-8">"{t.content}"</p>
+              <p className="text-brand-text italic font-light leading-relaxed mb-6">"{t.content}"</p>
+
+              {t.screenshot && (
+                <div className="mb-6 rounded-lg overflow-hidden border border-gray-100 shadow-sm group-hover:shadow-md transition-all">
+                  <img
+                    src={t.screenshot}
+                    alt={`Screenshot of review from ${t.client_name}`}
+                    className="w-full object-cover max-h-48"
+                    loading="lazy"
+                  />
+                </div>
+              )}
+
+              <div className="mb-8"></div>
 
               {/* Client info with profile picture */}
               <div className="flex items-center gap-3 mb-4">

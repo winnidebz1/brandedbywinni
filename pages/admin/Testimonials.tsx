@@ -9,6 +9,7 @@ type Testimonial = {
     content: string;
     rating: number;
     profile_image?: string;
+    screenshot?: string;
 };
 
 const Testimonials = () => {
@@ -145,6 +146,44 @@ const Testimonials = () => {
                                     />
                                     <p className="text-xs text-gray-500 mt-1">Upload a small profile photo</p>
                                 </div>
+                            </div>
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Review Screenshot (Optional)</label>
+                            <div className="border-2 border-dashed border-gray-200 rounded-lg p-4 hover:border-[#E89BA7] transition-colors relative group">
+                                {formData.screenshot ? (
+                                    <div className="relative">
+                                        <img src={formData.screenshot} alt="Screenshot" className="w-full h-48 object-contain rounded-md" />
+                                        <button
+                                            type="button"
+                                            onClick={() => setFormData({ ...formData, screenshot: '' })}
+                                            className="absolute top-2 right-2 p-1 bg-red-500 text-white rounded-full hover:bg-red-600 transition-colors"
+                                            title="Remove screenshot"
+                                        >
+                                            <X size={16} />
+                                        </button>
+                                    </div>
+                                ) : (
+                                    <div className="flex flex-col items-center justify-center py-6 text-gray-400">
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={(e) => {
+                                                const file = e.target.files?.[0];
+                                                if (file) {
+                                                    const reader = new FileReader();
+                                                    reader.onloadend = () => {
+                                                        setFormData({ ...formData, screenshot: reader.result as string });
+                                                    };
+                                                    reader.readAsDataURL(file);
+                                                }
+                                            }}
+                                            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                        />
+                                        <Plus size={32} className="mb-2 opacity-50" />
+                                        <p className="text-sm">Click to upload screenshot</p>
+                                    </div>
+                                )}
                             </div>
                         </div>
                         <div className="flex justify-end pt-4">
