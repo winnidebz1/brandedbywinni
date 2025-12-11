@@ -14,11 +14,21 @@ const Dashboard = () => {
 
     useEffect(() => {
         const loadData = async () => {
+            // Get today's date at midnight (start of day)
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const todayISO = today.toISOString();
+
             // Fetch counts
             const { count: leadsCount } = await supabase.from('leads').select('*', { count: 'exact', head: true });
             const { count: projectsCount } = await supabase.from('projects').select('*', { count: 'exact', head: true });
             const { count: testimonialsCount } = await supabase.from('testimonials').select('*', { count: 'exact', head: true });
-            const { count: visitsCount } = await supabase.from('site_visits').select('*', { count: 'exact', head: true });
+
+            // Fetch TODAY's visitor count only
+            const { count: visitsCount } = await supabase
+                .from('site_visits')
+                .select('*', { count: 'exact', head: true })
+                .gte('created_at', todayISO);
 
             // Fetch recent leads
             const { data: leads } = await supabase
@@ -27,8 +37,12 @@ const Dashboard = () => {
                 .order('created_at', { ascending: false })
                 .limit(5);
 
-            // Get country stats (client-side aggregation for now)
-            const { data: visits } = await supabase.from('site_visits').select('country').limit(1000);
+            // Get country stats for TODAY only
+            const { data: visits } = await supabase
+                .from('site_visits')
+                .select('country')
+                .gte('created_at', todayISO)
+                .limit(1000);
 
             type CountryCount = { [key: string]: number };
             const countryStats: CountryCount = {};
@@ -84,7 +98,7 @@ const Dashboard = () => {
                 <StatCard title="Total Inquiries" value={stats.leads} icon={<Users />} color="blue" />
                 <StatCard title="Projects Added" value={stats.projects} icon={<FileText />} color="purple" />
                 <StatCard title="Testimonials" value={stats.testimonials} icon={<MessageSquare />} color="green" />
-                <StatCard title="Total Visitors" value={(stats as any).visits} icon={<BarChart />} color="indigo" />
+                <StatCard title="Today's Visitors" value={(stats as any).visits} icon={<BarChart />} color="indigo" />
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
