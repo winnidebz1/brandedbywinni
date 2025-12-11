@@ -164,7 +164,7 @@ const Testimonials = () => {
                                         </button>
                                     </div>
                                 ) : (
-                                    <div className="flex flex-col items-center justify-center py-6 text-gray-400">
+                                    <div className="flex flex-col items-center justify-center py-6 text-gray-400 relative w-full h-full">
                                         <input
                                             type="file"
                                             accept="image/*"
@@ -178,10 +178,10 @@ const Testimonials = () => {
                                                     reader.readAsDataURL(file);
                                                 }
                                             }}
-                                            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                                            className="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-20"
                                         />
-                                        <Plus size={32} className="mb-2 opacity-50" />
-                                        <p className="text-sm">Click to upload screenshot</p>
+                                        <Plus size={32} className="mb-2 opacity-50 pointer-events-none" />
+                                        <p className="text-sm pointer-events-none">Click to upload screenshot</p>
                                     </div>
                                 )}
                             </div>
