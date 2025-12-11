@@ -13,6 +13,37 @@ const AdminLayout = () => {
         navigate('/admin/login');
     };
 
+    // Notification Logic
+    React.useEffect(() => {
+        // Request permission
+        if ('Notification' in window && Notification.permission === 'default') {
+            Notification.requestPermission();
+        }
+
+        // Real-time subscription
+        const channel = supabase
+            .channel('public:leads')
+            .on(
+                'postgres_changes',
+                { event: 'INSERT', schema: 'public', table: 'leads' },
+                (payload) => {
+                    // Show notification
+                    if (Notification.permission === 'granted') {
+                        new Notification('New Lead Received! 🚀', {
+                            body: `${payload.new.name} sent a message regarding ${payload.new.service || 'inquiry'}.`,
+                            icon: '/logo-icon.png'
+                        });
+                    }
+                    // Optional: Play sound or toast
+                }
+            )
+            .subscribe();
+
+        return () => {
+            supabase.removeChannel(channel);
+        };
+    }, []);
+
     const navItems = [
         { name: 'Dashboard', path: '/admin', icon: <LayoutDashboard size={20} /> },
         { name: 'Projects', path: '/admin/projects', icon: <FolderOpen size={20} /> },

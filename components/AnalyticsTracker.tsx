@@ -1,69 +1,52 @@
-import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
-
-// This will send you email notifications when someone visits your website
-// You need to get a FREE Web3Forms API key for analytics notifications
-// See ANALYTICS_SETUP.md for instructions
-const WEB3FORMS_ANALYTICS_KEY = (import.meta as any).env?.VITE_WEB3FORMS_ANALYTICS_KEY || '';
+import { useEffect, useRef } from 'react';
+import { supabase } from '../lib/supabase';
 
 const AnalyticsTracker = () => {
-    const location = useLocation();
+    // strict mode causes double firing in dev, useRef helps prevent that
+    const executedRef = useRef(false);
 
     useEffect(() => {
-        const trackPageView = async () => {
-            // Skip if no API key is configured
-            if (!WEB3FORMS_ANALYTICS_KEY) {
-                console.log('Analytics tracking disabled - no API key configured');
+        const logVisit = async () => {
+            // Only log unique sessions (per browser tab session)
+            if (sessionStorage.getItem('visit_logged') && !(import.meta as any).env.DEV) {
                 return;
             }
 
-            try {
-                // Get visitor information
-                const timestamp = new Date().toLocaleString();
-                const page = location.pathname;
-                const referrer = document.referrer || 'Direct';
+            if (executedRef.current) return;
+            executedRef.current = true;
 
-                // Get approximate location using IP (optional - you can remove this if you prefer)
-                let locationInfo = 'Unknown';
+            try {
+                // 1. Get Location Data (Country)
+                let country = 'Unknown';
                 try {
-                    const ipResponse = await fetch('https://api.ipify.org?format=json');
-                    const ipData = await ipResponse.json();
-                    locationInfo = ipData.ip;
-                } catch (error) {
-                    console.log('Could not fetch IP');
+                    const res = await fetch('https://ipapi.co/json/');
+                    const data = await res.json();
+                    if (data.country_name) country = data.country_name;
+                } catch (e) {
+                    console.log('Geo-IP unavailable');
                 }
 
-                // Send notification via Web3Forms
-                const formData = new FormData();
-                formData.append('access_key', WEB3FORMS_ANALYTICS_KEY);
-                formData.append('subject', '🔔 New Website Visitor - Branded By Winni');
-                formData.append('from_name', 'Website Analytics');
-                formData.append('message', `
-New visitor on your website!
+                // 2. Identify Device
+                const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+                const device = isMobile ? 'Mobile' : 'Desktop';
 
-📅 Time: ${timestamp}
-📄 Page: ${page}
-🔗 Referrer: ${referrer}
-🌍 IP: ${locationInfo}
-        `);
+                // 3. Log to Supabase
+                await supabase.from('site_visits').insert([{
+                    page_path: window.location.pathname,
+                    country: country,
+                    device_type: device
+                }]);
 
-                await fetch('https://api.web3forms.com/submit', {
-                    method: 'POST',
-                    body: formData
-                });
+                // Mark as logged for this session
+                sessionStorage.setItem('visit_logged', 'true');
 
             } catch (error) {
-                console.error('Analytics tracking error:', error);
+                console.error('Tracking Error:', error);
             }
         };
 
-        // Track page view with a small delay to avoid spam
-        const timer = setTimeout(() => {
-            trackPageView();
-        }, 2000);
-
-        return () => clearTimeout(timer);
-    }, [location]);
+        logVisit();
+    }, []);
 
     return null;
 };
