@@ -40,10 +40,10 @@ const Hero: React.FC = () => {
           className="lg:col-span-4 relative block h-[500px] lg:h-[600px] w-full mt-12 lg:mt-0"
         >
           {/* Decorative collage using simple divs and images */}
-          <div className="absolute top-0 right-10 lg:top-10 lg:right-0 w-56 h-72 lg:w-64 lg:h-80 bg-gray-200 overflow-hidden rounded-lg shadow-xl rotate-3 hover:rotate-0 transition-transform duration-700">
+          <div className="absolute top-10 left-1/2 -translate-x-1/2 lg:translate-x-0 lg:left-auto lg:top-10 lg:right-0 w-64 h-80 bg-gray-200 overflow-hidden rounded-lg shadow-xl rotate-3 hover:rotate-0 transition-transform duration-700">
             <img src="/hero-1.jpg" alt="Team Collaboration" className="w-full h-full object-cover opacity-90" />
           </div>
-          <div className="absolute bottom-10 left-10 lg:bottom-20 lg:left-10 w-48 h-64 lg:w-56 lg:h-72 bg-gray-300 overflow-hidden rounded-lg shadow-2xl -rotate-6 hover:rotate-0 transition-transform duration-700 z-10">
+          <div className="hidden lg:block absolute bottom-10 left-10 lg:bottom-20 lg:left-10 w-48 h-64 lg:w-56 lg:h-72 bg-gray-300 overflow-hidden rounded-lg shadow-2xl -rotate-6 hover:rotate-0 transition-transform duration-700 z-10">
             <img src="/hero-2.jpg" alt="Creative Meeting" className="w-full h-full object-cover opacity-90" />
           </div>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full bg-brand-pink/20 blur-3xl z-0"></div>
