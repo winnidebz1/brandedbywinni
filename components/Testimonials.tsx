@@ -96,7 +96,7 @@ const Testimonials: React.FC = () => {
       {/* Brand Logos Strip */}
       <div className="mt-24 pt-12 border-t border-gray-100 container mx-auto px-6">
         <p className="text-center text-xs text-brand-muted uppercase tracking-widest mb-10">Trusted By</p>
-        <div className="flex flex-wrap justify-center items-center gap-6 md:gap-20">
+        <div className="flex flex-wrap justify-center items-center gap-4 md:gap-16">
           {/* Client Logos - Replaced text with uploaded images */}
           {[
             { name: 'Buernix Tech', src: '/logos/buernix-tech.png' },
@@ -104,7 +104,7 @@ const Testimonials: React.FC = () => {
             { name: 'Jollof Empire', src: '/logos/jollof-empire.png' },
             { name: 'Portia Martey', src: '/logos/portia-martey-updated.png' }
           ].map((logo, idx) => (
-            <div key={idx} className="h-20 md:h-32 flex items-center justify-center grayscale hover:grayscale-0 transition-all duration-300 opacity-70 hover:opacity-100">
+            <div key={idx} className="h-16 md:h-28 flex items-center justify-center transition-transform duration-300 hover:scale-105">
               <img
                 src={logo.src}
                 alt={`${logo.name} logo`}
