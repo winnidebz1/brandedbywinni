@@ -80,10 +80,11 @@
   <script type="module" src="/index.tsx"></script>
   <script>
     if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('/sw.js')
-          .then(reg => console.log('SW registered!', reg))
-          .catch(err => console.log('SW failed', err));
+      // UNREGISTER any existing service workers to fix blocking issues
+      navigator.serviceWorker.getRegistrations().then(function (registrations) {
+        for (let registration of registrations) {
+          registration.unregister();
+        }
       });
     }
   </script>
