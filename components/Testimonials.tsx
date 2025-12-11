@@ -67,7 +67,7 @@ const Testimonials: React.FC = () => {
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-12 h-12 rounded-full bg-brand-pink/20 flex items-center justify-center overflow-hidden flex-shrink-0">
                   {t.profile_image ? (
-                    <img src={t.profile_image} alt={t.client_name} className="w-full h-full object-cover" />
+                    <img src={t.profile_image} alt={t.client_name} className="w-full h-full object-cover" loading="lazy" />
                   ) : (
                     <span className="text-brand-dark font-bold text-lg">{t.client_name.charAt(0)}</span>
                   )}
@@ -109,6 +109,7 @@ const Testimonials: React.FC = () => {
                 src={logo.src}
                 alt={`${logo.name} logo`}
                 className="h-full w-auto object-contain mix-blend-multiply"
+                loading="lazy"
               />
             </div>
           ))}

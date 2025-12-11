@@ -40,7 +40,7 @@ const PortfolioPage: React.FC = () => {
     const fetchProjects = async () => {
         const { data } = await supabase
             .from('projects')
-            .select('*')
+            .select('id, title, slug, category, cover_image, client_industry, problem, created_at')
             .order('created_at', { ascending: false });
 
         if (data) setProjects(data);
@@ -108,8 +108,8 @@ const PortfolioPage: React.FC = () => {
                                     key={cat}
                                     onClick={() => setActiveCategory(cat)}
                                     className={`px-6 py-2 rounded-full text-sm uppercase tracking-wider transition-all duration-300 ${activeCategory === cat
-                                            ? 'bg-brand-dark text-white shadow-lg'
-                                            : 'bg-white text-brand-muted hover:bg-gray-100 border border-gray-200'
+                                        ? 'bg-brand-dark text-white shadow-lg'
+                                        : 'bg-white text-brand-muted hover:bg-gray-100 border border-gray-200'
                                         }`}
                                 >
                                     {cat}

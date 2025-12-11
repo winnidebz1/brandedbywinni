@@ -44,7 +44,12 @@ const Hero: React.FC = () => {
         >
           {/* Decorative collage using simple divs and images */}
           <div className="absolute top-10 left-1/2 -translate-x-1/2 lg:translate-x-0 lg:left-auto lg:top-10 lg:right-0 w-64 h-80 bg-gray-200 overflow-hidden rounded-lg shadow-xl rotate-3 hover:rotate-0 transition-transform duration-700">
-            <img src="/hero-1.jpg" alt="Team Collaboration" className="w-full h-full object-cover opacity-90" />
+            <img
+              src="/hero-1.jpg"
+              alt="Team Collaboration"
+              className="w-full h-full object-cover opacity-90"
+              fetchPriority="high"
+            />
           </div>
           <div className="hidden lg:block absolute bottom-10 left-10 lg:bottom-20 lg:left-10 w-48 h-64 lg:w-56 lg:h-72 bg-gray-300 overflow-hidden rounded-lg shadow-2xl -rotate-6 hover:rotate-0 transition-transform duration-700 z-10">
             <img src="/hero-2.jpg" alt="Creative Meeting" className="w-full h-full object-cover opacity-90" />

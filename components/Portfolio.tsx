@@ -23,7 +23,7 @@ const Portfolio: React.FC = () => {
   const fetchProjects = async () => {
     const { data } = await supabase
       .from('projects')
-      .select('*')
+      .select('id, title, category, cover_image, slug')
       .order('created_at', { ascending: false })
       .limit(6);
 
