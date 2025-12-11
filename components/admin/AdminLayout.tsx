@@ -95,6 +95,15 @@ const AdminLayout = () => {
                         <LogOut size={20} />
                         <span>Logout</span>
                     </button>
+                    {Notification.permission === 'default' && (
+                        <button
+                            onClick={() => Notification.requestPermission()}
+                            className="mt-2 flex items-center space-x-3 px-4 py-3 w-full rounded-lg bg-blue-600/20 text-blue-300 hover:bg-blue-600/30 transition-all font-medium"
+                        >
+                            <MessageSquare size={20} />
+                            <span>Enable Alerts</span>
+                        </button>
+                    )}
                 </div>
             </div>
 
