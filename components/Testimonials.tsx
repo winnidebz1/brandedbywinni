@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Quote } from 'lucide-react';
+import { Quote, Star } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
 type Testimonial = {
@@ -9,6 +9,7 @@ type Testimonial = {
   role: string;
   content: string;
   rating: number;
+  profile_image?: string;
 };
 
 const Testimonials: React.FC = () => {
@@ -61,9 +62,31 @@ const Testimonials: React.FC = () => {
             >
               <Quote className="text-brand-pink mb-6 opacity-50" size={32} />
               <p className="text-brand-text italic font-light leading-relaxed mb-8">"{t.content}"</p>
-              <div>
-                <h4 className="font-serif text-lg text-brand-dark">{t.client_name}</h4>
-                <p className="text-xs uppercase tracking-widest text-brand-muted">{t.role}</p>
+
+              {/* Client info with profile picture */}
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-12 h-12 rounded-full bg-brand-pink/20 flex items-center justify-center overflow-hidden flex-shrink-0">
+                  {t.profile_image ? (
+                    <img src={t.profile_image} alt={t.client_name} className="w-full h-full object-cover" />
+                  ) : (
+                    <span className="text-brand-dark font-bold text-lg">{t.client_name.charAt(0)}</span>
+                  )}
+                </div>
+                <div>
+                  <h4 className="font-serif text-lg text-brand-dark">{t.client_name}</h4>
+                  <p className="text-xs uppercase tracking-widest text-brand-muted">{t.role}</p>
+                </div>
+              </div>
+
+              {/* Star rating at the bottom */}
+              <div className="flex gap-1">
+                {[...Array(5)].map((_, idx) => (
+                  <Star
+                    key={idx}
+                    size={16}
+                    className={idx < t.rating ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}
+                  />
+                ))}
               </div>
             </motion.div>
           ))}

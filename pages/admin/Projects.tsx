@@ -13,6 +13,7 @@ type Project = {
     solution: string;
     cover_image: string;
     images: string[];
+    project_url: string;
     client_industry: string;
     seo_keywords: string[];
     created_at: string;
@@ -155,30 +156,55 @@ const ProjectForm = ({ mode, initialData, onCancel, onSuccess }: { mode: 'create
 
         setUploading(true);
         try {
-            const file = e.target.files[0];
-            if (!file.type.startsWith('image/')) throw new Error('Not an image file');
+            if (field === 'cover_image') {
+                // Single image upload for cover
+                const file = e.target.files[0];
+                if (!file.type.startsWith('image/')) throw new Error('Not an image file');
 
-            // Convert to base64
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                const base64String = reader.result as string;
-
-                if (field === 'cover_image') {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    const base64String = reader.result as string;
                     setValue('cover_image', base64String);
                     setCoverPreview(base64String);
-                } else {
-                    const currentImages = watch('images') || [];
-                    setValue('images', [...currentImages, base64String]);
-                }
-                setUploading(false);
-            };
+                    setUploading(false);
+                };
 
-            reader.onerror = () => {
-                alert('Failed to read image file');
-                setUploading(false);
-            };
+                reader.onerror = () => {
+                    alert('Failed to read image file');
+                    setUploading(false);
+                };
 
-            reader.readAsDataURL(file);
+                reader.readAsDataURL(file);
+            } else {
+                // Multiple images upload for gallery
+                const files = Array.from(e.target.files) as File[];
+                const currentImages = watch('images') || [];
+                let processedCount = 0;
+
+                files.forEach((file: File) => {
+                    if (!file.type.startsWith('image/')) {
+                        processedCount++;
+                        if (processedCount === files.length) setUploading(false);
+                        return;
+                    }
+
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                        const base64String = reader.result as string;
+                        const updatedImages = [...currentImages, base64String];
+                        setValue('images', updatedImages);
+                        processedCount++;
+                        if (processedCount === files.length) setUploading(false);
+                    };
+
+                    reader.onerror = () => {
+                        processedCount++;
+                        if (processedCount === files.length) setUploading(false);
+                    };
+
+                    reader.readAsDataURL(file);
+                });
+            }
         } catch (error: any) {
             alert('Upload failed: ' + error.message);
             setUploading(false);
@@ -247,6 +273,48 @@ const ProjectForm = ({ mode, initialData, onCancel, onSuccess }: { mode: 'create
                     <div>
                         <label className="block text-sm font-medium text-gray-700 mb-1">Solution</label>
                         <textarea {...register('solution')} rows={4} className="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-[#E89BA7]" placeholder="How we solved it..." />
+                    </div>
+                </div>
+
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Project URL (Optional)</label>
+                    <input {...register('project_url')} className="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-[#E89BA7]" placeholder="https://example.com" />
+                    <p className="text-xs text-gray-500 mt-1">Live website URL or project link</p>
+                </div>
+
+                {/* Additional Images */}
+                <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Additional Images (Gallery)</label>
+                    <div className="border-2 border-dashed border-gray-300 rounded-xl p-4 bg-gray-50">
+                        <input
+                            type="file"
+                            accept="image/*"
+                            multiple
+                            onChange={(e) => handleImageUpload(e, 'images')}
+                            className="w-full cursor-pointer"
+                        />
+                        <p className="text-xs text-gray-500 mt-2">Upload multiple images to showcase in project detail page</p>
+
+                        {/* Preview uploaded images */}
+                        {watch('images') && watch('images')!.length > 0 && (
+                            <div className="grid grid-cols-3 gap-2 mt-4">
+                                {watch('images')!.map((img, idx) => (
+                                    <div key={idx} className="relative group">
+                                        <img src={img} alt={`Gallery ${idx + 1}`} className="w-full h-24 object-cover rounded" />
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                const currentImages = watch('images') || [];
+                                                setValue('images', currentImages.filter((_, i) => i !== idx));
+                                            }}
+                                            className="absolute top-1 right-1 bg-red-500 text-white rounded-full p-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                                        >
+                                            <X size={12} />
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
                 </div>
 

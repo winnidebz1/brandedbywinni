@@ -78,7 +78,7 @@ const Portfolio: React.FC = () => {
                 transition={{ delay: index * 0.1, duration: 0.6 }}
                 className={`${index % 2 === 0 ? 'md:mt-0' : 'md:mt-24'}`}
               >
-                <div className="group relative overflow-hidden rounded-lg cursor-pointer block">
+                <Link to={`/project/${project.slug}`} className="group relative overflow-hidden rounded-lg cursor-pointer block">
                   <div className="aspect-[4/5] md:aspect-[3/4] overflow-hidden bg-gray-200">
                     <img
                       src={project.cover_image || 'https://picsum.photos/800/600'}
@@ -97,7 +97,7 @@ const Portfolio: React.FC = () => {
                     <p className="text-brand-pink text-xs uppercase tracking-widest mb-2">{project.category}</p>
                     <h3 className="font-serif text-3xl text-white">{project.title}</h3>
                   </div>
-                </div>
+                </Link>
               </motion.div>
             ))}
           </div>
@@ -126,7 +126,7 @@ const Portfolio: React.FC = () => {
                 transition={{ delay: index * 0.1, duration: 0.6 }}
                 className={`${index % 2 === 0 ? 'md:mt-0' : 'md:mt-24'}`}
               >
-                <div className="group relative overflow-hidden rounded-lg cursor-pointer block">
+                <Link to={`/project/${project.slug}`} className="group relative overflow-hidden rounded-lg cursor-pointer block">
                   <div className="aspect-[4/5] md:aspect-[3/4] overflow-hidden bg-gray-200">
                     <img
                       src={project.cover_image || 'https://picsum.photos/800/600'}
@@ -145,7 +145,7 @@ const Portfolio: React.FC = () => {
                     <p className="text-brand-pink text-xs uppercase tracking-widest mb-2">{project.category}</p>
                     <h3 className="font-serif text-3xl text-white">{project.title}</h3>
                   </div>
-                </div>
+                </Link>
               </motion.div>
             ))}
           </div>

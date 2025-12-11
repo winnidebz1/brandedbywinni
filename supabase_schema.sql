@@ -26,6 +26,7 @@ create table if not exists public.projects (
   solution text,
   cover_image text,
   images text[], -- Array of image URLs
+  project_url text, -- Live project URL
   seo_keywords text[],
   client_industry text
 );
@@ -37,7 +38,8 @@ create table if not exists public.testimonials (
   client_name text not null,
   role text,
   content text not null,
-  rating integer default 5
+  rating integer default 5,
+  profile_image text -- Profile picture (base64 or URL)
 );
 
 -- 2. Enable Row Level Security (RLS)

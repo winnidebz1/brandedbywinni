@@ -8,6 +8,7 @@ type Testimonial = {
     role: string;
     content: string;
     rating: number;
+    profile_image?: string;
 };
 
 const Testimonials = () => {
@@ -115,6 +116,36 @@ const Testimonials = () => {
                             >
                                 {[1, 2, 3, 4, 5].map(r => <option key={r} value={r}>{r} Stars</option>)}
                             </select>
+                        </div>
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Profile Picture (Optional)</label>
+                            <div className="flex items-center gap-4">
+                                <div className="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden border-2 border-gray-200">
+                                    {formData.profile_image ? (
+                                        <img src={formData.profile_image} alt="Profile" className="w-full h-full object-cover" />
+                                    ) : (
+                                        <span className="text-gray-400 text-2xl">{formData.client_name?.charAt(0) || '?'}</span>
+                                    )}
+                                </div>
+                                <div className="flex-1">
+                                    <input
+                                        type="file"
+                                        accept="image/*"
+                                        onChange={(e) => {
+                                            const file = e.target.files?.[0];
+                                            if (file) {
+                                                const reader = new FileReader();
+                                                reader.onloadend = () => {
+                                                    setFormData({ ...formData, profile_image: reader.result as string });
+                                                };
+                                                reader.readAsDataURL(file);
+                                            }
+                                        }}
+                                        className="w-full text-sm"
+                                    />
+                                    <p className="text-xs text-gray-500 mt-1">Upload a small profile photo</p>
+                                </div>
+                            </div>
                         </div>
                         <div className="flex justify-end pt-4">
                             <button type="submit" className="bg-[#4A3B40] text-[#FAF9F6] px-6 py-2 rounded-lg font-medium hover:opacity-90 flex items-center">
