@@ -1,5 +1,5 @@
 
-const CACHE_NAME = 'winni-admin-v2'; // Bump version to force update
+const CACHE_NAME = 'winni-admin-v3'; // Bump version to force update
 const ASSETS_TO_CACHE = [
     '/',
     '/index.html',
@@ -39,7 +39,6 @@ self.addEventListener('fetch', (event) => {
         event.respondWith(
             fetch(event.request)
                 .catch(() => {
-                    // If network fails (Offline), return the Cached App Shell (index.html)
                     return caches.match('/index.html');
                 })
         );
@@ -47,18 +46,26 @@ self.addEventListener('fetch', (event) => {
     }
 
     // 2. Handle Assets (CSS, JS, Images) -> Stale-While-Revalidate
-    if (event.request.method !== 'GET') return;
+    // Allow caching specific external CDNs (Tailwind, Fonts)
     const url = new URL(event.request.url);
+    const isExternalAllowed =
+        url.hostname.includes('cdn.tailwindcss.com') ||
+        url.hostname.includes('fonts.googleapis.com') ||
+        url.hostname.includes('fonts.gstatic.com') ||
+        url.hostname.includes('aistudiocdn.com'); // internal CDN
 
-    // Skip external stuff usually, but cache Supabase/CDN assets if needed (optional)
-    // For now restrict to origin
-    if (!url.origin.includes(self.location.origin)) return;
+    if (event.request.method !== 'GET') return;
+
+    // If external and NOT allowed, skip
+    if (!url.origin.includes(self.location.origin) && !isExternalAllowed) {
+        return;
+    }
 
     event.respondWith(
         caches.match(event.request).then((cachedResponse) => {
             return cachedResponse || fetch(event.request).then((response) => {
-                // Cache new assets for next time
-                if (response && response.status === 200 && response.type === 'basic') {
+                // Only cache valid responses
+                if (response && response.status === 200 && response.type === 'basic' || (response.type === 'cors' && isExternalAllowed)) {
                     const responseToCache = response.clone();
                     caches.open(CACHE_NAME).then((cache) => {
                         cache.put(event.request, responseToCache);
