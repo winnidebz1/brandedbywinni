@@ -74,6 +74,7 @@ const AboutPage: React.FC = () => {
                         initial={{ opacity: 0, x: -30 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.6 }}
+                        className="text-center md:text-left"
                     >
                         <h1 className="text-4xl md:text-6xl font-serif text-brand-dark mb-6 leading-tight">
                             <span className="text-brand-pink">Branded By Winni</span> is your digital growth partner.
@@ -81,7 +82,7 @@ const AboutPage: React.FC = () => {
                         <p className="text-xl text-brand-muted leading-relaxed mb-8">
                             We help visionaries and businesses translate their ideas into stunning digital reality. Our mission is to empower brands with websites that don't just look good—they convert, engage, and grow your business.
                         </p>
-                        <div className="flex gap-4">
+                        <div className="flex gap-4 justify-center md:justify-start">
                             <div className="px-6 py-4 bg-white rounded-xl shadow-sm border border-brand-pink/10">
                                 <div className="text-3xl font-bold text-brand-pink mb-1">5+</div>
                                 <div className="text-xs uppercase tracking-wider text-brand-muted">Years Exp</div>
