@@ -39,3 +39,17 @@ ALTER TABLE public.tracked_links ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Admin can manage outreach" ON public.outreach_logs FOR ALL USING (auth.role() = 'authenticated');
 CREATE POLICY "Admin can manage links" ON public.tracked_links FOR ALL USING (auth.role() = 'authenticated');
 CREATE POLICY "Public can view links" ON public.tracked_links FOR SELECT USING (true); -- If used publicly
+
+-- 6. Analytics Table (Site Visits)
+CREATE TABLE IF NOT EXISTS public.site_visits (
+  id uuid default gen_random_uuid() primary key,
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null,
+  page_path text,
+  country text,
+  referrer text,
+  device_type text
+);
+
+ALTER TABLE public.site_visits ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Public can insert visits" ON public.site_visits FOR INSERT WITH CHECK (true);
+CREATE POLICY "Admin can view visits" ON public.site_visits FOR SELECT USING (auth.role() = 'authenticated');

@@ -3,7 +3,7 @@ import { supabase } from '../../lib/supabase';
 import {
     Download, Mail, Phone, Calendar, Search, Filter,
     Instagram, Linkedin, Twitter, MoreHorizontal, X,
-    Send, MessageCircle, CheckCircle, Clock
+    Send, MessageCircle, CheckCircle, Clock, Trash2, Plus
 } from 'lucide-react';
 import Papa from 'papaparse';
 
@@ -14,9 +14,25 @@ const Leads = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [filterStatus, setFilterStatus] = useState('all');
 
+    // Outreach Logging State
+    const [isLogging, setIsLogging] = useState(false);
+    const [outreachNote, setOutreachNote] = useState('');
+    const [outreachType, setOutreachType] = useState('Email');
+    const [leadLogs, setLeadLogs] = useState<any[]>([]);
+
+    // New Lead Modal
+    const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+    const [newLead, setNewLead] = useState({ name: '', email: '', service: 'Branding', source: 'Manual' });
+
     useEffect(() => {
         fetchLeads();
     }, []);
+
+    useEffect(() => {
+        if (selectedLead) {
+            fetchLogs(selectedLead.id);
+        }
+    }, [selectedLead]);
 
     const fetchLeads = async () => {
         const { data } = await supabase
@@ -25,6 +41,31 @@ const Leads = () => {
             .order('created_at', { ascending: false });
         if (data) setLeads(data);
         setLoading(false);
+    };
+
+    const fetchLogs = async (leadId: string) => {
+        const { data } = await supabase
+            .from('outreach_logs')
+            .select('*')
+            .eq('lead_id', leadId)
+            .order('sent_at', { ascending: false });
+        if (data) setLeadLogs(data);
+    };
+
+    const handleCreateLead = async (e: React.FormEvent) => {
+        e.preventDefault();
+        const { error } = await supabase.from('leads').insert([{
+            ...newLead,
+            status: 'new',
+            created_at: new Date().toISOString()
+        }]);
+        if (!error) {
+            setIsAddModalOpen(false);
+            setNewLead({ name: '', email: '', service: 'Branding', source: 'Manual' });
+            fetchLeads();
+        } else {
+            alert('Error creating lead');
+        }
     };
 
     const handleExport = () => {
@@ -46,6 +87,37 @@ const Leads = () => {
             setSelectedLead({ ...selectedLead, status });
         }
         await supabase.from('leads').update({ status }).eq('id', id);
+    };
+
+    const handleDelete = async (id: string) => {
+        if (confirm('Delete this lead and all history?')) {
+            await supabase.from('leads').delete().eq('id', id);
+            if (selectedLead?.id === id) setSelectedLead(null);
+            fetchLeads();
+        }
+    };
+
+    const handleLogOutreach = async () => {
+        if (!outreachNote) return;
+
+        const { error } = await supabase.from('outreach_logs').insert([{
+            lead_id: selectedLead.id,
+            type: outreachType,
+            content: outreachNote,
+            sent_at: new Date().toISOString()
+        }]);
+
+        // Also update last_contact_date on lead
+        await supabase.from('leads').update({
+            last_contact_date: new Date().toISOString()
+        }).eq('id', selectedLead.id);
+
+        if (!error) {
+            setOutreachNote('');
+            setIsLogging(false);
+            fetchLogs(selectedLead.id);
+            fetchLeads(); // Update list for last contact date
+        }
     };
 
     const filteredLeads = leads.filter(lead => {
@@ -77,7 +149,10 @@ const Leads = () => {
                     <button onClick={handleExport} className="p-2 border border-gray-200 rounded-lg hover:bg-gray-50 text-gray-600">
                         <Download size={20} />
                     </button>
-                    <button className="bg-[#4A3B40] text-[#FAF9F6] px-4 py-2 rounded-lg font-medium hover:bg-[#644B52] transition-colors">
+                    <button
+                        onClick={() => setIsAddModalOpen(true)}
+                        className="bg-[#4A3B40] text-[#FAF9F6] px-4 py-2 rounded-lg font-medium hover:bg-[#644B52] transition-colors"
+                    >
                         + New Lead
                     </button>
                 </div>
@@ -90,8 +165,8 @@ const Leads = () => {
                         key={status}
                         onClick={() => setFilterStatus(status)}
                         className={`px-4 py-1.5 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${filterStatus === status
-                                ? 'bg-[#4A3B40] text-white'
-                                : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50'
+                            ? 'bg-[#4A3B40] text-white'
+                            : 'bg-white border border-gray-200 text-gray-600 hover:bg-gray-50'
                             }`}
                     >
                         {status.charAt(0).toUpperCase() + status.slice(1)}
@@ -101,7 +176,7 @@ const Leads = () => {
 
             {/* Table */}
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 flex-1 overflow-hidden flex flex-col">
-                <div className="overflow-auto flex-1">
+                <div className="overflow-auto flex-1 h-[500px]">
                     <table className="w-full text-left border-collapse">
                         <thead className="bg-[#FAF9F6] text-[#4A3B40] sticky top-0 z-10">
                             <tr>
@@ -110,7 +185,6 @@ const Leads = () => {
                                 <th className="px-6 py-4 font-bold text-sm">Status</th>
                                 <th className="px-6 py-4 font-bold text-sm">Source</th>
                                 <th className="px-6 py-4 font-bold text-sm">Last Contact</th>
-                                <th className="px-6 py-4 font-bold text-sm">Actions</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y divide-gray-100">
@@ -142,16 +216,11 @@ const Leads = () => {
                                     <td className="px-6 py-4 text-sm text-gray-400">
                                         {lead.last_contact_date ? new Date(lead.last_contact_date).toLocaleDateString() : 'Never'}
                                     </td>
-                                    <td className="px-6 py-4">
-                                        <button className="p-2 hover:bg-gray-100 rounded-full text-gray-400 hover:text-[#4A3B40]">
-                                            <MoreHorizontal size={16} />
-                                        </button>
-                                    </td>
                                 </tr>
                             ))}
                             {filteredLeads.length === 0 && !loading && (
                                 <tr>
-                                    <td colSpan={6} className="px-6 py-12 text-center text-gray-400">
+                                    <td colSpan={5} className="px-6 py-12 text-center text-gray-400">
                                         No leads found matching your filters.
                                     </td>
                                 </tr>
@@ -170,12 +239,21 @@ const Leads = () => {
                                 <h2 className="text-2xl font-bold font-serif text-[#4A3B40]">{selectedLead.name}</h2>
                                 <p className="text-gray-500 text-sm">{selectedLead.email}</p>
                             </div>
-                            <button
-                                onClick={() => setSelectedLead(null)}
-                                className="p-2 hover:bg-gray-100 rounded-full text-gray-400"
-                            >
-                                <X size={24} />
-                            </button>
+                            <div className="flex items-center space-x-2">
+                                <button
+                                    onClick={() => handleDelete(selectedLead.id)}
+                                    className="p-2 hover:bg-red-50 text-red-400 rounded-full"
+                                    title="Delete Lead"
+                                >
+                                    <Trash2 size={20} />
+                                </button>
+                                <button
+                                    onClick={() => setSelectedLead(null)}
+                                    className="p-2 hover:bg-gray-100 rounded-full text-gray-400"
+                                >
+                                    <X size={24} />
+                                </button>
+                            </div>
                         </div>
 
                         {/* Status Dropdown */}
@@ -202,47 +280,119 @@ const Leads = () => {
                         </div>
 
                         {/* Message */}
-                        <div className="bg-[#FAF9F6] p-4 rounded-xl mb-8">
-                            <h3 className="text-xs font-bold text-gray-400 uppercase mb-2">Original Message</h3>
-                            <p className="text-[#4A3B40] text-sm leading-relaxed whitespace-pre-wrap">{selectedLead.message}</p>
-                        </div>
+                        {selectedLead.message && (
+                            <div className="bg-[#FAF9F6] p-4 rounded-xl mb-8">
+                                <h3 className="text-xs font-bold text-gray-400 uppercase mb-2">Original Message</h3>
+                                <p className="text-[#4A3B40] text-sm leading-relaxed whitespace-pre-wrap">{selectedLead.message}</p>
+                            </div>
+                        )}
 
                         {/* Outreach Log Section */}
                         <div className="border-t border-gray-100 pt-6">
                             <h3 className="font-bold text-[#4A3B40] mb-4 flex items-center justify-between">
                                 <span>Outreach Log</span>
-                                <button className="text-xs bg-[#4A3B40] text-white px-3 py-1 rounded-full hover:bg-[#644B52]">
-                                    + Log
+                                <button
+                                    onClick={() => setIsLogging(!isLogging)}
+                                    className="text-xs bg-[#4A3B40] text-white px-3 py-1 rounded-full hover:bg-[#644B52]"
+                                >
+                                    + Log Interaction
                                 </button>
                             </h3>
 
-                            <div className="space-y-4">
-                                {/* Mock Log Entry */}
-                                <div className="flex gap-3">
-                                    <div className="mt-1">
-                                        <div className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-blue-600">
-                                            <Send size={14} />
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <p className="text-sm font-medium text-[#4A3B40]">Sent Intro Email</p>
-                                        <p className="text-xs text-gray-500">Template: General Inquiry Response</p>
-                                        <p className="text-[10px] text-gray-400 mt-1">Today at 10:42 AM</p>
+                            {isLogging && (
+                                <div className="bg-gray-50 p-4 rounded-lg mb-4 animate-fadeIn">
+                                    <select
+                                        className="w-full mb-3 text-sm border-gray-200 rounded-md py-1"
+                                        value={outreachType}
+                                        onChange={(e) => setOutreachType(e.target.value)}
+                                    >
+                                        <option>Email</option>
+                                        <option>DM</option>
+                                        <option>Call</option>
+                                        <option>Meeting</option>
+                                    </select>
+                                    <textarea
+                                        className="w-full border border-gray-200 rounded-lg p-2 text-sm mb-2"
+                                        rows={3}
+                                        placeholder="Notes about this interaction..."
+                                        value={outreachNote}
+                                        onChange={e => setOutreachNote(e.target.value)}
+                                    />
+                                    <div className="flex justify-end space-x-2">
+                                        <button onClick={() => setIsLogging(false)} className="text-xs px-3 py-1 text-gray-500">Cancel</button>
+                                        <button onClick={handleLogOutreach} className="text-xs px-3 py-1 bg-blue-600 text-white rounded-md">Save Log</button>
                                     </div>
                                 </div>
-                                <div className="flex gap-3 text-gray-400">
+                            )}
+
+                            <div className="space-y-4">
+                                {leadLogs.map((log) => (
+                                    <div key={log.id} className="flex gap-3 relative">
+                                        <div className="mt-1">
+                                            <div className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center text-blue-600">
+                                                {log.type === 'Email' ? <Mail size={14} /> :
+                                                    log.type === 'DM' ? <MessageCircle size={14} /> :
+                                                        <Phone size={14} />}
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <p className="text-sm font-medium text-[#4A3B40]">{log.type} Sent/Logged</p>
+                                            <p className="text-xs text-gray-500">{log.content}</p>
+                                            <p className="text-[10px] text-gray-400 mt-1">
+                                                {new Date(log.sent_at).toLocaleDateString()} at {new Date(log.sent_at).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                            </p>
+                                        </div>
+                                    </div>
+                                ))}
+                                <div className="flex gap-3 text-gray-400 opacity-70">
                                     <div className="mt-1">
                                         <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center text-gray-400">
-                                            <CheckCircle size={14} />
+                                            <Clock size={14} />
                                         </div>
                                     </div>
                                     <div>
-                                        <p className="text-sm font-medium">Inquiry Received</p>
+                                        <p className="text-sm font-medium">Inquiry Started</p>
                                         <p className="text-[10px] mt-1">{new Date(selectedLead.created_at).toLocaleDateString()}</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Add Lead Modal */}
+            {isAddModalOpen && (
+                <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+                    <div className="bg-white w-full max-w-md rounded-2xl p-6">
+                        <div className="flex justify-between items-center mb-4">
+                            <h3 className="text-xl font-bold text-[#4A3B40]">Add New Lead</h3>
+                            <button onClick={() => setIsAddModalOpen(false)}><X size={24} /></button>
+                        </div>
+                        <form onSubmit={handleCreateLead} className="space-y-4">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
+                                <input className="w-full border rounded-lg p-2" required value={newLead.name} onChange={e => setNewLead({ ...newLead, name: e.target.value })} />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                                <input className="w-full border rounded-lg p-2" type="email" required value={newLead.email} onChange={e => setNewLead({ ...newLead, email: e.target.value })} />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Service</label>
+                                <select className="w-full border rounded-lg p-2" value={newLead.service} onChange={e => setNewLead({ ...newLead, service: e.target.value })}>
+                                    <option>Branding</option>
+                                    <option>Web Design</option>
+                                    <option>SEO</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Source</label>
+                                <input className="w-full border rounded-lg p-2" value={newLead.source} onChange={e => setNewLead({ ...newLead, source: e.target.value })} />
+                            </div>
+                            <button type="submit" className="w-full bg-[#4A3B40] text-white py-3 rounded-xl font-bold">Add Lead</button>
+                        </form>
                     </div>
                 </div>
             )}
