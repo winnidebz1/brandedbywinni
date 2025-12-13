@@ -21,6 +21,10 @@ const Login = React.lazy(() => import('./pages/admin/Login'));
 const Dashboard = React.lazy(() => import('./pages/admin/Dashboard'));
 const Projects = React.lazy(() => import('./pages/admin/Projects'));
 const Leads = React.lazy(() => import('./pages/admin/Leads'));
+const Clients = React.lazy(() => import('./pages/admin/Clients'));
+const Analytics = React.lazy(() => import('./pages/admin/Analytics'));
+const Content = React.lazy(() => import('./pages/admin/Content'));
+const Settings = React.lazy(() => import('./pages/admin/Settings'));
 const Testimonials = React.lazy(() => import('./pages/admin/Testimonials'));
 const AdminLayout = React.lazy(() => import('./components/admin/AdminLayout'));
 const ProtectedRoute = React.lazy(() => import('./components/admin/ProtectedRoute'));
@@ -84,6 +88,10 @@ const App: React.FC = () => {
                 <Route index element={<Dashboard />} />
                 <Route path="projects" element={<Projects />} />
                 <Route path="leads" element={<Leads />} />
+                <Route path="clients" element={<Clients />} />
+                <Route path="analytics" element={<Analytics />} />
+                <Route path="content" element={<Content />} />
+                <Route path="settings" element={<Settings />} />
                 <Route path="testimonials" element={<Testimonials />} />
               </Route>
             </Route>

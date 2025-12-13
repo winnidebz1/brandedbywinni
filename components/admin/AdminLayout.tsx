@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
-import { LayoutDashboard, FolderOpen, Users, LogOut, Menu, X, MessageSquare, BarChart } from 'lucide-react';
+import { LayoutDashboard, FolderOpen, Users, LogOut, Menu, X, MessageSquare, BarChart, Link2, Settings } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 
 const AdminLayout = () => {
@@ -46,9 +46,12 @@ const AdminLayout = () => {
 
     const navItems = [
         { name: 'Dashboard', path: '/admin', icon: <LayoutDashboard size={20} /> },
+        { name: 'Leads & Outreach', path: '/admin/leads', icon: <MessageSquare size={20} /> },
+        { name: 'Clients', path: '/admin/clients', icon: <Users size={20} /> },
         { name: 'Projects', path: '/admin/projects', icon: <FolderOpen size={20} /> },
-        { name: 'Testimonials', path: '/admin/testimonials', icon: <MessageSquare size={20} /> },
-        { name: 'Leads', path: '/admin/leads', icon: <Users size={20} /> },
+        { name: 'Analytics', path: '/admin/analytics', icon: <BarChart size={20} /> },
+        { name: 'Content & Links', path: '/admin/content', icon: <Link2 size={20} /> },
+        { name: 'Settings', path: '/admin/settings', icon: <Settings size={20} /> },
     ];
 
     return (
