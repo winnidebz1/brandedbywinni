@@ -9,6 +9,7 @@ type Testimonial = {
   role: string;
   content: string;
   rating: number;
+  profile_image?: string;
 };
 
 const Testimonials: React.FC = () => {
@@ -71,7 +72,11 @@ const Testimonials: React.FC = () => {
                   <div className="mb-6"></div>
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-12 h-12 rounded-full bg-brand-pink/20 flex items-center justify-center overflow-hidden flex-shrink-0">
-                      <span className="text-brand-dark font-bold text-lg">{t.client_name.charAt(0)}</span>
+                      {t.profile_image ? (
+                        <img src={t.profile_image} alt={t.client_name} className="w-full h-full object-cover" loading="lazy" />
+                      ) : (
+                        <span className="text-brand-dark font-bold text-lg">{t.client_name.charAt(0)}</span>
+                      )}
                     </div>
                     <div>
                       <h4 className="font-serif text-lg text-brand-dark">{t.client_name}</h4>
