@@ -1,4 +1,3 @@
-```javascript
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
 import { useNavigate } from 'react-router-dom';
@@ -23,12 +22,12 @@ const Dashboard = () => {
     const loadData = async () => {
         setLoading(true);
         const now = new Date();
-        const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay())); 
-        const startOfToday = new Date(new Date().setHours(0,0,0,0));
+        const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay()));
+        const startOfToday = new Date(new Date().setHours(0, 0, 0, 0));
 
         // 1. Leads Stats
         const { count: totalLeads } = await supabase.from('leads').select('*', { count: 'exact', head: true });
-        
+
         const { count: newLeads } = await supabase
             .from('leads')
             .select('*', { count: 'exact', head: true })
@@ -61,9 +60,9 @@ const Dashboard = () => {
 
             // Helper to sort and map
             const process = (obj: any) => Object.entries(obj)
-                .sort(([,a]:any, [,b]:any) => b - a)
+                .sort(([, a]: any, [, b]: any) => b - a)
                 .slice(0, 4)
-                .map(([name, count]: any) => ({ name, count, percent: Math.round((count/visitsTodayParams)*100) }));
+                .map(([name, count]: any) => ({ name, count, percent: Math.round((count / visitsTodayParams) * 100) }));
 
             setTopCountries(process(countryCount));
             setTopSources(process(sourceCount));
@@ -92,15 +91,15 @@ const Dashboard = () => {
     }, []);
 
     const QuickActionFunc = (action: string) => {
-        switch(action) {
+        switch (action) {
             case 'Add Lead':
-                navigate('/admin/leads'); 
+                navigate('/admin/leads');
                 break;
             case 'Log Outreach':
                 navigate('/admin/leads'); // In Leads page, user uses the side panel
                 break;
             case 'Generate Report':
-                window.print(); 
+                window.print();
                 break;
         }
     };
@@ -165,7 +164,7 @@ const Dashboard = () => {
                             {topCountries.length === 0 && <p className="text-sm text-gray-400 italic">No data available yet</p>}
                         </div>
                     </div>
-                    
+
                     {/* Top Sources */}
                     <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                         <h3 className="font-bold text-[#4A3B40] mb-4 text-sm uppercase tracking-wider">Daily Top Sources</h3>
@@ -214,7 +213,7 @@ const Dashboard = () => {
 const StatCard = ({ title, value, icon, color }: any) => (
     <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
         <div className="flex justify-between items-start mb-4">
-            <div className={`p - 3 rounded - xl bg - ${ color } -50 text - ${ color } -600`}>
+            <div className={`p-3 rounded-xl bg-${color}-50 text-${color}-600`}>
                 {icon}
             </div>
         </div>
@@ -233,4 +232,3 @@ const ActionBtn = ({ icon, label, onClick }: any) => (
 );
 
 export default Dashboard;
-```
