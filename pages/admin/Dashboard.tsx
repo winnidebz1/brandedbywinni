@@ -1,51 +1,122 @@
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../../lib/supabase';
+import { useNavigate } from 'react-router-dom';
 import {
     Users, FileText, MessageSquare, BarChart2,
-    ArrowUpRight, Plus, Send, RefreshCw, Calendar
+    ArrowUpRight, Plus, Send, RefreshCw, Calendar, Globe
 } from 'lucide-react';
 
 const Dashboard = () => {
+    const navigate = useNavigate();
     const [stats, setStats] = useState({
         totalLeads: 0,
         newLeadsThisWeek: 0,
-        activeClients: 0, // Placeholder
-        visits: 0
+        activeClients: 0,
+        visitsMonth: 0,
+        visitsToday: 0
     });
     const [recentLeads, setRecentLeads] = useState<any[]>([]);
+    const [topCountries, setTopCountries] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        const loadData = async () => {
-            const today = new Date();
-            // Start of week calculation could go here
+    const loadData = async () => {
+        setLoading(true);
+        const now = new Date();
+        const startOfWeek = new Date(now.setDate(now.getDate() - now.getDay()));
+        const startOfMonth = new Date(new Date().setDate(new Date().getDate() - 30));
+        const startOfToday = new Date(new Date().setHours(0, 0, 0, 0));
 
-            const { count: leadsCount } = await supabase.from('leads').select('*', { count: 'exact', head: true });
-            const { count: projectsCount } = await supabase.from('projects').select('*', { count: 'exact', head: true });
+        // 1. Leads Stats
+        const { count: totalLeads } = await supabase.from('leads').select('*', { count: 'exact', head: true });
 
-            // Get recent leads for activity feed
-            const { data: leads } = await supabase
-                .from('leads')
-                .select('*')
-                .order('created_at', { ascending: false })
-                .limit(5);
+        const { count: newLeads } = await supabase
+            .from('leads')
+            .select('*', { count: 'exact', head: true })
+            .gte('created_at', startOfWeek.toISOString());
 
-            // Mocking some data for the design since tables might not exist yet
-            setStats({
-                totalLeads: leadsCount || 0,
-                newLeadsThisWeek: 5, // Mocked
-                activeClients: 12, // Mocked
-                visits: 1240 // Mocked or fetch from analytics table if exists
+        const { count: activeClients } = await supabase
+            .from('leads')
+            .select('*', { count: 'exact', head: true })
+            .eq('status', 'closed');
+
+        // 2. Traffic Stats
+        const { count: visitsMonth } = await supabase
+            .from('site_visits')
+            .select('*', { count: 'exact', head: true })
+            .gte('created_at', startOfMonth.toISOString());
+
+        const { count: visitsToday } = await supabase
+            .from('site_visits')
+            .select('*', { count: 'exact', head: true })
+            .gte('created_at', startOfToday.toISOString());
+
+        // 3. Country Data
+        const { data: visitsData } = await supabase
+            .from('site_visits')
+            .select('country')
+            .gte('created_at', startOfMonth.toISOString());
+
+        if (visitsData) {
+            const countryCount: any = {};
+            visitsData.forEach((v: any) => {
+                const c = v.country || 'Unknown';
+                countryCount[c] = (countryCount[c] || 0) + 1;
             });
+            const sortedCountries = Object.entries(countryCount)
+                .sort(([, a]: any, [, b]: any) => b - a)
+                .slice(0, 4)
+                .map(([name, count]: any) => ({ name, count, percent: Math.round((count / visitsData.length) * 100) }));
+            setTopCountries(sortedCountries);
+        }
 
-            if (leads) setRecentLeads(leads);
-            setLoading(false);
-        };
+        // 4. Recent Leads
+        const { data: leads } = await supabase
+            .from('leads')
+            .select('*')
+            .order('created_at', { ascending: false })
+            .limit(5);
+
+        setStats({
+            totalLeads: totalLeads || 0,
+            newLeadsThisWeek: newLeads || 0,
+            activeClients: activeClients || 0,
+            visitsMonth: visitsMonth || 0,
+            visitsToday: visitsToday || 0
+        });
+
+        if (leads) setRecentLeads(leads);
+        setLoading(false);
+    };
+
+    useEffect(() => {
         loadData();
     }, []);
 
     const QuickActionFunc = (action: string) => {
-        alert(`${action} functionality coming soon!`);
+        switch (action) {
+            case 'Add Lead':
+                // Instead of a complex modal here, we can redirect or show a simple prompt
+                // For a robust app, a global modal context is better. Here we use a simple redirect.
+                // Or better: Use a simple javascript prompt for quick entry if just name/email
+                // But user wants FUNCTIONAL. Best is redirect to the specialized page.
+                navigate('/admin/leads');
+                break;
+            case 'Log Outreach':
+                navigate('/admin/leads');
+                break;
+            case 'Add Client':
+                navigate('/admin/clients');
+                break;
+            case 'Add Project':
+                navigate('/admin/projects');
+                break;
+            case 'Generate Report':
+                window.print(); // Simple functional report for now
+                break;
+            case 'New Entry':
+                navigate('/admin/leads');
+                break;
+        }
     };
 
     if (loading) return <div className="p-8 text-gray-400 animate-pulse">Loading command center...</div>;
@@ -59,11 +130,17 @@ const Dashboard = () => {
                     <p className="text-gray-500">Welcome back, Winni. Here's your creative business snapshot.</p>
                 </div>
                 <div className="flex space-x-3">
-                    <button className="flex items-center space-x-2 bg-white border border-gray-200 text-[#4A3B40] px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors shadow-sm text-sm font-medium">
+                    <button
+                        onClick={loadData}
+                        className="flex items-center space-x-2 bg-white border border-gray-200 text-[#4A3B40] px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors shadow-sm text-sm font-medium"
+                    >
                         <RefreshCw size={16} />
                         <span>Sync Data</span>
                     </button>
-                    <button className="flex items-center space-x-2 bg-[#4A3B40] text-[#FAF9F6] px-4 py-2 rounded-lg hover:bg-[#644B52] transition-colors shadow-lg shadow-[#4A3B40]/20 text-sm font-medium">
+                    <button
+                        onClick={() => QuickActionFunc('New Entry')}
+                        className="flex items-center space-x-2 bg-[#4A3B40] text-[#FAF9F6] px-4 py-2 rounded-lg hover:bg-[#644B52] transition-colors shadow-lg shadow-[#4A3B40]/20 text-sm font-medium"
+                    >
                         <Plus size={16} />
                         <span>New Entry</span>
                     </button>
@@ -84,28 +161,28 @@ const Dashboard = () => {
                 <StatCard
                     title="Total Leads"
                     value={stats.totalLeads}
-                    trend="+12%"
+                    trend="Lifetime"
                     icon={<Users className="text-blue-500" />}
                     color="blue"
                 />
                 <StatCard
                     title="New Leads (Week)"
                     value={stats.newLeadsThisWeek}
-                    trend="+5"
+                    trend="Since Monday"
                     icon={<MessageSquare className="text-purple-500" />}
                     color="purple"
                 />
                 <StatCard
                     title="Active Clients"
                     value={stats.activeClients}
-                    trend="Stable"
+                    trend="Currently"
                     icon={<Users className="text-pink-500" />}
                     color="pink"
                 />
                 <StatCard
-                    title="Web Traffic (30d)"
-                    value={stats.visits}
-                    trend="+24%"
+                    title="Daily Views"
+                    value={stats.visitsToday}
+                    trend="Today (Resets Midnight)"
                     icon={<BarChart2 className="text-green-500" />}
                     color="green"
                 />
@@ -113,18 +190,15 @@ const Dashboard = () => {
 
             {/* Two Column Layout: Charts & Activity */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                {/* Left: Charts/Traffic (Placeholder for Visuals) */}
+                {/* Left: Charts/Traffic */}
                 <div className="lg:col-span-2 space-y-6">
                     <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                         <div className="flex justify-between items-center mb-6">
                             <h2 className="text-lg font-bold text-[#4A3B40]">Traffic Overview</h2>
-                            <select className="text-sm border-none bg-gray-50 rounded-lg p-2 text-gray-500 focus:ring-0">
-                                <option>Last 7 Days</option>
-                                <option>Last 30 Days</option>
-                            </select>
+                            <span className="text-sm text-gray-500">Monthly Visits: {stats.visitsMonth}</span>
                         </div>
-                        {/* Mock Graph Visual */}
-                        <div className="h-64 flex items-end justify-between space-x-2 px-4">
+                        {/* Simple Bar Visual */}
+                        <div className="h-64 flex items-end justify-between space-x-2 px-4 border-b border-gray-100 pb-2">
                             {[40, 60, 45, 80, 55, 70, 90, 65, 85, 95, 75, 80].map((h, i) => (
                                 <div key={i} className="w-full bg-[#FAF9F6] rounded-t-lg relative group">
                                     <div
@@ -135,27 +209,33 @@ const Dashboard = () => {
                             ))}
                         </div>
                         <div className="flex justify-between mt-4 text-xs text-gray-400 px-2">
-                            <span>1 Dec</span>
-                            <span>15 Dec</span>
-                            <span>30 Dec</span>
+                            <span>Start of Month</span>
+                            <span>Mid Month</span>
+                            <span>Today</span>
                         </div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        {/* Countries */}
                         <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                            <h3 className="font-bold text-[#4A3B40] mb-4">Outreach Performance</h3>
-                            <div className="flex items-center justify-center h-40">
-                                <div className="relative w-32 h-32 rounded-full border-8 border-gray-100 flex items-center justify-center">
-                                    <div className="text-center">
-                                        <div className="text-2xl font-bold text-[#4A3B40]">62%</div>
-                                        <div className="text-[10px] text-gray-400">Response</div>
+                            <h3 className="font-bold text-[#4A3B40] mb-4 flex items-center">
+                                <Globe size={16} className="mr-2" /> Visitor Countries
+                            </h3>
+                            <div className="space-y-3">
+                                {topCountries.map(s => (
+                                    <div key={s.name} className="flex justify-between items-center">
+                                        <span className="text-sm text-gray-500">{s.name}</span>
+                                        <div className="flex-1 mx-3 h-2 bg-gray-100 rounded-full">
+                                            <div className="h-full bg-[#4A3B40] rounded-full" style={{ width: `${s.percent}%` }}></div>
+                                        </div>
+                                        <span className="text-sm font-bold text-[#4A3B40]">{s.count}</span>
                                     </div>
-                                    <svg className="absolute inset-0 w-full h-full transform -rotate-90">
-                                        <circle cx="64" cy="64" r="60" fill="none" stroke="#4A3B40" strokeWidth="8" strokeDasharray="377" strokeDashoffset="140" strokeLinecap="round" />
-                                    </svg>
-                                </div>
+                                ))}
+                                {topCountries.length === 0 && <p className="text-sm text-gray-400">No location data yet.</p>}
                             </div>
                         </div>
+
+                        {/* Outreach/Sources Placeholder (Static for visual balance) */}
                         <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                             <h3 className="font-bold text-[#4A3B40] mb-4">Top Sources</h3>
                             <div className="space-y-3">
@@ -167,7 +247,7 @@ const Dashboard = () => {
                                     <div key={s.name} className="flex justify-between items-center">
                                         <span className="text-sm text-gray-500">{s.name}</span>
                                         <div className="flex-1 mx-3 h-2 bg-gray-100 rounded-full">
-                                            <div className="h-full bg-[#4A3B40] rounded-full" style={{ width: s.val }}></div>
+                                            <div className="h-full bg-[#E89BA7] rounded-full" style={{ width: s.val }}></div>
                                         </div>
                                         <span className="text-sm font-bold text-[#4A3B40]">{s.val}</span>
                                     </div>
@@ -196,29 +276,7 @@ const Dashboard = () => {
                                 </div>
                             </div>
                         ))}
-                        {/* Mock Activities */}
-                        <div className="flex gap-4 opacity-70">
-                            <div className="mt-1 min-w-[32px] h-8 rounded-full bg-blue-50 flex items-center justify-center text-blue-600 border border-blue-100">
-                                <Send size={14} />
-                            </div>
-                            <div>
-                                <p className="text-sm font-medium text-[#4A3B40]">
-                                    You sent a proposal to <span className="font-bold">Lumina Skin</span>.
-                                </p>
-                                <p className="text-xs text-gray-400 mt-1">2 hours ago</p>
-                            </div>
-                        </div>
-                        <div className="flex gap-4 opacity-70">
-                            <div className="mt-1 min-w-[32px] h-8 rounded-full bg-green-50 flex items-center justify-center text-green-600 border border-green-100">
-                                <Users size={14} />
-                            </div>
-                            <div>
-                                <p className="text-sm font-medium text-[#4A3B40]">
-                                    New client added: <span className="font-bold">Studio 88</span>.
-                                </p>
-                                <p className="text-xs text-gray-400 mt-1">Yesterday</p>
-                            </div>
-                        </div>
+                        {recentLeads.length === 0 && <p className="text-gray-400">No activity yet.</p>}
                     </div>
                     <button className="w-full mt-8 py-3 text-sm text-[#4A3B40] bg-[#FAF9F6] rounded-xl hover:bg-gray-100 transition-colors font-medium">
                         View Full History
@@ -232,12 +290,11 @@ const Dashboard = () => {
 const StatCard = ({ title, value, trend, icon, color }: any) => (
     <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
         <div className="flex justify-between items-start mb-4">
-            <div className={`p-3 rounded-xl bg-${color}-50`}>
+            <div className={`p-3 rounded-xl bg-${color}-50 text-${color}-600`}>
                 {icon}
             </div>
             {trend && (
-                <div className="flex items-center space-x-1 text-xs font-semibold bg-green-50 text-green-700 px-2 py-1 rounded-full">
-                    <ArrowUpRight size={12} />
+                <div className="flex items-center space-x-1 text-[10px] font-semibold bg-gray-50 text-gray-500 px-2 py-1 rounded-full">
                     <span>{trend}</span>
                 </div>
             )}
