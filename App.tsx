@@ -26,6 +26,8 @@ const Analytics = React.lazy(() => import('./pages/admin/Analytics'));
 const Content = React.lazy(() => import('./pages/admin/Content'));
 const Settings = React.lazy(() => import('./pages/admin/Settings'));
 const Testimonials = React.lazy(() => import('./pages/admin/Testimonials'));
+const Reviews = React.lazy(() => import('./pages/admin/Reviews'));
+const ReviewsPublic = React.lazy(() => import('./pages/ReviewsPublic'));
 const AdminLayout = React.lazy(() => import('./components/admin/AdminLayout'));
 const ProtectedRoute = React.lazy(() => import('./components/admin/ProtectedRoute'));
 const TestConnection = React.lazy(() => import('./pages/admin/TestConnection'));
