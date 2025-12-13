@@ -22,7 +22,7 @@ const Leads = () => {
 
     // New Lead Modal
     const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-    const [newLead, setNewLead] = useState({ name: '', email: '', service: 'Branding', source: 'Manual' });
+    const [newLead, setNewLead] = useState({ name: '', email: '', service: 'Branding', source: 'Outbound' });
 
     useEffect(() => {
         fetchLeads();

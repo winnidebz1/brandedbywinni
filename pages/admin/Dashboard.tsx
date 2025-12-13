@@ -17,6 +17,7 @@ const Dashboard = () => {
     });
     const [recentLeads, setRecentLeads] = useState<any[]>([]);
     const [topCountries, setTopCountries] = useState<any[]>([]);
+    const [topSources, setTopSources] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
 
     const loadData = async () => {
@@ -45,28 +46,42 @@ const Dashboard = () => {
             .select('*', { count: 'exact', head: true })
             .gte('created_at', startOfMonth.toISOString());
 
-        const { count: visitsToday } = await supabase
+        // We need the data for today to calculate countries/sources
+        const { data: visitsTodayData } = await supabase
             .from('site_visits')
-            .select('*', { count: 'exact', head: true })
+            .select('country, referrer')
             .gte('created_at', startOfToday.toISOString());
 
-        // 3. Country Data
-        const { data: visitsData } = await supabase
-            .from('site_visits')
-            .select('country')
-            .gte('created_at', startOfMonth.toISOString());
+        const visitsTodayParams = visitsTodayData ? visitsTodayData.length : 0;
 
-        if (visitsData) {
+        // 3. Process Daily Analytics (Countries & Sources)
+        if (visitsTodayData) {
+            // Countries
             const countryCount: any = {};
-            visitsData.forEach((v: any) => {
+            // Sources
+            const sourceCount: any = {};
+
+            visitsTodayData.forEach((v: any) => {
                 const c = v.country || 'Unknown';
                 countryCount[c] = (countryCount[c] || 0) + 1;
+
+                const s = v.referrer || 'Direct';
+                sourceCount[s] = (sourceCount[s] || 0) + 1;
             });
+
+            // Sort & Map Countries
             const sortedCountries = Object.entries(countryCount)
                 .sort(([, a]: any, [, b]: any) => b - a)
                 .slice(0, 4)
-                .map(([name, count]: any) => ({ name, count, percent: Math.round((count / visitsData.length) * 100) }));
+                .map(([name, count]: any) => ({ name, count, percent: Math.round((count / visitsTodayParams) * 100) }));
             setTopCountries(sortedCountries);
+
+            // Sort & Map Sources
+            const sortedSources = Object.entries(sourceCount)
+                .sort(([, a]: any, [, b]: any) => b - a)
+                .slice(0, 4)
+                .map(([name, count]: any) => ({ name, count, percent: Math.round((count / visitsTodayParams) * 100) }));
+            setTopSources(sortedSources);
         }
 
         // 4. Recent Leads
@@ -81,7 +96,7 @@ const Dashboard = () => {
             newLeadsThisWeek: newLeads || 0,
             activeClients: activeClients || 0,
             visitsMonth: visitsMonth || 0,
-            visitsToday: visitsToday || 0
+            visitsToday: visitsTodayParams
         });
 
         if (leads) setRecentLeads(leads);
@@ -219,7 +234,7 @@ const Dashboard = () => {
                         {/* Countries */}
                         <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                             <h3 className="font-bold text-[#4A3B40] mb-4 flex items-center">
-                                <Globe size={16} className="mr-2" /> Visitor Countries
+                                <Globe size={16} className="mr-2" /> Daily Visitor Countries
                             </h3>
                             <div className="space-y-3">
                                 {topCountries.map(s => (
@@ -231,27 +246,24 @@ const Dashboard = () => {
                                         <span className="text-sm font-bold text-[#4A3B40]">{s.count}</span>
                                     </div>
                                 ))}
-                                {topCountries.length === 0 && <p className="text-sm text-gray-400">No location data yet.</p>}
+                                {topCountries.length === 0 && <p className="text-sm text-gray-400">No visits today yet.</p>}
                             </div>
                         </div>
 
-                        {/* Outreach/Sources Placeholder (Static for visual balance) */}
+                        {/* Top Sources */}
                         <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
-                            <h3 className="font-bold text-[#4A3B40] mb-4">Top Sources</h3>
+                            <h3 className="font-bold text-[#4A3B40] mb-4">Daily Top Sources</h3>
                             <div className="space-y-3">
-                                {[
-                                    { name: 'Instagram', val: '45%' },
-                                    { name: 'Referral', val: '30%' },
-                                    { name: 'Website', val: '15%' },
-                                ].map(s => (
+                                {topSources.map(s => (
                                     <div key={s.name} className="flex justify-between items-center">
                                         <span className="text-sm text-gray-500">{s.name}</span>
                                         <div className="flex-1 mx-3 h-2 bg-gray-100 rounded-full">
-                                            <div className="h-full bg-[#E89BA7] rounded-full" style={{ width: s.val }}></div>
+                                            <div className="h-full bg-[#E89BA7] rounded-full" style={{ width: `${s.percent}%` }}></div>
                                         </div>
-                                        <span className="text-sm font-bold text-[#4A3B40]">{s.val}</span>
+                                        <span className="text-sm font-bold text-[#4A3B40]">{s.percent}%</span>
                                     </div>
                                 ))}
+                                {topSources.length === 0 && <p className="text-sm text-gray-400">No referral data today.</p>}
                             </div>
                         </div>
                     </div>
