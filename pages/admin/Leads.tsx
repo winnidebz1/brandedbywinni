@@ -375,8 +375,8 @@ const Leads = () => {
                                 <input className="w-full border rounded-lg p-2" required value={newLead.name} onChange={e => setNewLead({ ...newLead, name: e.target.value })} />
                             </div>
                             <div>
-                                <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                                <input className="w-full border rounded-lg p-2" type="email" required value={newLead.email} onChange={e => setNewLead({ ...newLead, email: e.target.value })} />
+                                <label className="block text-sm font-medium text-gray-700 mb-1">Contact Info</label>
+                                <input className="w-full border rounded-lg p-2" type="text" placeholder="Email, Phone, or Handle" required value={newLead.email} onChange={e => setNewLead({ ...newLead, email: e.target.value })} />
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">Service</label>

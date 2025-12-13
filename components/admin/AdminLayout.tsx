@@ -50,7 +50,7 @@ const AdminLayout = () => {
         { name: 'Clients', path: '/admin/clients', icon: <Users size={20} /> },
         { name: 'Projects', path: '/admin/projects', icon: <FolderOpen size={20} /> },
         { name: 'Analytics', path: '/admin/analytics', icon: <BarChart size={20} /> },
-        { name: 'Content & Links', path: '/admin/content', icon: <Link2 size={20} /> },
+        { name: 'Customer Reviews', path: '/admin/reviews', icon: <MessageSquare size={20} /> },
         { name: 'Settings', path: '/admin/settings', icon: <Settings size={20} /> },
     ];
 

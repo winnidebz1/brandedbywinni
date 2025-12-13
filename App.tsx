@@ -77,6 +77,7 @@ const App: React.FC = () => {
               <Route path="/terms" element={<TermsOfService />} />
               <Route path="/project/:slug" element={<ProjectDetail />} />
               <Route path="/portfolio" element={<PortfolioPage />} />
+              <Route path="/review-us" element={<ReviewsPublic />} /> {/* New public route */}
             </Route>
 
             {/* Admin Routes */}
@@ -90,7 +91,7 @@ const App: React.FC = () => {
                 <Route path="leads" element={<Leads />} />
                 <Route path="clients" element={<Clients />} />
                 <Route path="analytics" element={<Analytics />} />
-                <Route path="content" element={<Content />} />
+                <Route path="reviews" element={<Reviews />} /> {/* Changed from path="content" to path="reviews" */}
                 <Route path="settings" element={<Settings />} />
                 <Route path="testimonials" element={<Testimonials />} />
               </Route>
