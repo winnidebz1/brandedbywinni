@@ -13,7 +13,7 @@ const Reviews = () => {
 
     const fetchReviews = async () => {
         const { data } = await supabase
-            .from('reviews')
+            .from('testimonials')
             .select('*')
             .order('created_at', { ascending: false });
         if (data) setReviews(data);
@@ -21,7 +21,7 @@ const Reviews = () => {
     };
 
     const updateStatus = async (id: string, status: string) => {
-        const { error } = await supabase.from('reviews').update({ status }).eq('id', id);
+        const { error } = await supabase.from('testimonials').update({ status }).eq('id', id);
         if (!error) {
             setReviews(reviews.map(r => r.id === id ? { ...r, status } : r));
         }
@@ -29,12 +29,12 @@ const Reviews = () => {
 
     const handleDelete = async (id: string) => {
         if (confirm('Are you sure you want to delete this review?')) {
-            await supabase.from('reviews').delete().eq('id', id);
+            await supabase.from('testimonials').delete().eq('id', id);
             fetchReviews();
         }
     };
 
-    const filteredReviews = reviews.filter(r => filterStatus === 'all' || r.status === filterStatus);
+    const filteredReviews = reviews.filter(r => filterStatus === 'all' || (r.status || 'Pending') === filterStatus);
 
     return (
         <div className="space-y-6">
@@ -71,8 +71,8 @@ const Reviews = () => {
                         {filteredReviews.map((review) => (
                             <tr key={review.id} className="hover:bg-gray-50">
                                 <td className="px-6 py-4">
-                                    <div className="font-bold text-[#4A3B40]">{review.reviewer_name}</div>
-                                    <div className="text-xs text-gray-500">{review.brand_name}</div>
+                                    <div className="font-bold text-[#4A3B40]">{review.client_name}</div>
+                                    <div className="text-xs text-gray-500">{review.role}</div>
                                     <div className="text-[10px] text-gray-400 mt-1">{new Date(review.created_at).toLocaleDateString()}</div>
                                 </td>
                                 <td className="px-6 py-4">
@@ -83,23 +83,23 @@ const Reviews = () => {
                                     </div>
                                 </td>
                                 <td className="px-6 py-4 text-sm text-gray-600 leading-relaxed line-clamp-2">
-                                    {review.review_text}
+                                    {review.content}
                                 </td>
                                 <td className="px-6 py-4">
-                                    <span className={`px-2 py-1 rounded-full text-xs font-bold uppercase ${review.status === 'Approved' ? 'bg-green-100 text-green-700' :
-                                            review.status === 'Hidden' ? 'bg-gray-100 text-gray-600' :
+                                    <span className={`px-2 py-1 rounded-full text-xs font-bold uppercase ${(review.status || 'Pending') === 'Approved' ? 'bg-green-100 text-green-700' :
+                                            (review.status || 'Pending') === 'Hidden' ? 'bg-gray-100 text-gray-600' :
                                                 'bg-yellow-100 text-yellow-700'
                                         }`}>
-                                        {review.status}
+                                        {review.status || 'Pending'}
                                     </span>
                                 </td>
                                 <td className="px-6 py-4 text-right space-x-2">
-                                    {review.status !== 'Approved' && (
+                                    {(review.status || 'Pending') !== 'Approved' && (
                                         <button onClick={() => updateStatus(review.id, 'Approved')} className="p-2 text-green-600 hover:bg-green-50 rounded-lg" title="Approve">
                                             <CheckCircle size={18} />
                                         </button>
                                     )}
-                                    {review.status !== 'Hidden' && (
+                                    {(review.status || 'Pending') !== 'Hidden' && (
                                         <button onClick={() => updateStatus(review.id, 'Hidden')} className="p-2 text-gray-400 hover:bg-gray-50 rounded-lg" title="Hide">
                                             <EyeOff size={18} />
                                         </button>

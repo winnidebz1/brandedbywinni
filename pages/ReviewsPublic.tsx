@@ -5,10 +5,10 @@ import { Link } from 'react-router-dom';
 
 const ReviewsPublic = () => {
     const [formData, setFormData] = useState({
-        reviewer_name: '',
-        brand_name: '',
+        client_name: '',
+        role: '', // Using role for Brand/Business Name
         service: 'Website Design',
-        review_text: '',
+        content: '',
         rating: 5,
         is_public_permission: true
     });
@@ -18,7 +18,7 @@ const ReviewsPublic = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true);
-        const { error } = await supabase.from('reviews').insert([{
+        const { error } = await supabase.from('testimonials').insert([{
             ...formData,
             status: 'Pending'
         }]);
@@ -26,6 +26,7 @@ const ReviewsPublic = () => {
         if (!error) {
             setSubmitted(true);
         } else {
+            console.error(error);
             alert('Something went wrong. Please try again.');
         }
         setLoading(false);
@@ -61,8 +62,8 @@ const ReviewsPublic = () => {
                             <input
                                 required
                                 className="w-full bg-gray-50 border border-gray-200 rounded-lg p-3 outline-none focus:ring-2 focus:ring-[#E89BA7]"
-                                value={formData.reviewer_name}
-                                onChange={e => setFormData({ ...formData, reviewer_name: e.target.value })}
+                                value={formData.client_name}
+                                onChange={e => setFormData({ ...formData, client_name: e.target.value })}
                             />
                         </div>
                         <div>
@@ -70,8 +71,8 @@ const ReviewsPublic = () => {
                             <input
                                 required
                                 className="w-full bg-gray-50 border border-gray-200 rounded-lg p-3 outline-none focus:ring-2 focus:ring-[#E89BA7]"
-                                value={formData.brand_name}
-                                onChange={e => setFormData({ ...formData, brand_name: e.target.value })}
+                                value={formData.role}
+                                onChange={e => setFormData({ ...formData, role: e.target.value })}
                             />
                         </div>
                     </div>
@@ -118,8 +119,8 @@ const ReviewsPublic = () => {
                             rows={4}
                             className="w-full bg-gray-50 border border-gray-200 rounded-lg p-3 outline-none focus:ring-2 focus:ring-[#E89BA7]"
                             placeholder="Share your experience..."
-                            value={formData.review_text}
-                            onChange={e => setFormData({ ...formData, review_text: e.target.value })}
+                            value={formData.content}
+                            onChange={e => setFormData({ ...formData, content: e.target.value })}
                         />
                     </div>
 

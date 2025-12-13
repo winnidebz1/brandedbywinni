@@ -1,29 +1,42 @@
--- Create Reviews Table
-CREATE TABLE IF NOT EXISTS public.reviews (
+-- Add necessary columns to existing testimonials table or create if missing
+CREATE TABLE IF NOT EXISTS public.testimonials (
   id uuid default gen_random_uuid() primary key,
   created_at timestamp with time zone default timezone('utc'::text, now()) not null,
-  reviewer_name text not null,
-  brand_name text,
-  service text,
-  review_text text,
-  rating integer check (rating >= 1 and rating <= 5),
-  status text default 'Pending' check (status in ('Pending', 'Approved', 'Hidden')),
-  is_public_permission boolean default false
+  client_name text not null,
+  role text, -- Acts as Brand/Business Name
+  content text,
+  rating integer default 5,
+  profile_image text,
+  screenshot text
 );
 
+-- Add enhancements for CRM Review features
+ALTER TABLE public.testimonials ADD COLUMN IF NOT EXISTS service text;
+ALTER TABLE public.testimonials ADD COLUMN IF NOT EXISTS status text default 'Pending' check (status in ('Pending', 'Approved', 'Hidden'));
+ALTER TABLE public.testimonials ADD COLUMN IF NOT EXISTS is_public_permission boolean default false;
+
 -- Enable RLS
-ALTER TABLE public.reviews ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.testimonials ENABLE ROW LEVEL SECURITY;
 
 -- Policies
--- Public can insert (submit reviews)
-CREATE POLICY "Public can submit reviews" ON public.reviews FOR INSERT WITH CHECK (true);
 
--- Admin can view all
-CREATE POLICY "Admin can view reviews" ON public.reviews FOR SELECT USING (auth.role() = 'authenticated');
+-- 1. Public can submit reviews (INSERT)
+-- Drop existing insert policy if it exists to clean up
+DROP POLICY IF EXISTS "Public can insert testimonials" ON public.testimonials;
+CREATE POLICY "Public can submit testimonials" ON public.testimonials FOR INSERT WITH CHECK (true);
 
--- Admin can update/delete
-CREATE POLICY "Admin can update reviews" ON public.reviews FOR UPDATE USING (auth.role() = 'authenticated');
-CREATE POLICY "Admin can delete reviews" ON public.reviews FOR DELETE USING (auth.role() = 'authenticated');
+-- 2. Admin can view ALL (SELECT)
+DROP POLICY IF EXISTS "Admin can view all testimonials" ON public.testimonials;
+DROP POLICY IF EXISTS "Enable read access for all users" ON public.testimonials; -- Clean potential old policy
+CREATE POLICY "Admin can view all testimonials" ON public.testimonials FOR SELECT USING (auth.role() = 'authenticated');
 
--- Public can view APPROVED reviews only (for the website testimonials section)
-CREATE POLICY "Public can view approved reviews" ON public.reviews FOR SELECT USING (status = 'Approved');
+-- 3. Admin can update/delete
+DROP POLICY IF EXISTS "Admin can update testimonials" ON public.testimonials;
+CREATE POLICY "Admin can update testimonials" ON public.testimonials FOR UPDATE USING (auth.role() = 'authenticated');
+
+DROP POLICY IF EXISTS "Admin can delete testimonials" ON public.testimonials;
+CREATE POLICY "Admin can delete testimonials" ON public.testimonials FOR DELETE USING (auth.role() = 'authenticated');
+
+-- 4. Public can view APPROVED testimonials only (SELECT)
+DROP POLICY IF EXISTS "Public can view approved testimonials" ON public.testimonials;
+CREATE POLICY "Public can view approved testimonials" ON public.testimonials FOR SELECT USING (status = 'Approved');

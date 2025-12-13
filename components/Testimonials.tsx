@@ -3,16 +3,16 @@ import { motion } from 'framer-motion';
 import { Quote, Star } from 'lucide-react';
 import { supabase } from '../lib/supabase';
 
-type Review = {
+type Testimonial = {
   id: string;
-  reviewer_name: string;
-  brand_name: string;
-  review_text: string;
+  client_name: string;
+  role: string;
+  content: string;
   rating: number;
 };
 
 const Testimonials: React.FC = () => {
-  const [reviews, setReviews] = useState<Review[]>([]);
+  const [reviews, setReviews] = useState<Testimonial[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -21,7 +21,7 @@ const Testimonials: React.FC = () => {
 
   const fetchReviews = async () => {
     const { data } = await supabase
-      .from('reviews')
+      .from('testimonials')
       .select('*')
       .eq('status', 'Approved')
       .order('created_at', { ascending: false })
@@ -64,18 +64,18 @@ const Testimonials: React.FC = () => {
               >
                 <div>
                   <Quote className="text-brand-pink mb-6 opacity-50" size={32} />
-                  <p className="text-brand-text italic font-light leading-relaxed mb-6">"{t.review_text}"</p>
+                  <p className="text-brand-text italic font-light leading-relaxed mb-6">"{t.content}"</p>
                 </div>
 
                 <div>
                   <div className="mb-6"></div>
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-12 h-12 rounded-full bg-brand-pink/20 flex items-center justify-center overflow-hidden flex-shrink-0">
-                      <span className="text-brand-dark font-bold text-lg">{t.reviewer_name.charAt(0)}</span>
+                      <span className="text-brand-dark font-bold text-lg">{t.client_name.charAt(0)}</span>
                     </div>
                     <div>
-                      <h4 className="font-serif text-lg text-brand-dark">{t.reviewer_name}</h4>
-                      <p className="text-xs uppercase tracking-widest text-brand-muted">{t.brand_name}</p>
+                      <h4 className="font-serif text-lg text-brand-dark">{t.client_name}</h4>
+                      <p className="text-xs uppercase tracking-widest text-brand-muted">{t.role}</p>
                     </div>
                   </div>
 
