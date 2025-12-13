@@ -34,7 +34,8 @@ const AnalyticsTracker = () => {
                 await supabase.from('site_visits').insert([{
                     page_path: window.location.pathname,
                     country: country,
-                    device_type: device
+                    device_type: device,
+                    referrer: document.referrer || 'Direct'
                 }]);
 
                 // Mark as logged for this session

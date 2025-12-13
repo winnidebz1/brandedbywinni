@@ -88,6 +88,23 @@ const Dashboard = () => {
 
     useEffect(() => {
         loadData();
+
+        // Real-time subscriptions
+        const channel = supabase
+            .channel('dashboard_updates')
+            .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'leads' }, () => {
+                console.log('New lead! Refreshing data...');
+                loadData();
+            })
+            .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'site_visits' }, () => {
+                console.log('New visit! Refreshing data...');
+                loadData();
+            })
+            .subscribe();
+
+        return () => {
+            supabase.removeChannel(channel);
+        };
     }, []);
 
     const QuickActionFunc = (action: string) => {
