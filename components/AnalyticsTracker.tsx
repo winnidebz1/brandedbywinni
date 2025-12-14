@@ -7,15 +7,13 @@ const AnalyticsTracker = () => {
 
     useEffect(() => {
         const logVisit = async () => {
-            // TEMPORARY DEBUG: Always log to test db connection
-            // if (sessionStorage.getItem('visit_logged') && !(import.meta as any).env.DEV) {
-            //     return;
-            // }
+            // Only log unique sessions (per browser tab session)
+            if (sessionStorage.getItem('visit_logged') && !(import.meta as any).env.DEV) {
+                return;
+            }
 
             if (executedRef.current) return;
             executedRef.current = true;
-
-            console.log("AnalyticsTracker: Attempting to log visit...");
 
             try {
                 // 1. Get Location Data (Country)
@@ -42,8 +40,6 @@ const AnalyticsTracker = () => {
 
                 if (dbError) {
                     console.error("Analytics DB Error:", dbError);
-                } else {
-                    console.log("Analytics: Visit logged successfully!");
                 }
 
                 // Mark as logged for this session
