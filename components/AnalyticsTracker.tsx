@@ -7,13 +7,15 @@ const AnalyticsTracker = () => {
 
     useEffect(() => {
         const logVisit = async () => {
-            // Only log unique sessions (per browser tab session)
-            if (sessionStorage.getItem('visit_logged') && !(import.meta as any).env.DEV) {
-                return;
-            }
+            // TEMPORARY DEBUG: Always log to test db connection
+            // if (sessionStorage.getItem('visit_logged') && !(import.meta as any).env.DEV) {
+            //     return;
+            // }
 
             if (executedRef.current) return;
             executedRef.current = true;
+
+            console.log("AnalyticsTracker: Attempting to log visit...");
 
             try {
                 // 1. Get Location Data (Country)
@@ -31,12 +33,18 @@ const AnalyticsTracker = () => {
                 const device = isMobile ? 'Mobile' : 'Desktop';
 
                 // 3. Log to Supabase
-                await supabase.from('site_visits').insert([{
+                const { error: dbError } = await supabase.from('site_visits').insert([{
                     page_path: window.location.pathname,
                     country: country,
                     device_type: device,
                     referrer: document.referrer || 'Direct'
                 }]);
+
+                if (dbError) {
+                    console.error("Analytics DB Error:", dbError);
+                } else {
+                    console.log("Analytics: Visit logged successfully!");
+                }
 
                 // Mark as logged for this session
                 sessionStorage.setItem('visit_logged', 'true');
