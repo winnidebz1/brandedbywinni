@@ -68,7 +68,7 @@ const Portfolio: React.FC = () => {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-3 gap-3 md:gap-8">
             {websiteProjects.map((project, index) => (
               <motion.div
                 key={project.id}
@@ -88,13 +88,13 @@ const Portfolio: React.FC = () => {
 
                   {/* Tap to view overlay */}
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 pointer-events-none">
-                    <span className="px-6 py-3 bg-white/20 backdrop-blur-md border border-white/30 text-white rounded-full text-sm font-medium tracking-wide shadow-lg">Tap to view</span>
+                    <span className="px-6 py-3 bg-white/20 backdrop-blur-md border border-white/30 text-white rounded-full text-sm font-medium tracking-wide shadow-lg hidden md:block">view</span>
                   </div>
 
                   <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="absolute bottom-0 left-0 w-full p-8 translate-y-full group-hover:translate-y-0 transition-transform duration-500 bg-gradient-to-t from-black/60 to-transparent">
-                    <p className="text-brand-pink text-xs uppercase tracking-widest mb-2">{project.category}</p>
-                    <h3 className="font-serif text-3xl text-white">{project.title}</h3>
+                  <div className="absolute bottom-0 left-0 w-full p-2 md:p-8 translate-y-full group-hover:translate-y-0 transition-transform duration-500 bg-gradient-to-t from-black/60 to-transparent">
+                    <p className="text-brand-pink text-[10px] md:text-xs uppercase tracking-widest mb-1 md:mb-2 truncate">{project.category}</p>
+                    <h3 className="font-serif text-sm md:text-3xl text-white truncate">{project.title}</h3>
                   </div>
                 </Link>
               </motion.div>
@@ -115,7 +115,7 @@ const Portfolio: React.FC = () => {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-3 gap-3 md:gap-8">
             {brandingProjects.map((project, index) => (
               <motion.div
                 key={project.id}
@@ -135,13 +135,13 @@ const Portfolio: React.FC = () => {
 
                   {/* Tap to view overlay */}
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 pointer-events-none">
-                    <span className="px-6 py-3 bg-white/20 backdrop-blur-md border border-white/30 text-white rounded-full text-sm font-medium tracking-wide shadow-lg">Tap to view</span>
+                    <span className="px-6 py-3 bg-white/20 backdrop-blur-md border border-white/30 text-white rounded-full text-sm font-medium tracking-wide shadow-lg hidden md:block">view</span>
                   </div>
 
                   <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="absolute bottom-0 left-0 w-full p-8 translate-y-full group-hover:translate-y-0 transition-transform duration-500 bg-gradient-to-t from-black/60 to-transparent">
-                    <p className="text-brand-pink text-xs uppercase tracking-widest mb-2">{project.category}</p>
-                    <h3 className="font-serif text-3xl text-white">{project.title}</h3>
+                  <div className="absolute bottom-0 left-0 w-full p-2 md:p-8 translate-y-full group-hover:translate-y-0 transition-transform duration-500 bg-gradient-to-t from-black/60 to-transparent">
+                    <p className="text-brand-pink text-[10px] md:text-xs uppercase tracking-widest mb-1 md:mb-2 truncate">{project.category}</p>
+                    <h3 className="font-serif text-sm md:text-3xl text-white truncate">{project.title}</h3>
                   </div>
                 </Link>
               </motion.div>

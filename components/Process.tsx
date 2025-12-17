@@ -67,7 +67,7 @@ const Process: React.FC = () => {
                         </motion.a>
                     </div>
 
-                    <div className="w-full md:w-2/3 grid gap-6 md:gap-8">
+                    <div className="w-full md:w-2/3 grid grid-cols-2 md:grid-cols-1 gap-3 md:gap-8">
                         {steps.map((item, index) => (
                             <motion.div
                                 key={index}
@@ -75,17 +75,17 @@ const Process: React.FC = () => {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: index * 0.1 }}
-                                className="flex gap-6 p-8 bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-brand-pink/5"
+                                className="flex flex-col md:flex-row gap-3 md:gap-6 p-4 md:p-8 bg-white rounded-2xl shadow-sm hover:shadow-md transition-all duration-300 border border-brand-pink/5"
                             >
-                                <div className="shrink-0">
-                                    <div className="text-5xl font-serif text-brand-pink/20 font-bold -mt-2 mb-2">{item.step}</div>
-                                    <div className="w-10 h-10 rounded-full bg-brand-ivory flex items-center justify-center text-brand-dark">
-                                        {item.icon}
+                                <div className="shrink-0 flex md:block items-center gap-2">
+                                    <div className="text-3xl md:text-5xl font-serif text-brand-pink/20 font-bold -mt-2 md:mb-2">{item.step}</div>
+                                    <div className="w-8 h-8 md:w-10 md:h-10 rounded-full bg-brand-ivory flex items-center justify-center text-brand-dark">
+                                        {React.cloneElement(item.icon as React.ReactElement, { size: undefined, className: "w-4 h-4 md:w-6 md:h-6" })}
                                     </div>
                                 </div>
                                 <div>
-                                    <h3 className="text-2xl font-serif text-brand-dark mb-3">{item.title}</h3>
-                                    <p className="text-brand-muted leading-relaxed">{item.description}</p>
+                                    <h3 className="text-base md:text-2xl font-serif text-brand-dark mb-1 md:mb-3">{item.title}</h3>
+                                    <p className="text-brand-muted text-xs md:text-base leading-relaxed">{item.description}</p>
                                 </div>
                             </motion.div>
                         ))}

@@ -47,7 +47,7 @@ const Services: React.FC = () => {
           <h2 className="font-serif text-4xl md:text-5xl text-brand-dark mb-4">Our Expertise</h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 items-start">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 items-start">
           {services.map((service, index) => (
             <motion.div
               key={index}
@@ -56,12 +56,12 @@ const Services: React.FC = () => {
               viewport={{ once: true }}
               transition={{ delay: index * 0.1, duration: 0.5 }}
               onClick={() => toggleService(index)}
-              className={`group p-8 border border-brand-dark/10 hover:border-brand-pink rounded-lg transition-all duration-500 hover:shadow-lg hover:shadow-brand-pink/5 flex flex-col items-center text-center bg-white cursor-pointer ${expandedIndex === index ? 'border-brand-pink shadow-lg shadow-brand-pink/5' : ''}`}
+              className={`group p-4 md:p-8 border border-brand-dark/10 hover:border-brand-pink rounded-lg transition-all duration-500 hover:shadow-lg hover:shadow-brand-pink/5 flex flex-col items-center text-center bg-white cursor-pointer ${expandedIndex === index ? 'border-brand-pink shadow-lg shadow-brand-pink/5' : ''}`}
             >
-              <div className="w-16 h-16 bg-brand-ivory text-brand-pink rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-sm group-hover:bg-brand-pink group-hover:text-white">
-                {service.icon}
+              <div className="w-12 h-12 md:w-16 md:h-16 bg-brand-ivory text-brand-pink rounded-full flex items-center justify-center mb-4 md:mb-6 group-hover:scale-110 transition-transform duration-300 shadow-sm group-hover:bg-brand-pink group-hover:text-white">
+                {React.cloneElement(service.icon as React.ReactElement, { size: undefined, className: "w-6 h-6 md:w-8 md:h-8" })}
               </div>
-              <h3 className="font-serif text-2xl text-brand-dark group-hover:text-brand-pink transition-colors mb-4">{service.title}</h3>
+              <h3 className="font-serif text-base md:text-2xl text-brand-dark group-hover:text-brand-pink transition-colors mb-2 md:mb-4 leading-tight">{service.title}</h3>
 
               <AnimatePresence>
                 {expandedIndex === index && (
@@ -72,18 +72,18 @@ const Services: React.FC = () => {
                     className="overflow-hidden w-full text-left"
                   >
                     <div className="space-y-4">
-                      <p className="text-brand-muted text-sm leading-relaxed">
+                      <p className="text-brand-muted text-xs md:text-sm leading-relaxed">
                         {service.description}
                       </p>
 
                       <div>
-                        <h4 className="font-semibold text-brand-dark text-sm mb-1">What You Get:</h4>
-                        <p className="text-brand-muted text-sm">{service.whatYouGet}</p>
+                        <h4 className="font-semibold text-brand-dark text-xs md:text-sm mb-1">What You Get:</h4>
+                        <p className="text-brand-muted text-xs md:text-sm">{service.whatYouGet}</p>
                       </div>
 
-                      <div>
-                        <h4 className="font-semibold text-brand-dark text-sm mb-1">Components:</h4>
-                        <ul className="text-brand-muted text-sm space-y-1">
+                      <div className="hidden md:block">
+                        <h4 className="font-semibold text-brand-dark text-xs md:text-sm mb-1">Components:</h4>
+                        <ul className="text-brand-muted text-xs md:text-sm space-y-1">
                           {service.components.map((c, i) => (
                             <li key={i} className="flex items-start gap-2">
                               <span className="text-brand-pink mt-1.5 w-1 h-1 rounded-full bg-current shrink-0" />
@@ -98,7 +98,7 @@ const Services: React.FC = () => {
               </AnimatePresence>
 
               <div className="mt-auto transition-opacity duration-300 transform">
-                <span className="flex items-center gap-2 text-sm text-brand-pink font-medium uppercase tracking-wider">
+                <span className="flex items-center gap-1 md:gap-2 text-xs md:text-sm text-brand-pink font-medium uppercase tracking-wider">
                   {expandedIndex === index ? (
                     <>Show less <ChevronUp size={14} /></>
                   ) : (
