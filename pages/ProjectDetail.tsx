@@ -150,9 +150,9 @@ const ProjectDetail: React.FC = () => {
 
                 {/* Additional Images Gallery */}
                 {project.images && project.images.length > 0 && (
-                    <div className="container mx-auto px-6 md:px-12 pb-20">
-                        <h2 className="font-serif text-3xl text-brand-dark mb-12">Project Gallery</h2>
-                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div className="container mx-auto px-6 md:px-12 pb-20 max-w-6xl">
+                        <h2 className="font-serif text-3xl text-brand-dark mb-12 text-center">Project Gallery</h2>
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                             {project.images.map((image, idx) => (
                                 <motion.div
                                     key={idx}
