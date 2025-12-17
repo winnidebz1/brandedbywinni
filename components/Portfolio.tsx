@@ -25,7 +25,7 @@ const Portfolio: React.FC = () => {
       .from('projects')
       .select('id, title, category, cover_image, slug')
       .order('created_at', { ascending: false })
-      .limit(6);
+      .limit(12);
 
     if (data) setProjects(data);
     setLoading(false);
@@ -33,11 +33,11 @@ const Portfolio: React.FC = () => {
 
   const websiteProjects = projects.filter(p =>
     p.category === 'Web Design' || p.category === 'Website Design'
-  ).slice(0, 1);
+  );
 
   const brandingProjects = projects.filter(p =>
     p.category === 'Brand Identity' || p.category === 'Branding' || p.category === 'Packaging Design'
-  ).slice(0, 1);
+  );
 
   if (loading) {
     return (
@@ -68,7 +68,7 @@ const Portfolio: React.FC = () => {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 gap-8 md:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {websiteProjects.map((project, index) => (
               <motion.div
                 key={project.id}
@@ -76,7 +76,6 @@ const Portfolio: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.6 }}
-                className={`${index % 2 === 0 ? 'md:mt-0' : 'md:mt-24'}`}
               >
                 <Link to={`/project/${project.slug}`} className="group relative overflow-hidden rounded-lg cursor-pointer block">
                   <div className="aspect-[4/5] md:aspect-[3/4] overflow-hidden bg-gray-200">
@@ -116,7 +115,7 @@ const Portfolio: React.FC = () => {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 gap-8 md:gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {brandingProjects.map((project, index) => (
               <motion.div
                 key={project.id}
@@ -124,7 +123,6 @@ const Portfolio: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.6 }}
-                className={`${index % 2 === 0 ? 'md:mt-0' : 'md:mt-24'}`}
               >
                 <Link to={`/project/${project.slug}`} className="group relative overflow-hidden rounded-lg cursor-pointer block">
                   <div className="aspect-[4/5] md:aspect-[3/4] overflow-hidden bg-gray-200">
