@@ -49,7 +49,7 @@ const WhyWebsite: React.FC = () => {
                     </motion.p>
                 </div>
 
-                <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div className="grid grid-cols-4 gap-2 md:gap-8">
                     {benefits.map((item, index) => (
                         <motion.div
                             key={index}
@@ -57,13 +57,12 @@ const WhyWebsite: React.FC = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1 }}
-                            className="p-8 bg-brand-ivory rounded-2xl border border-brand-pink/10 hover:border-brand-pink/40 transition-colors group cursor-default"
+                            className="p-2 md:p-8 bg-brand-ivory rounded-xl md:rounded-2xl border border-brand-pink/10 hover:border-brand-pink/40 transition-colors group cursor-default flex flex-col items-center text-center"
                         >
-                            <div className="w-14 h-14 rounded-full bg-brand-pink/10 flex items-center justify-center text-brand-pink mb-6 group-hover:scale-110 transition-transform duration-300">
-                                {item.icon}
+                            <div className="w-10 h-10 md:w-14 md:h-14 rounded-full bg-brand-pink/10 flex items-center justify-center text-brand-pink mb-3 md:mb-6 group-hover:scale-110 transition-transform duration-300">
+                                {React.cloneElement(item.icon as React.ReactElement, { size: undefined, className: "w-5 h-5 md:w-8 md:h-8" })}
                             </div>
-                            <h3 className="text-xl font-serif text-brand-dark mb-4">{item.title}</h3>
-                            <p className="text-brand-muted text-sm leading-relaxed">{item.description}</p>
+                            <h3 className="text-xs md:text-xl font-serif text-brand-dark">{item.title}</h3>
                         </motion.div>
                     ))}
                 </div>
