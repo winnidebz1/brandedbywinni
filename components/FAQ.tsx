@@ -8,12 +8,12 @@ const faqs = [
         answer: "Project duration varies from 1 week to 4 weeks depending on the complexity of the project. Simple websites can be completed in about a week, while more complex projects with custom features may take up to 4 weeks."
     },
     {
-        question: "Do you offer payment plans?",
-        answer: "Yes! We understand a website is an investment. Typically, we require a 50% deposit to start, with the remaining 50% due upon completion. For larger projects, we can discuss a milestone-based payment schedule."
+        question: "Will my website be responsive on mobile phone?",
+        answer: "Absolutely. We design with a 'Mobile-First' approach. This means your website will be fully responsive and optimized for smartphones, tablets, and desktops."
     },
     {
-        question: "Will I look good on mobile phones?",
-        answer: "Absolutely. We design with a 'Mobile-First' approach. This means your website will be fully responsive and optimized for smartphones, tablets, and desktops."
+        question: "Do you offer payment plans?",
+        answer: "Yes! We understand a website is an investment. Typically, we require a 50% deposit to start, with the remaining 50% due upon completion. For larger projects, we can discuss a milestone-based payment schedule."
     },
     {
         question: "Do you write the content for the site?",
