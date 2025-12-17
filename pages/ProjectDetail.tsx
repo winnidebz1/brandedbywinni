@@ -109,7 +109,7 @@ const ProjectDetail: React.FC = () => {
                     transition={{ delay: 0.2, duration: 0.8 }}
                     className="container mx-auto px-6 md:px-12 mb-16"
                 >
-                    <div className="rounded-2xl overflow-hidden shadow-2xl max-w-4xl mx-auto">
+                    <div className="w-full md:w-3/4 mx-auto rounded-2xl overflow-hidden shadow-2xl">
                         <img
                             src={project.cover_image || 'https://picsum.photos/1200/800'}
                             alt={project.title}
