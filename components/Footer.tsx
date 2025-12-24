@@ -57,10 +57,10 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="text-sm uppercase tracking-widest text-brand-dark mb-6 font-medium border-b border-brand-dark/20 pb-2 inline-block">Services</h4>
             <ul className="space-y-4">
-              <li><Link to="/services" className="text-brand-text hover:text-brand-pink transition-colors font-light">Website Design</Link></li>
-              <li><Link to="/services" className="text-brand-text hover:text-brand-pink transition-colors font-light">E-commerce</Link></li>
-              <li><Link to="/services" className="text-brand-text hover:text-brand-pink transition-colors font-light">SEO Services</Link></li>
-              <li><Link to="/services" className="text-brand-text hover:text-brand-pink transition-colors font-light">Branding</Link></li>
+              <li><Link to="/services/website-design-development" className="text-brand-text hover:text-brand-pink transition-colors font-light">Website Design</Link></li>
+              <li><Link to="/services/ecommerce-website-design" className="text-brand-text hover:text-brand-pink transition-colors font-light">E-commerce</Link></li>
+              <li><Link to="/services/seo-services-ghana" className="text-brand-text hover:text-brand-pink transition-colors font-light">SEO Services</Link></li>
+              <li><Link to="/services/branding" className="text-brand-text hover:text-brand-pink transition-colors font-light">Branding</Link></li>
             </ul>
           </div>
 
