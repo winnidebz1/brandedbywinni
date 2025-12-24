@@ -15,8 +15,8 @@ const benefits = [
     },
     {
         icon: <Search size={32} />,
-        title: "Ghana-Targeted Keywords",
-        description: "Dominate search in Accra, Kumasi, Takoradi & nationwide with localized keyword strategies."
+        title: "Country-Targeted Keywords",
+        description: "Dominate search in your target region with localized keyword strategies based on your location."
     },
     {
         icon: <Layout size={32} />,

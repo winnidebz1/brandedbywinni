@@ -72,7 +72,7 @@ const Footer: React.FC = () => {
                 <div className="w-8 h-8 rounded-full bg-brand-pink/10 flex items-center justify-center shrink-0">
                   <Mail size={16} className="text-brand-pink" />
                 </div>
-                <a href="mailto:brandedbywinnistudio@gmail.com" className="hover:text-brand-pink transition-colors text-sm break-all">brandedbywinnistudio@gmail.com</a>
+                <a href="mailto:brandedbywinnistudio@gmail.com" className="hover:text-brand-pink transition-colors text-sm">brandedbywinnistudio@gmail.com</a>
               </li>
               <li className="flex items-center gap-3 text-brand-text font-light">
                 <div className="w-8 h-8 rounded-full bg-brand-pink/10 flex items-center justify-center shrink-0">
