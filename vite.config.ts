@@ -18,7 +18,11 @@ export default defineConfig(({ mode }) => {
           '/',
           '/about',
           '/services',
-          '/contact'
+          '/contact',
+          '/portfolio',
+          '/privacy',
+          '/terms',
+          '/review-us'
         ]
       })
     ],
