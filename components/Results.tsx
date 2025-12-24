@@ -41,14 +41,14 @@ const Results: React.FC = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.2 }}
-                            className="p-8 border border-white/10 rounded-2xl bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors"
+                            className="p-4 md:p-8 border border-white/10 rounded-2xl bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors"
                         >
-                            <div className="bg-brand-ivory/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
-                                {stat.icon}
+                            <div className="bg-brand-ivory/10 w-10 h-10 md:w-16 md:h-16 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-6">
+                                {React.cloneElement(stat.icon as React.ReactElement, { className: "w-5 h-5 md:w-8 md:h-8 text-brand-pink" })}
                             </div>
-                            <h3 className="text-5xl font-serif font-bold mb-2 text-brand-pink">{stat.value}</h3>
-                            <p className="text-xl font-medium mb-2">{stat.label}</p>
-                            <p className="text-sm text-brand-ivory/60">{stat.detail}</p>
+                            <h3 className="text-2xl md:text-5xl font-serif font-bold mb-1 md:mb-2 text-brand-pink">{stat.value}</h3>
+                            <p className="text-sm md:text-xl font-medium mb-1 md:mb-2 leading-tight">{stat.label}</p>
+                            <p className="text-xs md:text-sm text-brand-ivory/60">{stat.detail}</p>
                         </motion.div>
                     ))}
                 </div>
