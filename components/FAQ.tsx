@@ -17,7 +17,7 @@ const faqs = [
     },
     {
         question: "Do you write the content for the site?",
-        answer: "We can assist with copywriting as an add-on service. However, nobody knows your business better than you! We usually recommend you provide the core text, and we tweak it for SEO and flow. Our 'Content Strategy & AI Optimization' service specifically handles this."
+        answer: "We can assist with copywriting as an add-on service. However, nobody knows your business better than you! We usually recommend you provide the core text, and we tweak it for SEO and flow. Our 'Content Strategy & Copywriting' service specifically handles this."
     },
     {
         question: "What happens after the site launches?",
@@ -30,10 +30,6 @@ const faqs = [
     {
         question: "How long before I see results?",
         answer: "Web design delivers immediate credibility once launched. For SEO, you can expect to see initial improvements in 3 months, with significant growth in traffic and rankings typically achieved between 3–6 months."
-    },
-    {
-        question: "Why is AI-powered SEO important now?",
-        answer: "AI search engines like Google Gemini and ChatGPT effectively 'read' websites differently than traditional crawlers. We structure your high-quality content so it's easily understood and cited by these AI tools, giving you a competitive edge."
     },
     {
         question: "What’s included in a website & SEO audit?",

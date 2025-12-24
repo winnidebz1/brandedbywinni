@@ -6,8 +6,6 @@ const techStack = [
     "Google Search Console",
     "Google Analytics 4",
     "SEMrush & Ahrefs",
-    "ChatGPT & Gemini (AI)",
-    "Perplexity AI",
     "Google Ads Manager",
     "Meta Business Suite",
     "Rank Tracker"
@@ -34,7 +32,7 @@ const Tools: React.FC = () => {
                             transition={{ delay: 0.1 }}
                             className="text-brand-muted text-lg mb-8"
                         >
-                            We leverage the best technology and AI platforms to ensure your website is data-driven, searchable, and prepared for the future of digital marketing.
+                            We leverage the best technology platforms to ensure your website is data-driven, searchable, and prepared for the future of digital marketing.
                         </motion.p>
                     </div>
 

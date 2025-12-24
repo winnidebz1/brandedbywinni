@@ -10,8 +10,8 @@ const benefits = [
     },
     {
         icon: <Bot size={32} />,
-        title: "AI-Powered SEO",
-        description: "Optimized for Google, ChatGPT, Perplexity & Gemini. We structure content for the AI search era."
+        title: "Advanced SEO Strategy",
+        description: "Optimized for Google & major search engines. We structure content for maximizing organic reach and visibility."
     },
     {
         icon: <Search size={32} />,
@@ -21,7 +21,7 @@ const benefits = [
     {
         icon: <Layout size={32} />,
         title: "Structured Content",
-        description: "Website content organized and tagged for maximum visibility in both traditional and AI search engines."
+        description: "Website content organized and tagged for maximum visibility in search engines."
     },
     {
         icon: <MapPin size={32} />,
@@ -46,7 +46,7 @@ const WhyWebsite: React.FC = () => {
                         viewport={{ once: true }}
                         className="text-4xl md:text-5xl font-serif text-brand-dark mb-6"
                     >
-                        Our Web-First, AI-Powered Approach
+                        Our Web-First Approach
                     </motion.h2>
                     <motion.p
                         initial={{ opacity: 0, y: 20 }}
@@ -55,7 +55,7 @@ const WhyWebsite: React.FC = () => {
                         transition={{ delay: 0.2 }}
                         className="text-lg text-brand-muted"
                     >
-                        We deliver results through a web design–first strategy, supported by advanced SEO and AI tools, ensuring every website is designed to rank, convert, and scale.
+                        We deliver results through a web design–first strategy, ensuring every website is designed to rank, convert, and scale.
                     </motion.p>
                 </div>
 

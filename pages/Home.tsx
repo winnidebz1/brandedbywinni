@@ -16,8 +16,8 @@ const Home: React.FC = () => {
         <>
             <SEO
                 title="Web Design & SEO Services in Ghana"
-                description="Branded by Winni is a Ghana-based web design studio delivering high-converting, SEO-optimized websites. We specialize in web design, local SEO Ghana, AI search optimization, and digital marketing for businesses in Accra and beyond."
-                keywords={['web design ghana', 'seo services ghana', 'digital marketing accra', 'local seo', 'ai search optimization', 'ecommerce website design']}
+                description="Branded by Winni is a Ghana-based web design studio delivering high-converting, SEO-optimized websites. We specialize in web design, local SEO Ghana, search optimization, and digital marketing for businesses in Accra and beyond."
+                keywords={['web design ghana', 'seo services ghana', 'digital marketing accra', 'local seo', 'search optimization', 'ecommerce website design']}
             />
             <Hero />
             <WhyWebsite />

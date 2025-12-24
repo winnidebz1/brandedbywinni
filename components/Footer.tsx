@@ -27,7 +27,19 @@ const Footer: React.FC = () => {
 
           {/* Brand Info */}
           <div className="col-span-1 md:col-span-2">
-            <h3 className="font-serif text-2xl text-brand-dark mb-6">Branded By Winni</h3>
+            <h3 className="font-serif text-2xl text-brand-dark mb-4">Branded By Winni</h3>
+            <p className="inline-block bg-brand-pink text-white text-sm font-medium px-3 py-1 rounded-full mb-6 animate-pulse">
+              🎉 15% discount for January bookings
+            </p>
+
+            <div className="mb-6">
+              <h4 className="text-sm font-bold text-brand-dark mb-2">Work Hours</h4>
+              <p className="text-brand-muted text-sm font-light">Mondays - Fridays</p>
+              <p className="text-brand-muted text-sm font-light">8am - 2pm (Session 1)</p>
+              <p className="text-brand-muted text-sm font-light">7pm - 10pm (Session 2)</p>
+              <p className="text-brand-pink text-sm font-medium mt-1">Closed on holidays</p>
+            </div>
+
             <div className="flex gap-4 mt-6">
               <a href="https://instagram.com/brandedbywinni_" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-brand-pink/40 flex items-center justify-center text-brand-pink hover:bg-brand-pink hover:text-white transition-all">
                 <Instagram size={18} />
@@ -41,13 +53,14 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Services Links */}
           <div>
-            <h4 className="text-sm uppercase tracking-widest text-brand-dark mb-6 font-medium border-b border-brand-dark/20 pb-2 inline-block">Menu</h4>
+            <h4 className="text-sm uppercase tracking-widest text-brand-dark mb-6 font-medium border-b border-brand-dark/20 pb-2 inline-block">Services</h4>
             <ul className="space-y-4">
-              <li><Link to="/" className="text-brand-text hover:text-brand-pink transition-colors font-light">Home</Link></li>
-              <li><Link to="/about" className="text-brand-text hover:text-brand-pink transition-colors font-light">About</Link></li>
-              <li><Link to="/services" className="text-brand-text hover:text-brand-pink transition-colors font-light">Services</Link></li>
+              <li><Link to="/services" className="text-brand-text hover:text-brand-pink transition-colors font-light">Website Design</Link></li>
+              <li><Link to="/services" className="text-brand-text hover:text-brand-pink transition-colors font-light">E-commerce</Link></li>
+              <li><Link to="/services" className="text-brand-text hover:text-brand-pink transition-colors font-light">SEO Services</Link></li>
+              <li><Link to="/services" className="text-brand-text hover:text-brand-pink transition-colors font-light">Branding</Link></li>
             </ul>
           </div>
 
@@ -56,12 +69,16 @@ const Footer: React.FC = () => {
             <h4 className="text-sm uppercase tracking-widest text-brand-dark mb-6 font-medium border-b border-brand-dark/20 pb-2 inline-block">Contact</h4>
             <ul className="space-y-4">
               <li className="flex items-center gap-3 text-brand-text font-light">
-                <Mail size={16} className="text-brand-pink" />
-                <a href="mailto:brandedbywinnistudio@gmail.com" className="hover:text-brand-pink transition-colors">brandedbywinnistudio@gmail.com</a>
+                <div className="w-8 h-8 rounded-full bg-brand-pink/10 flex items-center justify-center shrink-0">
+                  <Mail size={16} className="text-brand-pink" />
+                </div>
+                <a href="mailto:brandedbywinnistudio@gmail.com" className="hover:text-brand-pink transition-colors text-sm break-all">brandedbywinnistudio@gmail.com</a>
               </li>
               <li className="flex items-center gap-3 text-brand-text font-light">
-                <Phone size={16} className="text-brand-pink" />
-                <a href="tel:+233202326851" className="hover:text-brand-pink transition-colors">+233 202326851</a>
+                <div className="w-8 h-8 rounded-full bg-brand-pink/10 flex items-center justify-center shrink-0">
+                  <Phone size={16} className="text-brand-pink" />
+                </div>
+                <a href="tel:+233202326851" className="hover:text-brand-pink transition-colors text-sm">+233 202326851</a>
               </li>
             </ul>
           </div>

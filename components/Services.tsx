@@ -27,23 +27,16 @@ const services = [
   {
     icon: <MapPin strokeWidth={1.5} />,
     title: "Local SEO & Google Business",
-    description: "dominate your local market. We optimize your Google Business Profile and local citations so customers in your area find you first on Maps and Search.",
+    description: "Dominate your local market. We optimize your Google Business Profile and local citations so customers in your area find you first on Maps and Search.",
     whatYouGet: "Enhanced local visibility and more foot traffic or calls from nearby customers.",
     components: ["Google Maps Optimization", "Local Citation Building", "Review Management Strategy", "NAP Consistency"]
   },
   {
     icon: <PenTool strokeWidth={1.5} />,
-    title: "Content Strategy & AI Optimization",
-    description: "Content is king, but context is queen. We create and structure SEO-friendly copy that appeals to human readers while being optimized for AI search engines like Google Gemini and ChatGPT.",
+    title: "Content Strategy & Copywriting",
+    description: "Content is king, but context is queen. We create and structure SEO-friendly copy that appeals to human readers while being fully optimized for search engines.",
     whatYouGet: "Compelling content that ranks well and positions you as an industry authority.",
-    components: ["SEO Copywriting", "AI Search Optimization", "Blog Content Strategy", "Voice Search Readiness"]
-  },
-  {
-    icon: <Megaphone strokeWidth={1.5} />,
-    title: "PPC & Paid Ads",
-    description: "Need results fast? We design targeted ad campaigns on Google and Meta (Facebook/Instagram) that align perfectly with your high-converting website funnels.",
-    whatYouGet: "Immediate traffic and leads while your long-term SEO strategy builds momentum.",
-    components: ["Google Ads Management", "Facebook/Instagram Ads", "Ad Creative Design", "Conversion Tracking"]
+    components: ["SEO Copywriting", "Search Optimization", "Blog Content Strategy", "Voice Search Readiness"]
   },
   {
     icon: <Share2 strokeWidth={1.5} />,
