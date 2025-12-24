@@ -33,7 +33,7 @@ const Results: React.FC = () => {
                     <p className="text-brand-ivory/70 max-w-2xl mx-auto">We don't just design; we deliver measurable growth.</p>
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 text-center">
                     {stats.map((stat, index) => (
                         <motion.div
                             key={index}
