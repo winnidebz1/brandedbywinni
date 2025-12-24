@@ -1,35 +1,63 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Monitor, TrendingUp, PenTool, Settings, ArrowRight, ChevronUp } from 'lucide-react';
+import { Monitor, TrendingUp, PenTool, Settings, ArrowRight, ChevronUp, ShoppingCart, MapPin, Megaphone, Share2, BarChart } from 'lucide-react';
 
 const services = [
   {
     icon: <Monitor strokeWidth={1.5} />,
-    title: "Website Design",
-    description: "Your website is often the first interaction a potential client has with your business. If it's clunky, outdated, or hard to navigate, you're losing money. We create bespoke, user-friendly websites that not only look incredible but are built to convert. We focus on storytelling and intuitive user flows to ensure your visitors stay longer and take action.",
-    whatYouGet: "A fully responsive, custom-designed website that elevates your credibility and turns visitors into clients.",
-    components: ["Strategic UI/UX Design", "Mobile & Tablet Responsiveness", "Conversion-Focused Layouts", "CMS Integration"]
+    title: "Website Design & Development",
+    description: "Your website is your digital HQ. We build custom, mobile-responsive business websites and landing pages that capture attention and drive conversions. No cookie-cutter templates—just strategic design tailored to your brand goals.",
+    whatYouGet: "A unique, high-performance website that elevates your brand and turns visitors into leads.",
+    components: ["Custom UI/UX Design", "Responsive & Mobile-First", "Lead Generation Forms", "Fast Loading Speed"]
   },
   {
-    icon: <Settings strokeWidth={1.5} />,
-    title: "Website Maintenance & Optimization",
-    description: "Nothing kills a sale faster than a broken link or a slow-loading page. But keeping up with technical updates, security patches, and backups is a headache you don't have time for. We handle all the technical details—keeping your site secure, fast, and glitch-free—so you can focus on running your business.",
-    whatYouGet: "Total peace of mind with a website that is always secure, up-to-date, and running at lightning speed.",
-    components: ["24/7 Security Monitoring", "Regular Software Updates", "Performance Speed Tuning", "Daily Cloud Backups"]
+    icon: <ShoppingCart strokeWidth={1.5} />,
+    title: "E-commerce Website Design",
+    description: "Sell more online with a robust e-commerce store. We design online shops optimized for trust, speed, and seamless checkout experiences to maximize your sales.",
+    whatYouGet: "An automated sales machine that looks great and functions perfectly on all devices.",
+    components: ["Secure Payment Gateways", "Product Inventory Management", "User-Friendly Checkout", "Sales Analytics Dashboard"]
   },
   {
     icon: <TrendingUp strokeWidth={1.5} />,
-    title: "SEO Ranking",
-    description: "You have an amazing business, but does Google know that? Being buried on page 2 (or 10) means your ideal clients never find you. Invisibility is costing you growth. We implement data-driven SEO strategies to help your business climb the search rankings and dominate your local market. Stop being the best-kept secret in your industry.",
-    whatYouGet: "Increased visibility and a steady stream of organic traffic from people actively searching for your services.",
-    components: ["Advanced Keyword Research", "On-Page Optimization", "Technical SEO Audits", "Competitor Analysis"]
+    title: "SEO Services in Ghana",
+    description: "Stop being invisible. We implement on-page, technical, and off-page SEO strategies to help you rank on Google for competitive keywords in Ghana and beyond.",
+    whatYouGet: "Higher search engine rankings, increased organic traffic, and more qualified leads.",
+    components: ["Keyword Research & Strategy", "On-Page Optimization", "Technical SEO Audits", "Link Building Support"]
+  },
+  {
+    icon: <MapPin strokeWidth={1.5} />,
+    title: "Local SEO & Google Business",
+    description: "dominate your local market. We optimize your Google Business Profile and local citations so customers in your area find you first on Maps and Search.",
+    whatYouGet: "Enhanced local visibility and more foot traffic or calls from nearby customers.",
+    components: ["Google Maps Optimization", "Local Citation Building", "Review Management Strategy", "NAP Consistency"]
   },
   {
     icon: <PenTool strokeWidth={1.5} />,
-    title: "Branding",
-    description: "First impressions stick. If your visual identity looks amateurish or inconsistent, customers will trust you less. A logo is not a brand; a brand is a feeling. We craft unique brand identities that resonate with your target audience and tell your unique story. From logos to color palettes, we ensure every touchpoint communicates professionalism and trust.",
-    whatYouGet: "A polished, professional brand identity that commands authority and builds immediate trust with your audience.",
-    components: ["Logo Design & Variations", "Curated Color Palettes", "Typography Systems", "Brand Style Guidelines"]
+    title: "Content Strategy & AI Optimization",
+    description: "Content is king, but context is queen. We create and structure SEO-friendly copy that appeals to human readers while being optimized for AI search engines like Google Gemini and ChatGPT.",
+    whatYouGet: "Compelling content that ranks well and positions you as an industry authority.",
+    components: ["SEO Copywriting", "AI Search Optimization", "Blog Content Strategy", "Voice Search Readiness"]
+  },
+  {
+    icon: <Megaphone strokeWidth={1.5} />,
+    title: "PPC & Paid Ads",
+    description: "Need results fast? We design targeted ad campaigns on Google and Meta (Facebook/Instagram) that align perfectly with your high-converting website funnels.",
+    whatYouGet: "Immediate traffic and leads while your long-term SEO strategy builds momentum.",
+    components: ["Google Ads Management", "Facebook/Instagram Ads", "Ad Creative Design", "Conversion Tracking"]
+  },
+  {
+    icon: <Share2 strokeWidth={1.5} />,
+    title: "Social Media Support",
+    description: "Extend your website's reach with consistent social media branding. We design campaign visuals and landing pages tailored for Ghanaian audiences on social platforms.",
+    whatYouGet: "A cohesive brand presence across web and social channels that engages your community.",
+    components: ["Social Media Graphics", "Campaign Landing Pages", "Brand Consistency Check", "Engagement Strategy"]
+  },
+  {
+    icon: <BarChart strokeWidth={1.5} />,
+    title: "Analytics & Reporting",
+    description: "Don't fly blind. We provide clear, transparent reports on your traffic, rankings, leads, and conversions so you know exactly what's working.",
+    whatYouGet: "Actionable insights and data-backed recommendations to grow your business.",
+    components: ["Google Analytics Setup", "Search Console Monitoring", "Monthly Performance Reports", "Conversion Tracking"]
   }
 ];
 

@@ -17,11 +17,31 @@ const faqs = [
     },
     {
         question: "Do you write the content for the site?",
-        answer: "We can assist with copywriting as an add-on service. However, nobody knows your business better than you! We usually recommend you provide the core text, and we tweak it for SEO and flow."
+        answer: "We can assist with copywriting as an add-on service. However, nobody knows your business better than you! We usually recommend you provide the core text, and we tweak it for SEO and flow. Our 'Content Strategy & AI Optimization' service specifically handles this."
     },
     {
         question: "What happens after the site launches?",
         answer: "You won't be left alone! We offer post-launch support packages to keep your site updated, secure, and running smoothly. We also provide a training session so you can make minor edits yourself."
+    },
+    {
+        question: "How much does web design and SEO cost in Ghana?",
+        answer: "Pricing depends on your specific goals, features, and scope. We offer flexible packages tailored to startups, growing businesses, and large enterprises. Contact us for a free quote based on your needs."
+    },
+    {
+        question: "How long before I see results?",
+        answer: "Web design delivers immediate credibility once launched. For SEO, you can expect to see initial improvements in 3 months, with significant growth in traffic and rankings typically achieved between 3–6 months."
+    },
+    {
+        question: "Why is AI-powered SEO important now?",
+        answer: "AI search engines like Google Gemini and ChatGPT effectively 'read' websites differently than traditional crawlers. We structure your high-quality content so it's easily understood and cited by these AI tools, giving you a competitive edge."
+    },
+    {
+        question: "What’s included in a website & SEO audit?",
+        answer: "Our comprehensive audit covers technical health checks, SEO gap analysis, content structure evaluation, user experience (UX) review, and conversion optimization recommendations to identify exactly how to grow."
+    },
+    {
+        question: "Why should Ghanaian businesses invest in local SEO?",
+        answer: "Most customers in Ghana search for services 'near me' or by city (e.g., 'Web designer in Accra'). Local SEO ensures you appear in Google Maps and local search results when these high-intent customers are looking for you."
     }
 ];
 
