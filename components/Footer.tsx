@@ -91,6 +91,7 @@ const Footer: React.FC = () => {
           <div className="flex gap-6 text-sm text-brand-muted">
             <Link to="/privacy" className="hover:text-brand-pink">Privacy Policy</Link>
             <Link to="/terms" className="hover:text-brand-pink">Terms of Service</Link>
+            <Link to="/admin/login" className="hover:text-brand-pink font-medium">Team Login</Link>
           </div>
         </div>
       </div>
