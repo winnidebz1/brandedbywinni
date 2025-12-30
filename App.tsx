@@ -19,6 +19,7 @@ const PortfolioPage = React.lazy(() => import('./pages/PortfolioPage'));
 
 // Portal / Admin Pages
 const Login = React.lazy(() => import('./pages/admin/Login'));
+const PortalLogin = React.lazy(() => import('./pages/admin/PortalLogin')); // New Portal Login
 const PortalDashboard = React.lazy(() => import('./pages/admin/PortalDashboard'));
 const PortalTasks = React.lazy(() => import('./pages/admin/PortalTasks'));
 const PortalProjects = React.lazy(() => import('./pages/admin/PortalProjects'));
@@ -39,6 +40,7 @@ const Reviews = React.lazy(() => import('./pages/admin/Reviews'));
 const ReviewsPublic = React.lazy(() => import('./pages/ReviewsPublic'));
 
 const PortalLayout = React.lazy(() => import('./components/admin/PortalLayout')); // Use new layout
+const AdminLayout = React.lazy(() => import('./components/admin/AdminLayout')); // Use legacy layout
 const ProtectedRoute = React.lazy(() => import('./components/admin/ProtectedRoute'));
 const TestConnection = React.lazy(() => import('./pages/admin/TestConnection'));
 
@@ -93,11 +95,28 @@ const App: React.FC = () => {
               <Route path="/review-us" element={<ReviewsPublic />} />
             </Route>
 
-            {/* Admin / Portal Routes */}
+            {/* Legacy Admin Routes (Restored) */}
             <Route path="/admin/login" element={<Login />} />
             <Route path="/admin/test" element={<TestConnection />} />
 
             <Route path="/admin" element={<ProtectedRoute />}>
+              <Route element={<AdminLayout />}>
+                <Route index element={<PortfolioProjects />} /> {/* Default to Projects or Dashboard */}
+                {/* Re-mapping legacy routes */}
+                <Route path="projects" element={<PortfolioProjects />} />
+                <Route path="leads" element={<Leads />} />
+                <Route path="clients" element={<Clients />} />
+                <Route path="analytics" element={<Analytics />} />
+                <Route path="reviews" element={<Reviews />} />
+                <Route path="settings" element={<Settings />} />
+                <Route path="testimonials" element={<Testimonials />} />
+              </Route>
+            </Route>
+
+            {/* New Portal Routes */}
+            <Route path="/portal/login" element={<PortalLogin />} />
+
+            <Route path="/portal" element={<ProtectedRoute />}>
               <Route element={<PortalLayout />}>
                 <Route index element={<PortalDashboard />} />
 
@@ -110,17 +129,10 @@ const App: React.FC = () => {
                 <Route path="feedback" element={<PortalFeedback />} />
                 <Route path="rules" element={<PortalRules />} />
                 <Route path="announcements" element={<PortalAnnouncements />} />
-
-                {/* Website Management (Legacy/Admin only) */}
-                <Route path="website/portfolio" element={<PortfolioProjects />} />
-                <Route path="leads" element={<Leads />} />
-                <Route path="clients" element={<Clients />} />
-                <Route path="analytics" element={<Analytics />} />
-                <Route path="reviews" element={<Reviews />} />
                 <Route path="settings" element={<Settings />} />
-                <Route path="testimonials" element={<Testimonials />} />
               </Route>
             </Route>
+
           </Routes>
         </React.Suspense>
       </Router>

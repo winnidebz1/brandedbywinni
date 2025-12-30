@@ -122,7 +122,7 @@ const PortalSOPs = () => {
                     title="SOPs & Knowledge Base"
                     subtitle="Everything you need to know to succeed."
                     action={
-                        <Link to="/admin/sops/handbook">
+                        <Link to="/portal/sops/handbook">
                             <Button variant="outline">
                                 <Book size={20} />
                                 <span>Intern Handbook (Print View)</span>
@@ -133,7 +133,7 @@ const PortalSOPs = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {Object.entries(sopContent).map(([key, data]) => (
-                        <Link key={key} to={`/admin/sops/${key}`}>
+                        <Link key={key} to={`/portal/sops/${key}`}>
                             <Card className="h-full hover:bg-brand-softBlush/20 group">
                                 <div className="flex items-center space-x-3 mb-4 text-brand-primaryPink">
                                     <Book size={24} />
@@ -159,7 +159,7 @@ const PortalSOPs = () => {
     // Detail View
     return (
         <div className="max-w-4xl mx-auto animate-fadeIn">
-            <Link to="/admin/sops" className="text-sm font-medium text-brand-muted hover:text-brand-primaryPink mb-4 inline-block">← Back to SOPs</Link>
+            <Link to="/portal/sops" className="text-sm font-medium text-brand-muted hover:text-brand-primaryPink mb-4 inline-block">← Back to SOPs</Link>
 
             <div className="bg-white rounded-3xl shadow-xl overflow-hidden">
                 <div className="bg-brand-primaryPink p-8 text-white relative overflow-hidden">

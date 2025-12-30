@@ -51,7 +51,7 @@ const PortalDashboard = () => {
                 <div className="space-y-6">
                     <div className="flex items-center justify-between">
                         <h2 className="text-xl font-bold text-brand-deepPlum">Priority Tasks</h2>
-                        <Link to="/admin/tasks" className="text-sm font-medium text-brand-primaryPink hover:underline">View All</Link>
+                        <Link to="/portal/tasks" className="text-sm font-medium text-brand-primaryPink hover:underline">View All</Link>
                     </div>
 
                     <div className="space-y-4">

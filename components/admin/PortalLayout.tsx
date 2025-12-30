@@ -28,22 +28,22 @@ const PortalLayout = () => {
 
     const handleLogout = async () => {
         await supabase.auth.signOut();
-        navigate('/admin/login');
+        navigate('/portal/login');
     };
 
     const navItems = [
-        { name: 'Dashboard', path: '/admin', icon: <LayoutDashboard size={20} /> },
-        { name: 'My Tasks', path: '/admin/tasks', icon: <CheckSquare size={20} /> },
-        { name: 'Projects', path: '/admin/projects', icon: <FolderOpen size={20} /> },
+        { name: 'Dashboard', path: '/portal', icon: <LayoutDashboard size={20} /> },
+        { name: 'My Tasks', path: '/portal/tasks', icon: <CheckSquare size={20} /> },
+        { name: 'Projects', path: '/portal/projects', icon: <FolderOpen size={20} /> },
         // SOPs handled separately for dropdown
-        { name: 'Brand Assets', path: '/admin/assets', icon: <ImageIcon size={20} /> },
-        { name: 'Feedback', path: '/admin/feedback', icon: <MessageSquare size={20} /> },
-        { name: 'Team Rules', path: '/admin/rules', icon: <Users size={20} /> },
-        { name: 'Announcements', path: '/admin/announcements', icon: <Bell size={20} /> },
+        { name: 'Brand Assets', path: '/portal/assets', icon: <ImageIcon size={20} /> },
+        { name: 'Feedback', path: '/portal/feedback', icon: <MessageSquare size={20} /> },
+        { name: 'Team Rules', path: '/portal/rules', icon: <Users size={20} /> },
+        { name: 'Announcements', path: '/portal/announcements', icon: <Bell size={20} /> },
     ];
 
     if (isAdmin) {
-        navItems.push({ name: 'Settings', path: '/admin/settings', icon: <Settings size={20} /> });
+        navItems.push({ name: 'Settings', path: '/portal/settings', icon: <Settings size={20} /> });
     }
 
     return (
@@ -74,9 +74,9 @@ const PortalLayout = () => {
                             key={item.path}
                             to={item.path}
                             onClick={() => setIsSidebarOpen(false)}
-                            className={`flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 group ${location.pathname === item.path || (item.path !== '/admin' && location.pathname.startsWith(item.path))
-                                    ? 'bg-brand-primaryPink text-white shadow-lg shadow-brand-primaryPink/30'
-                                    : 'hover:bg-brand-softBlush text-brand-deepPlum hover:text-brand-primaryPink'
+                            className={`flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 group ${location.pathname === item.path || (item.path !== '/portal' && location.pathname.startsWith(item.path))
+                                ? 'bg-brand-primaryPink text-white shadow-lg shadow-brand-primaryPink/30'
+                                : 'hover:bg-brand-softBlush text-brand-deepPlum hover:text-brand-primaryPink'
                                 }`}
                         >
                             <span className={`group-hover:scale-110 transition-transform ${location.pathname === item.path ? 'text-white' : 'text-brand-primaryPink'
@@ -103,13 +103,13 @@ const PortalLayout = () => {
                                 {['Company Overview', 'Team Expectations', 'Design SOPs', 'Content SOPs'].map((sop) => (
                                     <Link
                                         key={sop}
-                                        to={`/admin/sops/${sop.toLowerCase().replace(/ /g, '-')}`}
+                                        to={`/portal/sops/${sop.toLowerCase().replace(/ /g, '-')}`}
                                         className="block py-2 px-3 text-sm text-brand-deepPlum/80 hover:text-brand-primaryPink hover:bg-white rounded-lg transition-colors"
                                     >
                                         {sop}
                                     </Link>
                                 ))}
-                                <Link to="/admin/sops" className="block py-2 px-3 text-xs font-bold uppercase tracking-wider text-brand-primaryPink mt-2">View All SOPs →</Link>
+                                <Link to="/portal/sops" className="block py-2 px-3 text-xs font-bold uppercase tracking-wider text-brand-primaryPink mt-2">View All SOPs →</Link>
                             </div>
                         )}
                     </div>
