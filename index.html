@@ -24,11 +24,18 @@
         extend: {
           colors: {
             brand: {
-              pink: '#E89BA7',
+              pink: '#E89BA7', // Keeping existing brand pink as base if needed
               ivory: '#FAF9F6',
               dark: '#4A3B40',
               text: '#5D4E53',
-              muted: '#9C8C91'
+              muted: '#9C8C91',
+              // New Portal Colors
+              primaryPink: '#F472B6',
+              softBlush: '#FCE7F3',
+              deepPlum: '#4A044E',
+              neutralWhite: '#FFFFFF',
+              softGray: '#E5E7EB',
+              accentGold: '#F59E0B', // Adding gold for "Elegant" touch if needed
             }
           },
           fontFamily: {
@@ -37,6 +44,7 @@
           },
           backgroundImage: {
             'soft-gradient': 'linear-gradient(to right bottom, #FAF9F6, #FFF5F7, #FAF9F6)',
+            'portal-gradient': 'linear-gradient(135deg, #FDF2F8 0%, #FCE7F3 100%)', // Soft blush gradient
           }
         }
       }

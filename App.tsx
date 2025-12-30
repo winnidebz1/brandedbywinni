@@ -17,19 +17,28 @@ const TermsOfService = React.lazy(() => import('./pages/TermsOfService'));
 const ProjectDetail = React.lazy(() => import('./pages/ProjectDetail'));
 const PortfolioPage = React.lazy(() => import('./pages/PortfolioPage'));
 
-// Admin Pages & Components
+// Portal / Admin Pages
 const Login = React.lazy(() => import('./pages/admin/Login'));
-const Dashboard = React.lazy(() => import('./pages/admin/Dashboard'));
-const Projects = React.lazy(() => import('./pages/admin/Projects'));
+const PortalDashboard = React.lazy(() => import('./pages/admin/PortalDashboard'));
+const PortalTasks = React.lazy(() => import('./pages/admin/PortalTasks'));
+const PortalProjects = React.lazy(() => import('./pages/admin/PortalProjects'));
+const PortalSOPs = React.lazy(() => import('./pages/admin/PortalSOPs'));
+const PortalAssets = React.lazy(() => import('./pages/admin/PortalAssets'));
+const PortalFeedback = React.lazy(() => import('./pages/admin/PortalFeedback'));
+const PortalRules = React.lazy(() => import('./pages/admin/PortalRules'));
+const PortalAnnouncements = React.lazy(() => import('./pages/admin/PortalAnnouncements'));
+
+// Legacy/Website Admin Pages
+const PortfolioProjects = React.lazy(() => import('./pages/admin/Projects')); // Renamed from Projects
 const Leads = React.lazy(() => import('./pages/admin/Leads'));
 const Clients = React.lazy(() => import('./pages/admin/Clients'));
 const Analytics = React.lazy(() => import('./pages/admin/Analytics'));
-const Content = React.lazy(() => import('./pages/admin/Content'));
 const Settings = React.lazy(() => import('./pages/admin/Settings'));
 const Testimonials = React.lazy(() => import('./pages/admin/Testimonials'));
 const Reviews = React.lazy(() => import('./pages/admin/Reviews'));
 const ReviewsPublic = React.lazy(() => import('./pages/ReviewsPublic'));
-const AdminLayout = React.lazy(() => import('./components/admin/AdminLayout'));
+
+const PortalLayout = React.lazy(() => import('./components/admin/PortalLayout')); // Use new layout
 const ProtectedRoute = React.lazy(() => import('./components/admin/ProtectedRoute'));
 const TestConnection = React.lazy(() => import('./pages/admin/TestConnection'));
 
@@ -81,21 +90,33 @@ const App: React.FC = () => {
               <Route path="/terms" element={<TermsOfService />} />
               <Route path="/project/:slug" element={<ProjectDetail />} />
               <Route path="/portfolio" element={<PortfolioPage />} />
-              <Route path="/review-us" element={<ReviewsPublic />} /> {/* New public route */}
+              <Route path="/review-us" element={<ReviewsPublic />} />
             </Route>
 
-            {/* Admin Routes */}
+            {/* Admin / Portal Routes */}
             <Route path="/admin/login" element={<Login />} />
             <Route path="/admin/test" element={<TestConnection />} />
 
             <Route path="/admin" element={<ProtectedRoute />}>
-              <Route element={<AdminLayout />}>
-                <Route index element={<Dashboard />} />
-                <Route path="projects" element={<Projects />} />
+              <Route element={<PortalLayout />}>
+                <Route index element={<PortalDashboard />} />
+
+                {/* Portal Modules */}
+                <Route path="tasks" element={<PortalTasks />} />
+                <Route path="projects" element={<PortalProjects />} />
+                <Route path="sops" element={<PortalSOPs />} />
+                <Route path="sops/:slug" element={<PortalSOPs />} />
+                <Route path="assets" element={<PortalAssets />} />
+                <Route path="feedback" element={<PortalFeedback />} />
+                <Route path="rules" element={<PortalRules />} />
+                <Route path="announcements" element={<PortalAnnouncements />} />
+
+                {/* Website Management (Legacy/Admin only) */}
+                <Route path="website/portfolio" element={<PortfolioProjects />} />
                 <Route path="leads" element={<Leads />} />
                 <Route path="clients" element={<Clients />} />
                 <Route path="analytics" element={<Analytics />} />
-                <Route path="reviews" element={<Reviews />} /> {/* Changed from path="content" to path="reviews" */}
+                <Route path="reviews" element={<Reviews />} />
                 <Route path="settings" element={<Settings />} />
                 <Route path="testimonials" element={<Testimonials />} />
               </Route>
