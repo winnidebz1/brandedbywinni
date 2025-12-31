@@ -7,6 +7,7 @@ export interface Profile {
     role: 'founder' | 'team_member' | 'accountant';
     full_name: string;
     avatar_url: string;
+    last_announcement_view?: string;
 }
 
 export function useProfile() {

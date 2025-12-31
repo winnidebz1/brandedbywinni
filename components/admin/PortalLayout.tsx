@@ -33,12 +33,24 @@ const PortalLayout = () => {
     const isFinanceUser = profile?.role === 'founder' || profile?.role === 'accountant';
 
     useEffect(() => {
+        if (!profile) return;
+
         const fetchAnnouncements = async () => {
             try {
+                // If founder, they don't see notifications
+                if (profile.role === 'founder') {
+                    setAnnouncements([]);
+                    return;
+                }
+
+                // Fetch announcements created AFTER the user's last view
+                const lastView = profile.last_announcement_view || '1970-01-01T00:00:00.000Z';
+
                 const { data } = await supabase
                     .from('announcements')
-                    .select('*, profiles(full_name)')
+                    .select('id, created_at') // Only need basic info for count
                     .eq('is_active', true)
+                    .gt('created_at', lastView)
                     .order('created_at', { ascending: false });
 
                 if (data) setAnnouncements(data);
@@ -48,7 +60,7 @@ const PortalLayout = () => {
         };
 
         fetchAnnouncements();
-    }, []);
+    }, [profile]);
 
     const handleLogout = async () => {
         await supabase.auth.signOut();

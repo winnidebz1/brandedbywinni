@@ -50,14 +50,21 @@ const PortalDashboard = () => {
 
                 setRecentTasks(tasksData || []);
 
-                // 3. Fetch Announcements (all active)
-                const { data: announcementData } = await supabase
-                    .from('announcements')
-                    .select('*, profiles(full_name)')
-                    .eq('is_active', true)
-                    .order('created_at', { ascending: false });
+                // 3. Fetch New Announcements (for Notification Count)
+                // If founder, they don't see notifications
+                if (profile.role === 'founder') {
+                    setAnnouncements([]);
+                } else {
+                    const lastView = profile.last_announcement_view || '1970-01-01T00:00:00.000Z';
+                    const { data: announcementData } = await supabase
+                        .from('announcements')
+                        .select('id, created_at')
+                        .eq('is_active', true)
+                        .gt('created_at', lastView)
+                        .order('created_at', { ascending: false });
 
-                setAnnouncements(announcementData || []);
+                    setAnnouncements(announcementData || []);
+                }
 
             } catch (error) {
                 console.error('Error loading dashboard:', error);
@@ -67,7 +74,8 @@ const PortalDashboard = () => {
         };
 
         fetchDashboardData();
-    }, []);
+        fetchDashboardData();
+    }, [profile]);
 
     const statCards = [
         { label: 'Pending Tasks', value: stats.pending, icon: <Clock size={24} />, color: 'bg-brand-ivory text-brand-pink border border-brand-pink/20' },

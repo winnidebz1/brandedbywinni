@@ -35,7 +35,21 @@ const PortalAnnouncements = () => {
 
     useEffect(() => {
         fetchAnnouncements();
-    }, []);
+
+        // Mark as read when visiting the page
+        const markAsRead = async () => {
+            if (profile && profile.id) {
+                await supabase
+                    .from('profiles')
+                    .update({ last_announcement_view: new Date().toISOString() })
+                    .eq('id', profile.id);
+            }
+        };
+
+        if (profile) {
+            markAsRead();
+        }
+    }, [profile]);
 
     const handlePostAnnouncement = async (e: React.FormEvent) => {
         e.preventDefault();
