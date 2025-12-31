@@ -49,9 +49,14 @@ const PortalFinance = () => {
             // Let's stick to simple aggregates for now without complex date logic for the shell
             // Fetch everything and calc client side for small data, or use RPC in real app.
 
-            const revenue = 150000; // Mock for initial shell
-            const expenses = 45000;
-            const outstanding = 12000;
+            // 2. Real Data Fetch
+            const { data: invoices } = await supabase.from('finance_invoices').select('amount, status');
+            const safeInvoices = invoices || [];
+            const revenue = safeInvoices.filter(i => i.status === 'paid').reduce((sum, i) => sum + i.amount, 0);
+            const outstanding = safeInvoices.filter(i => i.status !== 'paid').reduce((sum, i) => sum + i.amount, 0);
+
+            const { data: expensesData } = await supabase.from('finance_expenses').select('amount');
+            const expenses = (expensesData || []).reduce((sum, e) => sum + e.amount, 0);
 
             setStats({
                 revenue,
@@ -71,6 +76,17 @@ const PortalFinance = () => {
 
     useEffect(() => {
         fetchFinanceData();
+
+        const channel = supabase
+            .channel('finance_dashboard_realtime')
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'finance_invoices' }, () => fetchFinanceData())
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'finance_expenses' }, () => fetchFinanceData())
+            .on('postgres_changes', { event: '*', schema: 'public', table: 'finance_goals' }, () => fetchFinanceData())
+            .subscribe();
+
+        return () => {
+            supabase.removeChannel(channel);
+        };
     }, []);
 
     if (loading) return <div className="p-8">Loading Financial Data...</div>;
