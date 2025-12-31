@@ -57,8 +57,8 @@ const PortalLayout = () => {
             )}
 
             {/* Sidebar */}
-            <aside className={`fixed inset-y-0 left-0 w-64 bg-white/90 backdrop-blur-md border-r border-brand-pink/20 transform transition-transform duration-300 ease-in-out z-50 md:relative md:translate-x-0 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} shadow-2xl`}>
-                <div className="p-6 flex justify-between items-center border-b border-brand-muted/20">
+            <aside className={`fixed inset-y-0 left-0 w-64 bg-white/90 backdrop-blur-md border-r border-brand-pink/20 transform transition-transform duration-300 ease-in-out z-50 md:relative md:translate-x-0 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} shadow-2xl flex flex-col`}>
+                <div className="p-6 flex justify-between items-center border-b border-brand-muted/20 shrink-0">
                     <div className="flex flex-col">
                         <h1 className="text-2xl font-bold font-serif text-brand-pink tracking-wide">Winni Portal</h1>
                         <span className="text-xs uppercase tracking-widest text-brand-muted mt-1">{profile?.role === 'founder' ? 'Founder Edition' : 'Team Portal'}</span>
@@ -68,7 +68,7 @@ const PortalLayout = () => {
                     </button>
                 </div>
 
-                <nav className="p-4 space-y-1 overflow-y-auto h-[calc(100vh-180px)]">
+                <nav className="p-4 space-y-1 flex-1 overflow-y-auto custom-scrollbar">
                     {navItems.map((item) => (
                         <Link
                             key={item.path}
@@ -115,7 +115,7 @@ const PortalLayout = () => {
                     </div>
                 </nav>
 
-                <div className="absolute bottom-0 w-full p-4 border-t border-brand-muted/20 bg-white/50 backdrop-blur-sm">
+                <div className="w-full p-4 border-t border-brand-muted/20 bg-white/50 backdrop-blur-sm shrink-0">
                     <div className="flex items-center mb-4 px-2">
                         <div className="w-10 h-10 rounded-full bg-brand-pink text-white flex items-center justify-center font-bold text-lg shadow-md">
                             {profile?.full_name?.charAt(0) || 'U'}
