@@ -37,6 +37,7 @@ const PortalFinanceExpenses = React.lazy(() => import('./pages/admin/PortalFinan
 const PortalFinanceReports = React.lazy(() => import('./pages/admin/PortalFinanceReports'));
 
 // Legacy/Website Admin Pages
+const Dashboard = React.lazy(() => import('./pages/admin/Dashboard'));
 const PortfolioProjects = React.lazy(() => import('./pages/admin/Projects')); // Renamed from Projects
 const Leads = React.lazy(() => import('./pages/admin/Leads'));
 const Clients = React.lazy(() => import('./pages/admin/Clients'));
@@ -108,7 +109,7 @@ const App: React.FC = () => {
 
             <Route path="/admin" element={<ProtectedRoute />}>
               <Route element={<AdminLayout />}>
-                <Route index element={<PortfolioProjects />} /> {/* Default to Projects or Dashboard */}
+                <Route index element={<Dashboard />} /> {/* Default to Dashboard */}
                 {/* Re-mapping legacy routes */}
                 <Route path="projects" element={<PortfolioProjects />} />
                 <Route path="leads" element={<Leads />} />
