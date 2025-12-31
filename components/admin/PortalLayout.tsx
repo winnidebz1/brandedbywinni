@@ -14,7 +14,8 @@ import {
     X,
     Settings,
     ChevronDown,
-    ChevronRight
+    ChevronRight,
+    PieChart // Added icon
 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useProfile } from '../../hooks/useProfile';
@@ -23,8 +24,10 @@ const PortalLayout = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-    const { profile, isAdmin } = useProfile();
+    const { profile, isAdmin } = useProfile(); // Re-using existing destructuring, calculating access manually for safety
     const [isSopsOpen, setIsSopsOpen] = useState(false);
+
+    const isFinanceUser = profile?.role === 'founder' || profile?.role === 'accountant';
 
     const handleLogout = async () => {
         await supabase.auth.signOut();
@@ -41,6 +44,10 @@ const PortalLayout = () => {
         { name: 'Team Rules', path: '/portal/rules', icon: <Users size={20} /> },
         { name: 'Announcements', path: '/portal/announcements', icon: <Bell size={20} /> },
     ];
+
+    if (isFinanceUser) {
+        navItems.splice(1, 0, { name: 'Finance', path: '/portal/finance', icon: <PieChart size={20} /> });
+    }
 
     if (isAdmin) {
         navItems.push({ name: 'Settings', path: '/portal/settings', icon: <Settings size={20} /> });

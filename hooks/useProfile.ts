@@ -4,7 +4,7 @@ import { supabase } from '../lib/supabase';
 export interface Profile {
     id: string;
     email: string;
-    role: 'founder' | 'team_member';
+    role: 'founder' | 'team_member' | 'accountant';
     full_name: string;
     avatar_url: string;
 }
@@ -29,10 +29,6 @@ export function useProfile() {
 
                     if (data && mounted) {
                         setProfile(data);
-                    } else if (error && mounted) {
-                        // If profile doesn't exist, create a default one (temporary fallback)
-                        console.warn('Profile not found, creating default...');
-                        // Optional: Create profile if missing
                     }
                 }
             } catch (error) {
@@ -49,5 +45,9 @@ export function useProfile() {
         };
     }, []);
 
-    return { profile, loading, isAdmin: profile?.role === 'founder' };
+    const isAdmin = profile?.role === 'founder';
+    const isAccountant = profile?.role === 'accountant';
+    const hasFinanceAccess = isAdmin || isAccountant;
+
+    return { profile, loading, isAdmin, isAccountant, hasFinanceAccess };
 }

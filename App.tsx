@@ -30,6 +30,7 @@ const PortalAssets = React.lazy(() => import('./pages/admin/PortalAssets'));
 const PortalFeedback = React.lazy(() => import('./pages/admin/PortalFeedback'));
 const PortalRules = React.lazy(() => import('./pages/admin/PortalRules'));
 const PortalAnnouncements = React.lazy(() => import('./pages/admin/PortalAnnouncements'));
+const PortalFinance = React.lazy(() => import('./pages/admin/PortalFinance')); // Finance Module
 
 // Legacy/Website Admin Pages
 const PortfolioProjects = React.lazy(() => import('./pages/admin/Projects')); // Renamed from Projects
@@ -133,6 +134,7 @@ const App: React.FC = () => {
                 <Route path="feedback" element={<PortalFeedback />} />
                 <Route path="rules" element={<PortalRules />} />
                 <Route path="announcements" element={<PortalAnnouncements />} />
+                <Route path="finance" element={<PortalFinance />} />
                 <Route path="settings" element={<Settings />} />
               </Route>
             </Route>
