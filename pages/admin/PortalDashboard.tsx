@@ -102,7 +102,7 @@ const PortalDashboard = () => {
 
                         {/* Announcements Popup */}
                         {showAnnouncements && (
-                            <div className="absolute right-0 mt-4 w-96 bg-white rounded-2xl shadow-2xl border border-brand-muted/10 z-50 overflow-hidden animate-fadeIn origin-top-right">
+                            <div className="absolute left-0 md:right-0 mt-4 w-80 md:w-96 max-w-[85vw] bg-white rounded-2xl shadow-2xl border border-brand-muted/10 z-50 overflow-hidden animate-fadeIn origin-top-left md:origin-top-right">
                                 <div className="p-4 border-b border-brand-muted/10 flex justify-between items-center bg-brand-ivory/50">
                                     <h3 className="font-bold text-brand-dark flex items-center gap-2">
                                         <Bell size={16} className="text-brand-pink" />

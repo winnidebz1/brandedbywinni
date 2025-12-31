@@ -156,7 +156,6 @@ const PortalLayout = () => {
                     <button onClick={() => setIsSidebarOpen(true)} className="text-brand-dark">
                         <Menu size={24} />
                     </button>
-                    <span className="font-bold text-brand-dark font-serif">Branded By Winni</span>
                     <div className="w-6" /> {/* Spacer */}
                 </header>
 
