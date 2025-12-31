@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { useProfile } from '../../hooks/useProfile';
-import { FileText, Upload, Plus, AlertTriangle, Download, Trash2 } from 'lucide-react';
+import { FileText, Upload, Plus, AlertTriangle, Download, Trash2, Printer, X } from 'lucide-react';
 import { Card, Button, Badge, PageHeader } from '../../components/portal/UI';
 import { useNavigate } from 'react-router-dom';
 
@@ -10,6 +10,8 @@ const PortalFinanceReports = () => {
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
     const [reports, setReports] = useState<any[]>([]);
+    const [showSystemReport, setShowSystemReport] = useState(false);
+    const [systemData, setSystemData] = useState<any>(null);
 
     // Quick Form State
     const [showModal, setShowModal] = useState(false);
@@ -46,16 +48,34 @@ const PortalFinanceReports = () => {
         fetchReports();
     }, []);
 
+    const fetchSystemReport = async () => {
+        setLoading(true);
+        try {
+            // 1. Invoices
+            const { data: invoices } = await supabase.from('finance_invoices').select('*').order('created_at', { ascending: false });
+            // 2. Expenses
+            const { data: expenses } = await supabase.from('finance_expenses').select('*').order('expense_date', { ascending: false });
+            // 3. Goals
+            const { data: goal } = await supabase.from('finance_goals').select('*').eq('is_active', true).single();
+
+            setSystemData({ invoices: invoices || [], expenses: expenses || [], goal });
+            setShowSystemReport(true);
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setLoading(false);
+        }
+    }
+
     const handleUpload = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            // MVP: Just inserting record, file upload logic assumed separate or placeholder
             const { error } = await supabase.from('finance_reports').insert({
                 title: newReport.title,
                 report_type: newReport.type,
                 flags: newReport.flags,
                 notes: newReport.notes,
-                file_url: '#', // Placeholder until buckets set up
+                file_url: '#', // Placeholder
                 created_by: profile?.id
             });
 
@@ -68,7 +88,137 @@ const PortalFinanceReports = () => {
         }
     };
 
-    if (loading) return <div className="p-8">Loading Reports...</div>;
+    if (loading && !systemData) return <div className="p-8">Loading Reports...</div>;
+
+    if (showSystemReport && systemData) {
+        return (
+            <div className="fixed inset-0 bg-white z-[100] overflow-auto animate-fadeIn">
+                <div className="max-w-[210mm] mx-auto p-8 bg-white min-h-screen my-8 border shadow-2xl print:shadow-none print:border-none print:m-0 print:w-full print:max-w-none">
+
+                    {/* Print Header */}
+                    <div className="flex justify-between items-start mb-8 border-b-2 border-brand-dark pb-4">
+                        <div>
+                            <h1 className="text-3xl font-serif font-bold text-brand-dark">Financial System Report</h1>
+                            <p className="text-brand-muted">Generated on {new Date().toLocaleDateString()} at {new Date().toLocaleTimeString()}</p>
+                        </div>
+                        <div className="print:hidden flex space-x-2">
+                            <Button onClick={() => window.print()}>
+                                <Printer size={16} className="mr-2" /> Print / Save PDF
+                            </Button>
+                            <button onClick={() => setShowSystemReport(false)} className="p-2 hover:bg-gray-100 rounded-full">
+                                <X size={24} />
+                            </button>
+                        </div>
+                    </div>
+
+                    {/* Summary Stats */}
+                    <div className="grid grid-cols-3 gap-6 mb-8">
+                        <div className="p-4 bg-gray-50 border border-gray-100 rounded-lg">
+                            <h3 className="text-sm font-bold uppercase text-gray-500">Total Revenue</h3>
+                            <p className="text-2xl font-bold font-mono">
+                                ₵{systemData.invoices.filter((i: any) => i.status === 'paid').reduce((acc: any, c: any) => acc + c.amount, 0).toLocaleString()}
+                            </p>
+                        </div>
+                        <div className="p-4 bg-gray-50 border border-gray-100 rounded-lg">
+                            <h3 className="text-sm font-bold uppercase text-gray-500">Total Expenses</h3>
+                            <p className="text-2xl font-bold font-mono text-red-600">
+                                -₵{systemData.expenses.reduce((acc: any, c: any) => acc + c.amount, 0).toLocaleString()}
+                            </p>
+                        </div>
+                        <div className="p-4 bg-gray-50 border border-gray-100 rounded-lg">
+                            <h3 className="text-sm font-bold uppercase text-gray-500">Net Profit</h3>
+                            <p className="text-2xl font-bold font-mono text-brand-dark">
+                                ₵{(
+                                    systemData.invoices.filter((i: any) => i.status === 'paid').reduce((acc: any, c: any) => acc + c.amount, 0) -
+                                    systemData.expenses.reduce((acc: any, c: any) => acc + c.amount, 0)
+                                ).toLocaleString()}
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Goal Context */}
+                    {systemData.goal && (
+                        <div className="mb-8 p-4 border border-dashed border-gray-300 rounded-lg">
+                            <h3 className="font-bold text-lg mb-2">Active Cycle Goals</h3>
+                            <div className="grid grid-cols-4 text-sm gap-4">
+                                <div>
+                                    <span className="text-gray-500">Target Revenue:</span> <br />
+                                    <span className="font-bold">₵{systemData.goal.revenue_target.toLocaleString()}</span>
+                                </div>
+                                <div>
+                                    <span className="text-gray-500">Target Profit:</span> <br />
+                                    <span className="font-bold">₵{systemData.goal.profit_target.toLocaleString()}</span>
+                                </div>
+                                <div>
+                                    <span className="text-gray-500">Dates:</span> <br />
+                                    <span className="font-bold">{new Date(systemData.goal.start_date).toLocaleDateString()} - {new Date(systemData.goal.end_date).toLocaleDateString()}</span>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Tables */}
+                    <div className="space-y-8">
+                        <div>
+                            <h2 className="text-xl font-bold border-b border-gray-200 pb-2 mb-4">Recorded Income</h2>
+                            <table className="w-full text-sm text-left">
+                                <thead>
+                                    <tr className="border-b border-gray-200">
+                                        <th className="py-2">Date</th>
+                                        <th className="py-2">Client</th>
+                                        <th className="py-2">Ref #</th>
+                                        <th className="py-2">Status</th>
+                                        <th className="py-2 text-right">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {systemData.invoices.map((inv: any) => (
+                                        <tr key={inv.id} className="border-b border-gray-100">
+                                            <td className="py-2">{new Date(inv.created_at).toLocaleDateString()}</td>
+                                            <td className="py-2 font-medium">{inv.client_name}</td>
+                                            <td className="py-2 text-gray-500">{inv.invoice_number}</td>
+                                            <td className="py-2">{inv.status}</td>
+                                            <td className="py-2 text-right font-mono">₵{inv.amount.toLocaleString()}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div>
+                            <h2 className="text-xl font-bold border-b border-gray-200 pb-2 mb-4">Recorded Expenses</h2>
+                            <table className="w-full text-sm text-left">
+                                <thead>
+                                    <tr className="border-b border-gray-200">
+                                        <th className="py-2">Date</th>
+                                        <th className="py-2">Item</th>
+                                        <th className="py-2">Category</th>
+                                        <th className="py-2">Approved?</th>
+                                        <th className="py-2 text-right">Amount</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {systemData.expenses.map((exp: any) => (
+                                        <tr key={exp.id} className="border-b border-gray-100">
+                                            <td className="py-2">{new Date(exp.expense_date).toLocaleDateString()}</td>
+                                            <td className="py-2 font-medium">{exp.name}</td>
+                                            <td className="py-2 text-gray-500">{exp.category}</td>
+                                            <td className="py-2">{exp.is_approved ? 'Yes' : 'No'}</td>
+                                            <td className="py-2 text-right font-mono text-red-600">-₵{exp.amount.toLocaleString()}</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div className="mt-12 text-center text-xs text-gray-400 print:fixed print:bottom-4 print:left-0 print:w-full">
+                        Branded By Winni Internal System • Confidential Financial Data
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="space-y-8 animate-fadeIn max-w-6xl mx-auto">
@@ -82,9 +232,14 @@ const PortalFinanceReports = () => {
                 title="Accountant Workspace"
                 subtitle="Financial reports, audits, and flagged issues."
                 action={
-                    <Button onClick={() => setShowModal(true)}>
-                        <Plus size={16} className="mr-2" /> Upload Report
-                    </Button>
+                    <div className="flex space-x-2">
+                        <Button variant="outline" onClick={fetchSystemReport}>
+                            <Printer size={16} className="mr-2" /> Generate System Report (PDF)
+                        </Button>
+                        <Button onClick={() => setShowModal(true)}>
+                            <Plus size={16} className="mr-2" /> Upload Manual Report
+                        </Button>
+                    </div>
                 }
             />
 
@@ -92,7 +247,7 @@ const PortalFinanceReports = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {reports.length === 0 ? (
                     <div className="col-span-full text-center p-12 bg-white rounded-xl border border-dashed text-brand-muted">
-                        No reports uploaded yet.
+                        No manual reports uploaded yet. Use "Generate System Report" to print live compiled data.
                     </div>
                 ) : reports.map((rep) => (
                     <Card key={rep.id} className="relative group border-l-4 border-l-brand-pink">
@@ -115,20 +270,17 @@ const PortalFinanceReports = () => {
                             <span className="text-xs font-bold text-brand-dark">
                                 By: {rep.profiles?.full_name || 'Accountant'}
                             </span>
-                            <button className="text-brand-pink hover:text-brand-dark transition-colors">
-                                <Download size={20} />
-                            </button>
+                            {/* Keep download for uploaded files if we implement storage later */}
                         </div>
                     </Card>
                 ))}
             </div>
 
-
             {/* MODAL */}
             {showModal && (
                 <div className="fixed inset-0 bg-brand-dark/50 flex items-center justify-center z-50 p-4 backdrop-blur-sm animate-fadeIn">
                     <div className="bg-white rounded-2xl w-full max-w-lg p-8 shadow-2xl">
-                        <h2 className="text-2xl font-serif font-bold text-brand-dark mb-6">Upload Report</h2>
+                        <h2 className="text-2xl font-serif font-bold text-brand-dark mb-6">Upload Manual Report</h2>
                         <form onSubmit={handleUpload} className="space-y-4">
                             <div>
                                 <label className="block text-sm font-bold text-brand-muted mb-1">Report Title</label>
@@ -140,7 +292,7 @@ const PortalFinanceReports = () => {
                                     placeholder="e.g. Q4 2025 P&L Statement"
                                 />
                             </div>
-
+                            {/* ... Rest of fields ... */}
                             <div>
                                 <label className="block text-sm font-bold text-brand-muted mb-1">Type</label>
                                 <select
@@ -162,7 +314,7 @@ const PortalFinanceReports = () => {
                                     className="w-full px-4 py-3 rounded-xl border border-brand-muted/20 focus:ring-2 focus:ring-brand-pink h-20"
                                     value={newReport.flags}
                                     onChange={(e) => setNewReport({ ...newReport, flags: e.target.value })}
-                                    placeholder="E.g. Missing receipts for marketing expense..."
+                                    placeholder="E.g. Missing receipts..."
                                 />
                             </div>
 
