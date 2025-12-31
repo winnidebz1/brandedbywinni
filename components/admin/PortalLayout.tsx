@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, Outlet, useNavigate, useLocation } from 'react-router-dom';
 import {
     LayoutDashboard,
@@ -27,7 +27,28 @@ const PortalLayout = () => {
     const { profile, isAdmin } = useProfile(); // Re-using existing destructuring, calculating access manually for safety
     const [isSopsOpen, setIsSopsOpen] = useState(false);
 
+    // Announcement State (Lifted to Layout for Mobile Header access)
+    const [announcements, setAnnouncements] = useState<any[]>([]);
+
     const isFinanceUser = profile?.role === 'founder' || profile?.role === 'accountant';
+
+    useEffect(() => {
+        const fetchAnnouncements = async () => {
+            try {
+                const { data } = await supabase
+                    .from('announcements')
+                    .select('*, profiles(full_name)')
+                    .eq('is_active', true)
+                    .order('created_at', { ascending: false });
+
+                if (data) setAnnouncements(data);
+            } catch (error) {
+                console.error('Error fetching announcements:', error);
+            }
+        };
+
+        fetchAnnouncements();
+    }, []);
 
     const handleLogout = async () => {
         await supabase.auth.signOut();
@@ -156,7 +177,19 @@ const PortalLayout = () => {
                     <button onClick={() => setIsSidebarOpen(true)} className="text-brand-dark">
                         <Menu size={24} />
                     </button>
-                    <div className="w-6" /> {/* Spacer */}
+
+                    {/* Mobile Notification Bell */}
+                    <button
+                        onClick={() => navigate('/portal/announcements')}
+                        className="p-2 text-brand-dark relative"
+                    >
+                        <Bell size={24} />
+                        {announcements.length > 0 && (
+                            <span className="absolute top-0 right-0 bg-brand-pink text-white text-[10px] font-bold h-4 w-4 flex items-center justify-center rounded-full border border-white">
+                                {announcements.length}
+                            </span>
+                        )}
+                    </button>
                 </header>
 
                 <main className="flex-1 overflow-auto p-4 md:p-8 z-10 scrollbar-thin scrollbar-thumb-brand-pink/20 scrollbar-track-transparent">

@@ -86,7 +86,7 @@ const PortalDashboard = () => {
                         {isAdmin ? "Here's what's happening at Branded By Winni today." : "Ready to create some magic?"}
                     </p>
                 </div>
-                <div className="flex items-center space-x-4">
+                <div className="hidden md:flex items-center space-x-4">
                     <div className="relative">
                         <button
                             onClick={() => setShowAnnouncements(!showAnnouncements)}
