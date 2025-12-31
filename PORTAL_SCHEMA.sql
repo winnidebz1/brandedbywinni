@@ -126,3 +126,37 @@ create policy "View announcements" on public.announcements for select using (aut
 create policy "Admins manage announcements" on public.announcements for all using (
   exists (select 1 from public.profiles where id = auth.uid() and role = 'founder')
 );
+
+-- 8. Team Rules (Policies)
+create table if not exists public.team_rules (
+  id uuid default gen_random_uuid() primary key,
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null,
+  title text not null,
+  content text not null,
+  icon text -- Optional lucide icon name
+);
+
+-- 9. Internal Feedback
+create table if not exists public.internal_feedback (
+  id uuid default gen_random_uuid() primary key,
+  created_at timestamp with time zone default timezone('utc'::text, now()) not null,
+  message text not null,
+  type text default 'suggestion', -- suggestion, concern, kudos
+  is_anonymous boolean default false,
+  user_id uuid references public.profiles(id) -- Nullable if truly anon, but usually good to track if not anon
+);
+
+-- RLS for Rules
+alter table public.team_rules enable row level security;
+create policy "View rules" on public.team_rules for select using (auth.role() = 'authenticated');
+create policy "Admins manage rules" on public.team_rules for all using (
+  exists (select 1 from public.profiles where id = auth.uid() and role = 'founder')
+);
+
+-- RLS for Feedback
+alter table public.internal_feedback enable row level security;
+create policy "View feedback" on public.internal_feedback for select using (auth.role() = 'authenticated');
+create policy "Insert feedback" on public.internal_feedback for insert with check (auth.role() = 'authenticated');
+create policy "Admins manage feedback" on public.internal_feedback for all using (
+  exists (select 1 from public.profiles where id = auth.uid() and role = 'founder')
+);

@@ -14,6 +14,7 @@ const PortalProjects = () => {
     const [name, setName] = React.useState('');
     const [client, setClient] = React.useState('');
     const [deadline, setDeadline] = React.useState('');
+    const [description, setDescription] = React.useState(''); // Added description state
     const [isSubmitting, setIsSubmitting] = React.useState(false);
 
     const fetchProjects = async () => {
@@ -44,6 +45,7 @@ const PortalProjects = () => {
                 name,
                 client_name: client,
                 deadline,
+                description, // Insert description
                 status: 'active',
                 created_by: profile?.id
             });
@@ -54,6 +56,7 @@ const PortalProjects = () => {
             setName('');
             setClient('');
             setDeadline('');
+            setDescription(''); // Reset description
             fetchProjects(); // Refresh list
         } catch (error: any) {
             alert('Error creating project: ' + error.message);
@@ -99,6 +102,7 @@ const PortalProjects = () => {
                                 <div>
                                     <h3 className="font-bold text-brand-dark">{p.name}</h3>
                                     <p className="text-xs text-brand-muted">{p.client_name}</p>
+                                    {p.description && <p className="text-xs text-brand-text mt-2 line-clamp-2">{p.description}</p>}
                                 </div>
                             </div>
 
@@ -152,6 +156,15 @@ const PortalProjects = () => {
                                     className="w-full px-4 py-2 rounded-xl border border-brand-muted/20 focus:ring-2 focus:ring-brand-pink focus:outline-none"
                                     value={deadline}
                                     onChange={(e) => setDeadline(e.target.value)}
+                                />
+                            </div>
+                            <div>
+                                <label className="block text-sm font-bold text-brand-muted mb-1">Project Description</label>
+                                <textarea
+                                    className="w-full px-4 py-2 rounded-xl border border-brand-muted/20 focus:ring-2 focus:ring-brand-pink focus:outline-none h-24"
+                                    value={description}
+                                    onChange={(e) => setDescription(e.target.value)}
+                                    placeholder="Brief overview of the project..."
                                 />
                             </div>
                             <div className="flex space-x-3 pt-4">
