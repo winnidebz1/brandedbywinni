@@ -47,23 +47,23 @@ const PortalLayout = () => {
     }
 
     return (
-        <div className="flex h-screen bg-brand-softBlush font-sans text-brand-deepPlum">
+        <div className="flex h-screen bg-brand-ivory font-sans text-brand-dark">
             {/* Mobile Sidebar Overlay */}
             {isSidebarOpen && (
                 <div
-                    className="fixed inset-0 bg-brand-deepPlum/50 z-40 md:hidden"
+                    className="fixed inset-0 bg-brand-dark/50 z-40 md:hidden"
                     onClick={() => setIsSidebarOpen(false)}
                 />
             )}
 
             {/* Sidebar */}
-            <aside className={`fixed inset-y-0 left-0 w-64 bg-white/90 backdrop-blur-md border-r border-brand-softPink/20 transform transition-transform duration-300 ease-in-out z-50 md:relative md:translate-x-0 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} shadow-2xl`}>
-                <div className="p-6 flex justify-between items-center border-b border-brand-softGray/50">
+            <aside className={`fixed inset-y-0 left-0 w-64 bg-white/90 backdrop-blur-md border-r border-brand-pink/20 transform transition-transform duration-300 ease-in-out z-50 md:relative md:translate-x-0 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} shadow-2xl`}>
+                <div className="p-6 flex justify-between items-center border-b border-brand-muted/20">
                     <div className="flex flex-col">
-                        <h1 className="text-2xl font-bold font-serif text-brand-primaryPink tracking-wide">Winni Portal</h1>
+                        <h1 className="text-2xl font-bold font-serif text-brand-pink tracking-wide">Winni Portal</h1>
                         <span className="text-xs uppercase tracking-widest text-brand-muted mt-1">{profile?.role === 'founder' ? 'Founder Edition' : 'Team Portal'}</span>
                     </div>
-                    <button onClick={() => setIsSidebarOpen(false)} className="md:hidden text-brand-deepPlum">
+                    <button onClick={() => setIsSidebarOpen(false)} className="md:hidden text-brand-dark">
                         <X size={24} />
                     </button>
                 </div>
@@ -75,11 +75,11 @@ const PortalLayout = () => {
                             to={item.path}
                             onClick={() => setIsSidebarOpen(false)}
                             className={`flex items-center space-x-3 px-4 py-3 rounded-xl transition-all duration-200 group ${location.pathname === item.path || (item.path !== '/portal' && location.pathname.startsWith(item.path))
-                                ? 'bg-brand-primaryPink text-white shadow-lg shadow-brand-primaryPink/30'
-                                : 'hover:bg-brand-softBlush text-brand-deepPlum hover:text-brand-primaryPink'
+                                ? 'bg-brand-pink text-white shadow-lg shadow-brand-pink/30'
+                                : 'hover:bg-brand-ivory text-brand-dark hover:text-brand-pink'
                                 }`}
                         >
-                            <span className={`group-hover:scale-110 transition-transform ${location.pathname === item.path ? 'text-white' : 'text-brand-primaryPink'
+                            <span className={`group-hover:scale-110 transition-transform ${location.pathname === item.path ? 'text-white' : 'text-brand-pink'
                                 }`}>{item.icon}</span>
                             <span className="font-medium">{item.name}</span>
                         </Link>
@@ -89,10 +89,10 @@ const PortalLayout = () => {
                     <div className="pt-2">
                         <button
                             onClick={() => setIsSopsOpen(!isSopsOpen)}
-                            className={`w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-200 hover:bg-brand-softBlush text-brand-deepPlum hover:text-brand-primaryPink ${isSopsOpen ? 'bg-brand-softBlush' : ''}`}
+                            className={`w-full flex items-center justify-between px-4 py-3 rounded-xl transition-all duration-200 hover:bg-brand-ivory text-brand-dark hover:text-brand-pink ${isSopsOpen ? 'bg-brand-ivory' : ''}`}
                         >
                             <div className="flex items-center space-x-3">
-                                <span className="text-brand-primaryPink"><FileText size={20} /></span>
+                                <span className="text-brand-pink"><FileText size={20} /></span>
                                 <span className="font-medium">SOPs & Guides</span>
                             </div>
                             {isSopsOpen ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
@@ -104,30 +104,30 @@ const PortalLayout = () => {
                                     <Link
                                         key={sop}
                                         to={`/portal/sops/${sop.toLowerCase().replace(/ /g, '-')}`}
-                                        className="block py-2 px-3 text-sm text-brand-deepPlum/80 hover:text-brand-primaryPink hover:bg-white rounded-lg transition-colors"
+                                        className="block py-2 px-3 text-sm text-brand-dark/80 hover:text-brand-pink hover:bg-white rounded-lg transition-colors"
                                     >
                                         {sop}
                                     </Link>
                                 ))}
-                                <Link to="/portal/sops" className="block py-2 px-3 text-xs font-bold uppercase tracking-wider text-brand-primaryPink mt-2">View All SOPs →</Link>
+                                <Link to="/portal/sops" className="block py-2 px-3 text-xs font-bold uppercase tracking-wider text-brand-pink mt-2">View All SOPs →</Link>
                             </div>
                         )}
                     </div>
                 </nav>
 
-                <div className="absolute bottom-0 w-full p-4 border-t border-brand-softGray/50 bg-white/50 backdrop-blur-sm">
+                <div className="absolute bottom-0 w-full p-4 border-t border-brand-muted/20 bg-white/50 backdrop-blur-sm">
                     <div className="flex items-center mb-4 px-2">
-                        <div className="w-10 h-10 rounded-full bg-brand-primaryPink text-white flex items-center justify-center font-bold text-lg shadow-md">
+                        <div className="w-10 h-10 rounded-full bg-brand-pink text-white flex items-center justify-center font-bold text-lg shadow-md">
                             {profile?.full_name?.charAt(0) || 'U'}
                         </div>
                         <div className="ml-3 overflow-hidden">
-                            <p className="text-sm font-bold text-brand-deepPlum truncate">{profile?.full_name || 'User'}</p>
+                            <p className="text-sm font-bold text-brand-dark truncate">{profile?.full_name || 'User'}</p>
                             <p className="text-xs text-brand-muted truncate capitalize">{profile?.role?.replace('_', ' ') || 'Team Member'}</p>
                         </div>
                     </div>
                     <button
                         onClick={handleLogout}
-                        className="flex items-center justify-center space-x-2 w-full py-2 rounded-lg border border-brand-deepPlum/10 hover:bg-red-50 text-red-400 hover:text-red-500 transition-colors text-sm font-medium"
+                        className="flex items-center justify-center space-x-2 w-full py-2 rounded-lg border border-brand-dark/10 hover:bg-red-50 text-red-400 hover:text-red-500 transition-colors text-sm font-medium"
                     >
                         <LogOut size={16} />
                         <span>Sign Out</span>
@@ -136,21 +136,21 @@ const PortalLayout = () => {
             </aside>
 
             {/* Main Content */}
-            <div className="flex-1 flex flex-col overflow-hidden bg-brand-softBlush relative">
-                {/* Decorative Background Elements */}
-                <div className="absolute top-0 right-0 w-96 h-96 bg-brand-primaryPink/5 rounded-full blur-3xl -z-0 pointer-events-none"></div>
-                <div className="absolute bottom-0 left-0 w-64 h-64 bg-brand-accentGold/5 rounded-full blur-3xl -z-0 pointer-events-none"></div>
+            <div className="flex-1 flex flex-col overflow-hidden bg-brand-ivory relative">
+                {/* Decorative Background Elements - UPDATED to match site aesthetic */}
+                <div className="absolute top-0 right-0 w-96 h-96 bg-brand-pink/5 rounded-full blur-3xl -z-0 pointer-events-none"></div>
+                <div className="absolute bottom-0 left-0 w-64 h-64 bg-brand-pink/5 rounded-full blur-3xl -z-0 pointer-events-none"></div>
 
                 {/* Mobile Header */}
                 <header className="md:hidden bg-white/80 backdrop-blur-md p-4 shadow-sm flex items-center justify-between z-30 sticky top-0">
-                    <button onClick={() => setIsSidebarOpen(true)} className="text-brand-deepPlum">
+                    <button onClick={() => setIsSidebarOpen(true)} className="text-brand-dark">
                         <Menu size={24} />
                     </button>
-                    <span className="font-bold text-brand-deepPlum font-serif">Branded By Winni</span>
+                    <span className="font-bold text-brand-dark font-serif">Branded By Winni</span>
                     <div className="w-6" /> {/* Spacer */}
                 </header>
 
-                <main className="flex-1 overflow-auto p-4 md:p-8 z-10 scrollbar-thin scrollbar-thumb-brand-primaryPink/20 scrollbar-track-transparent">
+                <main className="flex-1 overflow-auto p-4 md:p-8 z-10 scrollbar-thin scrollbar-thumb-brand-pink/20 scrollbar-track-transparent">
                     <div className="max-w-7xl mx-auto pb-20">
                         <Outlet />
                     </div>

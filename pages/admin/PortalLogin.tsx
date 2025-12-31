@@ -44,17 +44,17 @@ const PortalLogin = () => {
     };
 
     return (
-        <div className="min-h-screen bg-brand-softBlush flex items-center justify-center p-4 relative overflow-hidden">
+        <div className="min-h-screen bg-brand-ivory flex items-center justify-center p-4 relative overflow-hidden">
             {/* Decorative Background */}
-            <div className="absolute top-0 right-0 w-96 h-96 bg-brand-primaryPink/10 rounded-full blur-3xl -z-0"></div>
-            <div className="absolute bottom-0 left-0 w-64 h-64 bg-brand-deepPlum/10 rounded-full blur-3xl -z-0"></div>
+            <div className="absolute top-0 right-0 w-96 h-96 bg-brand-pink/10 rounded-full blur-3xl -z-0"></div>
+            <div className="absolute bottom-0 left-0 w-64 h-64 bg-brand-dark/10 rounded-full blur-3xl -z-0"></div>
 
-            <div className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl p-8 w-full max-w-md border border-brand-primaryPink/20 z-10">
+            <div className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl p-8 w-full max-w-md border border-brand-pink/20 z-10">
                 <div className="text-center mb-8">
-                    <div className="inline-flex p-4 bg-brand-primaryPink text-white rounded-2xl mb-4 shadow-lg shadow-brand-primaryPink/30">
+                    <div className="inline-flex p-4 bg-brand-pink text-white rounded-2xl mb-4 shadow-lg shadow-brand-pink/30">
                         {isSignUp ? <Heart className="w-8 h-8 animate-pulse" /> : <Lock className="w-8 h-8" />}
                     </div>
-                    <h1 className="text-3xl font-bold text-brand-deepPlum font-serif">
+                    <h1 className="text-3xl font-bold text-brand-dark font-serif">
                         {isSignUp ? 'Join the Team' : 'Welcome Back'}
                     </h1>
                     <p className="text-brand-muted mt-2">
@@ -74,7 +74,7 @@ const PortalLogin = () => {
                         <input
                             type="email"
                             required
-                            className="w-full px-4 py-3 rounded-xl border border-brand-softGray bg-white/50 focus:outline-none focus:ring-2 focus:ring-brand-primaryPink focus:border-transparent transition-all"
+                            className="w-full px-4 py-3 rounded-xl border border-brand-muted/20 bg-white/50 focus:outline-none focus:ring-2 focus:ring-brand-pink focus:border-transparent transition-all"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             placeholder="you@brandedbywinni.com"
@@ -85,7 +85,7 @@ const PortalLogin = () => {
                         <input
                             type="password"
                             required
-                            className="w-full px-4 py-3 rounded-xl border border-brand-softGray bg-white/50 focus:outline-none focus:ring-2 focus:ring-brand-primaryPink focus:border-transparent transition-all"
+                            className="w-full px-4 py-3 rounded-xl border border-brand-muted/20 bg-white/50 focus:outline-none focus:ring-2 focus:ring-brand-pink focus:border-transparent transition-all"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             placeholder="••••••••"
@@ -95,7 +95,7 @@ const PortalLogin = () => {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-brand-primaryPink text-white py-3.5 rounded-xl font-bold text-lg hover:bg-brand-primaryPink/90 hover:shadow-xl hover:shadow-brand-primaryPink/20 transition-all disabled:opacity-50 transform hover:-translate-y-0.5"
+                        className="w-full bg-brand-pink text-white py-3.5 rounded-xl font-bold text-lg hover:bg-brand-pink/90 hover:shadow-xl hover:shadow-brand-pink/20 transition-all disabled:opacity-50 transform hover:-translate-y-0.5"
                     >
                         {loading ? 'Processing...' : (isSignUp ? 'Create Account' : 'Sign In')}
                     </button>
@@ -104,7 +104,7 @@ const PortalLogin = () => {
                         <button
                             type="button"
                             onClick={() => { setIsSignUp(!isSignUp); setError(null); }}
-                            className="text-sm text-brand-muted hover:text-brand-primaryPink font-medium underline decoration-dashed underline-offset-4"
+                            className="text-sm text-brand-muted hover:text-brand-pink font-medium underline decoration-dashed underline-offset-4"
                         >
                             {isSignUp ? 'Already have an account? Log In' : 'New here? Create an Account'}
                         </button>
