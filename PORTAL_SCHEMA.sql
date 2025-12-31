@@ -16,7 +16,8 @@ create table if not exists public.internal_projects (
   client_name text,
   status text default 'active' check (status in ('active', 'completed', 'on_hold')),
   description text,
-  deadline timestamp with time zone
+  deadline timestamp with time zone,
+  created_by uuid references public.profiles(id)
 );
 
 -- 3. Tasks
