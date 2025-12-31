@@ -20,6 +20,8 @@ const PortfolioPage = React.lazy(() => import('./pages/PortfolioPage'));
 // Portal / Admin Pages
 const Login = React.lazy(() => import('./pages/admin/Login'));
 const PortalLogin = React.lazy(() => import('./pages/admin/PortalLogin')); // New Portal Login
+const PortalForgotPassword = React.lazy(() => import('./pages/admin/PortalForgotPassword'));
+const PortalUpdatePassword = React.lazy(() => import('./pages/admin/PortalUpdatePassword'));
 const PortalDashboard = React.lazy(() => import('./pages/admin/PortalDashboard'));
 const PortalTasks = React.lazy(() => import('./pages/admin/PortalTasks'));
 const PortalProjects = React.lazy(() => import('./pages/admin/PortalProjects'));
@@ -115,6 +117,8 @@ const App: React.FC = () => {
 
             {/* New Portal Routes */}
             <Route path="/portal/login" element={<PortalLogin />} />
+            <Route path="/portal/forgot-password" element={<PortalForgotPassword />} />
+            <Route path="/portal/update-password" element={<PortalUpdatePassword />} />
 
             <Route path="/portal" element={<ProtectedRoute />}>
               <Route element={<PortalLayout />}>

@@ -92,6 +92,18 @@ const PortalLogin = () => {
                         />
                     </div>
 
+                    {!isSignUp && (
+                        <div className="flex justify-end">
+                            <button
+                                type="button"
+                                onClick={() => navigate('/portal/forgot-password')}
+                                className="text-xs text-brand-pink font-medium hover:underline"
+                            >
+                                Forgot Password?
+                            </button>
+                        </div>
+                    )}
+
                     <button
                         type="submit"
                         disabled={loading}
