@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Lock, Heart } from 'lucide-react';
 
 const PortalLogin = () => {
+    const [fullName, setFullName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
@@ -20,6 +21,11 @@ const PortalLogin = () => {
             const { error } = await supabase.auth.signUp({
                 email,
                 password,
+                options: {
+                    data: {
+                        full_name: fullName
+                    }
+                }
             });
             if (error) {
                 setError(error.message);
@@ -69,6 +75,19 @@ const PortalLogin = () => {
                 )}
 
                 <form onSubmit={handleAuth} className="space-y-5">
+                    {isSignUp && (
+                        <div className="animate-fadeIn">
+                            <label className="block text-xs font-bold uppercase tracking-wider text-brand-muted mb-1">Full Name</label>
+                            <input
+                                type="text"
+                                required
+                                className="w-full px-4 py-3 rounded-xl border border-brand-muted/20 bg-white/50 focus:outline-none focus:ring-2 focus:ring-brand-pink focus:border-transparent transition-all"
+                                value={fullName}
+                                onChange={(e) => setFullName(e.target.value)}
+                                placeholder="Winni Debz"
+                            />
+                        </div>
+                    )}
                     <div>
                         <label className="block text-xs font-bold uppercase tracking-wider text-brand-muted mb-1">Email</label>
                         <input
