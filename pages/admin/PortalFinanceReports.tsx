@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { supabase } from '../../lib/supabase';
 import { useProfile } from '../../hooks/useProfile';
-import { FileText, Upload, Plus, AlertTriangle, Download, Trash2, Printer, X } from 'lucide-react';
+import { FileText, Upload, AlertTriangle, Download, Trash2, Printer, X } from 'lucide-react';
 import { Card, Button, Badge, PageHeader } from '../../components/portal/UI';
 import { useNavigate } from 'react-router-dom';
 
@@ -13,14 +13,7 @@ const PortalFinanceReports = () => {
     const [showSystemReport, setShowSystemReport] = useState(false);
     const [systemData, setSystemData] = useState<any>(null);
 
-    // Quick Form State
-    const [showModal, setShowModal] = useState(false);
-    const [newReport, setNewReport] = useState({
-        title: '',
-        type: 'Monthly Summary',
-        flags: '',
-        notes: ''
-    });
+
 
     const isFinanceUser = isAdmin || isAccountant;
 
@@ -67,26 +60,7 @@ const PortalFinanceReports = () => {
         }
     }
 
-    const handleUpload = async (e: React.FormEvent) => {
-        e.preventDefault();
-        try {
-            const { error } = await supabase.from('finance_reports').insert({
-                title: newReport.title,
-                report_type: newReport.type,
-                flags: newReport.flags,
-                notes: newReport.notes,
-                file_url: '#', // Placeholder
-                created_by: profile?.id
-            });
 
-            if (error) throw error;
-            setShowModal(false);
-            setNewReport({ title: '', type: 'Monthly Summary', flags: '', notes: '' });
-            fetchReports();
-        } catch (error: any) {
-            alert(error.message);
-        }
-    };
 
     if (loading && !systemData) return <div className="p-8">Loading Reports...</div>;
 
@@ -236,9 +210,6 @@ const PortalFinanceReports = () => {
                         <Button variant="outline" onClick={fetchSystemReport}>
                             <Printer size={16} className="mr-2" /> Generate System Report (PDF)
                         </Button>
-                        <Button onClick={() => setShowModal(true)}>
-                            <Plus size={16} className="mr-2" /> Upload Manual Report
-                        </Button>
                     </div>
                 }
             />
@@ -276,68 +247,7 @@ const PortalFinanceReports = () => {
                 ))}
             </div>
 
-            {/* MODAL */}
-            {showModal && (
-                <div className="fixed inset-0 bg-brand-dark/50 flex items-center justify-center z-50 p-4 backdrop-blur-sm animate-fadeIn">
-                    <div className="bg-white rounded-2xl w-full max-w-lg p-8 shadow-2xl">
-                        <h2 className="text-2xl font-serif font-bold text-brand-dark mb-6">Upload Manual Report</h2>
-                        <form onSubmit={handleUpload} className="space-y-4">
-                            <div>
-                                <label className="block text-sm font-bold text-brand-muted mb-1">Report Title</label>
-                                <input
-                                    required
-                                    className="w-full px-4 py-3 rounded-xl border border-brand-muted/20 focus:ring-2 focus:ring-brand-pink"
-                                    value={newReport.title}
-                                    onChange={(e) => setNewReport({ ...newReport, title: e.target.value })}
-                                    placeholder="e.g. Q4 2025 P&L Statement"
-                                />
-                            </div>
-                            {/* ... Rest of fields ... */}
-                            <div>
-                                <label className="block text-sm font-bold text-brand-muted mb-1">Type</label>
-                                <select
-                                    className="w-full px-4 py-3 rounded-xl border border-brand-muted/20 focus:ring-2 focus:ring-brand-pink bg-white"
-                                    value={newReport.type}
-                                    onChange={(e) => setNewReport({ ...newReport, type: e.target.value })}
-                                >
-                                    <option>Monthly Summary</option>
-                                    <option>Tax Report</option>
-                                    <option>Audit</option>
-                                    <option>Expense Review</option>
-                                    <option>12-Week Review</option>
-                                </select>
-                            </div>
 
-                            <div>
-                                <label className="block text-sm font-bold text-brand-muted mb-1">Flag Issues? (Optional)</label>
-                                <textarea
-                                    className="w-full px-4 py-3 rounded-xl border border-brand-muted/20 focus:ring-2 focus:ring-brand-pink h-20"
-                                    value={newReport.flags}
-                                    onChange={(e) => setNewReport({ ...newReport, flags: e.target.value })}
-                                    placeholder="E.g. Missing receipts..."
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-bold text-brand-muted mb-1">Notes</label>
-                                <textarea
-                                    className="w-full px-4 py-3 rounded-xl border border-brand-muted/20 focus:ring-2 focus:ring-brand-pink h-20"
-                                    value={newReport.notes}
-                                    onChange={(e) => setNewReport({ ...newReport, notes: e.target.value })}
-                                    placeholder="Add context..."
-                                />
-                            </div>
-
-                            <div className="flex space-x-3 pt-4">
-                                <Button type="button" variant="outline" onClick={() => setShowModal(false)} className="flex-1">
-                                    Cancel
-                                </Button>
-                                <Button type="submit" className="flex-1">Upload</Button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            )}
         </div>
     );
 };
