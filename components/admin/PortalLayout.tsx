@@ -58,12 +58,15 @@ const PortalLayout = () => {
 
             {/* Sidebar */}
             <aside className={`fixed inset-y-0 left-0 w-64 bg-white/90 backdrop-blur-md border-r border-brand-pink/20 transform transition-transform duration-300 ease-in-out z-50 md:relative md:translate-x-0 ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'} shadow-2xl flex flex-col`}>
-                <div className="p-6 flex justify-between items-center border-b border-brand-muted/20 shrink-0">
-                    <div className="flex flex-col">
-                        <h1 className="text-2xl font-bold font-serif text-brand-pink tracking-wide">Winni Portal</h1>
-                        <span className="text-xs uppercase tracking-widest text-brand-muted mt-1">{profile?.role === 'founder' ? 'Founder Edition' : 'Team Portal'}</span>
-                    </div>
-                    <button onClick={() => setIsSidebarOpen(false)} className="md:hidden text-brand-dark">
+                <div className="p-6 flex flex-col items-center justify-center border-b border-brand-muted/20 shrink-0">
+                    <img
+                        src="/Mainlogo.png"
+                        alt="Branded By Winni"
+                        className="h-16 w-auto object-contain mb-2"
+                    />
+                    <span className="text-[10px] uppercase tracking-widest text-brand-muted font-medium">{profile?.role === 'founder' ? 'Founder Portal' : 'Team Portal'}</span>
+
+                    <button onClick={() => setIsSidebarOpen(false)} className="md:hidden absolute top-6 right-6 text-brand-dark">
                         <X size={24} />
                     </button>
                 </div>
