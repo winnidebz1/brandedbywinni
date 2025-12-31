@@ -1,5 +1,5 @@
 import React from 'react';
-import { LayoutDashboard, Clock, CheckSquare, AlertCircle } from 'lucide-react';
+import { LayoutDashboard, Clock, CheckSquare, Bell, X, User } from 'lucide-react';
 import { Card, Button, Badge, PageHeader } from '../../components/portal/UI';
 import { useProfile } from '../../hooks/useProfile';
 import { Link } from 'react-router-dom';
@@ -9,7 +9,8 @@ const PortalDashboard = () => {
     const { profile, isAdmin } = useProfile();
     const [stats, setStats] = React.useState({ pending: 0, completed: 0, activeProjects: 0 });
     const [recentTasks, setRecentTasks] = React.useState<any[]>([]);
-    const [latestAnnouncement, setLatestAnnouncement] = React.useState<any>(null);
+    const [announcements, setAnnouncements] = React.useState<any[]>([]);
+    const [showAnnouncements, setShowAnnouncements] = React.useState(false);
     const [loading, setLoading] = React.useState(true);
 
     React.useEffect(() => {
@@ -49,16 +50,14 @@ const PortalDashboard = () => {
 
                 setRecentTasks(tasksData || []);
 
-                // 3. Fetch Latest Announcement
+                // 3. Fetch Announcements (all active)
                 const { data: announcementData } = await supabase
                     .from('announcements')
                     .select('*, profiles(full_name)')
                     .eq('is_active', true)
-                    .order('created_at', { ascending: false })
-                    .limit(1)
-                    .single();
+                    .order('created_at', { ascending: false });
 
-                setLatestAnnouncement(announcementData);
+                setAnnouncements(announcementData || []);
 
             } catch (error) {
                 console.error('Error loading dashboard:', error);
@@ -87,8 +86,66 @@ const PortalDashboard = () => {
                         {isAdmin ? "Here's what's happening at Branded By Winni today." : "Ready to create some magic?"}
                     </p>
                 </div>
-                <div className="flex items-center space-x-3">
-                    <div className="px-4 py-2 bg-white rounded-xl shadow-sm border border-brand-muted/20 text-sm font-medium text-brand-dark">
+                <div className="flex items-center space-x-4">
+                    <div className="relative">
+                        <button
+                            onClick={() => setShowAnnouncements(!showAnnouncements)}
+                            className="p-3 bg-white rounded-full shadow-sm border border-brand-muted/20 hover:scale-105 transition-transform text-brand-dark relative"
+                        >
+                            <Bell size={24} />
+                            {announcements.length > 0 && (
+                                <span className="absolute -top-1 -right-1 bg-brand-pink text-white text-[10px] font-bold h-5 w-5 flex items-center justify-center rounded-full border-2 border-brand-ivory">
+                                    {announcements.length}
+                                </span>
+                            )}
+                        </button>
+
+                        {/* Announcements Popup */}
+                        {showAnnouncements && (
+                            <div className="absolute right-0 mt-4 w-96 bg-white rounded-2xl shadow-2xl border border-brand-muted/10 z-50 overflow-hidden animate-fadeIn origin-top-right">
+                                <div className="p-4 border-b border-brand-muted/10 flex justify-between items-center bg-brand-ivory/50">
+                                    <h3 className="font-bold text-brand-dark flex items-center gap-2">
+                                        <Bell size={16} className="text-brand-pink" />
+                                        Announcements
+                                    </h3>
+                                    <button onClick={() => setShowAnnouncements(false)} className="text-brand-muted hover:text-brand-dark">
+                                        <X size={18} />
+                                    </button>
+                                </div>
+
+                                <div className="max-h-[400px] overflow-y-auto p-2 space-y-2">
+                                    {announcements.length === 0 ? (
+                                        <div className="p-8 text-center text-sm text-brand-muted">
+                                            No announcements yet.
+                                        </div>
+                                    ) : (
+                                        announcements.map((a) => (
+                                            <div key={a.id} className="p-4 hover:bg-brand-pink/5 rounded-xl transition-colors border border-transparent hover:border-brand-pink/10 group">
+                                                <div className="flex justify-between items-start mb-2">
+                                                    {a.profiles?.full_name && (
+                                                        <span className="text-[10px] font-bold uppercase tracking-wider text-white bg-brand-pink px-2 py-0.5 rounded-full">
+                                                            {a.profiles.full_name.split(' ')[0]}
+                                                        </span>
+                                                    )}
+                                                    <span className="text-[10px] text-brand-muted">{new Date(a.created_at).toLocaleDateString()}</span>
+                                                </div>
+                                                <h4 className="font-bold text-sm text-brand-dark mb-1 group-hover:text-brand-pink transition-colors">{a.title}</h4>
+                                                <p className="text-xs text-brand-muted line-clamp-3 leading-relaxed">{a.content}</p>
+                                            </div>
+                                        ))
+                                    )}
+                                </div>
+
+                                <div className="p-3 border-t border-brand-muted/10 text-center bg-brand-ivory/50">
+                                    <Link to="/portal/announcements" className="text-xs font-bold text-brand-pink hover:underline uppercase tracking-wide">
+                                        View All & Manage
+                                    </Link>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="hidden md:block px-4 py-2 bg-white rounded-xl shadow-sm border border-brand-muted/20 text-sm font-medium text-brand-dark">
                         {new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' })}
                     </div>
                 </div>
@@ -141,42 +198,14 @@ const PortalDashboard = () => {
                     </div>
                 </div>
 
-                {/* Announcements / SOP Spotlight */}
+                {/* Daily Inspiration & Quick Links */}
                 <div className="space-y-6">
-                    <div className="flex items-center justify-between">
-                        <h2 className="text-xl font-bold text-brand-dark">Announcements & Tips</h2>
-                        {isAdmin && <Link to="/portal/announcements" className="text-sm font-medium text-brand-pink hover:underline">Manage</Link>}
-                    </div>
-
-                    {latestAnnouncement ? (
-                        <Card className="bg-brand-dark text-white relative overflow-hidden h-full flex flex-col justify-center">
-                            <div className="relative z-10">
-                                <div className="flex items-center space-x-2 mb-4">
-                                    <Badge className="bg-white/20 text-white border-none">Latest Update</Badge>
-                                    {latestAnnouncement.profiles?.full_name && (
-                                        <div className="px-3 py-1 bg-white rounded-full text-brand-pink text-xs font-bold uppercase tracking-wider shadow-sm">
-                                            {latestAnnouncement.profiles.full_name.split(' ')[0]}
-                                        </div>
-                                    )}
-                                </div>
-                                <h3 className="text-2xl font-bold mb-3">{latestAnnouncement.title}</h3>
-                                <p className="opacity-90 mb-6 text-sm leading-relaxed line-clamp-4">{latestAnnouncement.content}</p>
-                                <Link to="/portal/announcements">
-                                    <Button className="bg-white text-brand-dark hover:bg-brand-ivory border-none">Read More</Button>
-                                </Link>
-                            </div>
-                            <div className="absolute -right-10 -bottom-10 w-48 h-48 bg-brand-pink rounded-full blur-3xl opacity-30"></div>
-                        </Card>
-                    ) : (
-                        <Card className="bg-brand-ivory text-brand-dark flex flex-col items-center justify-center p-8 text-center border-dashed border-brand-muted/30">
-                            <h3 className="font-bold mb-2">No active announcements</h3>
-                            <p className="text-sm text-brand-muted">Check back later for team updates.</p>
-                        </Card>
-                    )}
-
-                    <Card className="border-l-4 border-l-brand-pink">
-                        <h3 className="font-bold text-brand-dark mb-2">Daily Inspiration</h3>
-                        <p className="italic text-brand-muted text-sm">"Design is the silent ambassador of your brand." - Paul Rand</p>
+                    <Card className="border-l-4 border-l-brand-pink h-full flex flex-col justify-center p-8 bg-gradient-to-br from-white to-brand-ivory">
+                        <h3 className="font-bold text-brand-dark mb-4 text-xl">Daily Inspiration</h3>
+                        <blockquote className="italic text-brand-muted text-lg leading-relaxed font-serif">
+                            "Design is the silent ambassador of your brand."
+                        </blockquote>
+                        <p className="text-sm font-bold text-brand-pink mt-4">- Paul Rand</p>
                     </Card>
                 </div>
             </div>
