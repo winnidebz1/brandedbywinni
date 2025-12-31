@@ -52,7 +52,7 @@ const PortalDashboard = () => {
                 // 3. Fetch Latest Announcement
                 const { data: announcementData } = await supabase
                     .from('announcements')
-                    .select('*')
+                    .select('*, profiles(full_name)')
                     .eq('is_active', true)
                     .order('created_at', { ascending: false })
                     .limit(1)
@@ -151,7 +151,14 @@ const PortalDashboard = () => {
                     {latestAnnouncement ? (
                         <Card className="bg-brand-dark text-white relative overflow-hidden h-full flex flex-col justify-center">
                             <div className="relative z-10">
-                                <Badge className="bg-white/20 text-white mb-4 border-none">Latest Update</Badge>
+                                <div className="flex items-center space-x-2 mb-4">
+                                    <Badge className="bg-white/20 text-white border-none">Latest Update</Badge>
+                                    {latestAnnouncement.profiles?.full_name && (
+                                        <div className="px-3 py-1 bg-white rounded-full text-brand-pink text-xs font-bold uppercase tracking-wider shadow-sm">
+                                            {latestAnnouncement.profiles.full_name.split(' ')[0]}
+                                        </div>
+                                    )}
+                                </div>
                                 <h3 className="text-2xl font-bold mb-3">{latestAnnouncement.title}</h3>
                                 <p className="opacity-90 mb-6 text-sm leading-relaxed line-clamp-4">{latestAnnouncement.content}</p>
                                 <Link to="/portal/announcements">

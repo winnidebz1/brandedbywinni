@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Bell, User, Plus, X } from 'lucide-react';
+import { Bell, User, Plus, X, Trash2, Edit2 } from 'lucide-react';
 import { Card, PageHeader, Badge, Button } from '../../components/portal/UI';
 import { supabase } from '../../lib/supabase';
 import { useProfile } from '../../hooks/useProfile';
@@ -11,6 +11,7 @@ const PortalAnnouncements = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     // Form State
+    const [editingId, setEditingId] = useState<string | null>(null);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -40,24 +41,49 @@ const PortalAnnouncements = () => {
         e.preventDefault();
         setIsSubmitting(true);
         try {
-            const { error } = await supabase.from('announcements').insert({
-                title,
-                content,
-                author_id: profile?.id,
-                is_active: true
-            });
-
-            if (error) throw error;
+            if (editingId) {
+                const { error } = await supabase.from('announcements')
+                    .update({ title, content })
+                    .eq('id', editingId);
+                if (error) throw error;
+            } else {
+                const { error } = await supabase.from('announcements').insert({
+                    title,
+                    content,
+                    author_id: profile?.id,
+                    is_active: true
+                });
+                if (error) throw error;
+            }
 
             setIsModalOpen(false);
+            setEditingId(null);
             setTitle('');
             setContent('');
             fetchAnnouncements();
         } catch (error: any) {
-            alert('Error posting announcement: ' + error.message);
+            alert('Error saving announcement: ' + error.message);
         } finally {
             setIsSubmitting(false);
         }
+    };
+
+    const handleDelete = async (id: string) => {
+        if (!confirm('Are you sure you want to delete this announcement?')) return;
+        try {
+            const { error } = await supabase.from('announcements').delete().eq('id', id);
+            if (error) throw error;
+            fetchAnnouncements();
+        } catch (error: any) {
+            alert('Error deleting: ' + error.message);
+        }
+    };
+
+    const openEditModal = (a: any) => {
+        setEditingId(a.id);
+        setTitle(a.title);
+        setContent(a.content);
+        setIsModalOpen(true);
     };
 
     return (
@@ -66,7 +92,12 @@ const PortalAnnouncements = () => {
                 title="Announcements"
                 subtitle="Latest team updates."
                 action={isAdmin && (
-                    <Button onClick={() => setIsModalOpen(true)}>
+                    <Button onClick={() => {
+                        setEditingId(null);
+                        setTitle('');
+                        setContent('');
+                        setIsModalOpen(true);
+                    }}>
                         <Plus size={20} />
                         <span>Post Update</span>
                     </Button>
@@ -86,7 +117,19 @@ const PortalAnnouncements = () => {
                         <Card key={a.id} className="relative overflow-hidden border-l-4 border-l-brand-pink hover:bg-brand-ivory transition-colors">
                             <div className="flex justify-between items-start mb-3">
                                 <h3 className="text-xl font-bold text-brand-dark">{a.title}</h3>
-                                <span className="text-xs text-brand-muted">{new Date(a.created_at).toLocaleDateString()}</span>
+                                <div className="flex items-center space-x-3">
+                                    <span className="text-xs text-brand-muted">{new Date(a.created_at).toLocaleDateString()}</span>
+                                    {isAdmin && (
+                                        <div className="flex space-x-1">
+                                            <button onClick={() => openEditModal(a)} className="p-1 text-brand-muted hover:text-brand-pink transition-colors">
+                                                <Edit2 size={16} />
+                                            </button>
+                                            <button onClick={() => handleDelete(a.id)} className="p-1 text-brand-muted hover:text-red-500 transition-colors">
+                                                <Trash2 size={16} />
+                                            </button>
+                                        </div>
+                                    )}
+                                </div>
                             </div>
                             <p className="text-brand-text mb-6 whitespace-pre-wrap leading-relaxed">{a.content}</p>
 
@@ -104,7 +147,9 @@ const PortalAnnouncements = () => {
                 <div className="fixed inset-0 bg-brand-dark/50 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
                     <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-lg animate-fadeIn">
                         <div className="flex justify-between items-center mb-6">
-                            <h2 className="text-2xl font-serif font-bold text-brand-dark">Post Announcement</h2>
+                            <h2 className="text-2xl font-serif font-bold text-brand-dark">
+                                {editingId ? 'Edit Announcement' : 'Post Announcement'}
+                            </h2>
                             <button onClick={() => setIsModalOpen(false)} className="text-brand-muted hover:text-brand-dark"><X size={24} /></button>
                         </div>
 
@@ -143,7 +188,7 @@ const PortalAnnouncements = () => {
                                     disabled={isSubmitting}
                                     className="flex-1 px-4 py-2 rounded-xl bg-brand-pink text-white font-bold hover:shadow-lg hover:shadow-brand-pink/30 hover:-translate-y-0.5 transition-all"
                                 >
-                                    {isSubmitting ? 'Posting...' : 'Post Update'}
+                                    {isSubmitting ? 'Saving...' : (editingId ? 'Save Changes' : 'Post Update')}
                                 </button>
                             </div>
                         </form>
