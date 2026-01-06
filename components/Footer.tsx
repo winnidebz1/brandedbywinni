@@ -27,7 +27,7 @@ const Footer: React.FC = () => {
 
           {/* Brand Info */}
           <div className="col-span-1 md:col-span-2">
-            <h3 className="font-serif text-2xl text-brand-dark mb-4">Branded By Winni</h3>
+
             <p className="inline-block bg-brand-pink text-white text-sm font-medium px-3 py-1 rounded-full mb-6 animate-pulse">
               🎉 15% discount for January bookings
             </p>
@@ -91,7 +91,7 @@ const Footer: React.FC = () => {
           <div className="flex gap-6 text-sm text-brand-muted">
             <Link to="/privacy" className="hover:text-brand-pink">Privacy Policy</Link>
             <Link to="/terms" className="hover:text-brand-pink">Terms of Service</Link>
-            <Link to="/admin/login" className="hover:text-brand-pink font-medium">Team Login</Link>
+
           </div>
         </div>
       </div>

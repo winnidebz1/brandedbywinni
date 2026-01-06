@@ -10,10 +10,12 @@ import FAQ from '../components/FAQ';
 import FinalCTA from '../components/FinalCTA';
 import Results from '../components/Results';
 import Tools from '../components/Tools';
+import PromoPopup from '../components/PromoPopup';
 
 const Home: React.FC = () => {
     return (
         <>
+            <PromoPopup />
             <SEO
                 title="Web Design & SEO Services in Ghana"
                 description="Branded by Winni is a Ghana-based web design studio delivering high-converting, SEO-optimized websites. We specialize in web design, local SEO Ghana, search optimization, and digital marketing for businesses in Accra and beyond."

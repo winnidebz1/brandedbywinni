@@ -33,7 +33,7 @@ const Results: React.FC = () => {
                     <p className="text-brand-ivory/70 max-w-2xl mx-auto">We don't just design; we deliver measurable growth.</p>
                 </div>
 
-                <div className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-8 text-center">
+                <div className="flex overflow-x-auto pb-8 -mx-6 px-6 md:mx-0 md:px-0 md:grid md:grid-cols-3 gap-6 md:gap-8 snap-x snap-mandatory scrollbar-hide">
                     {stats.map((stat, index) => (
                         <motion.div
                             key={index}
@@ -41,14 +41,14 @@ const Results: React.FC = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.2 }}
-                            className="p-4 md:p-8 border border-white/10 rounded-2xl bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors"
+                            className="min-w-[85%] md:min-w-0 flex-shrink-0 snap-center p-8 border border-white/10 rounded-2xl bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors text-center"
                         >
-                            <div className="bg-brand-ivory/10 w-10 h-10 md:w-16 md:h-16 rounded-full flex items-center justify-center mx-auto mb-3 md:mb-6">
-                                {React.cloneElement(stat.icon as React.ReactElement, { className: "w-5 h-5 md:w-8 md:h-8 text-brand-pink" })}
+                            <div className="bg-brand-ivory/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                                {React.cloneElement(stat.icon as React.ReactElement, { className: "w-8 h-8 text-brand-pink" })}
                             </div>
-                            <h3 className="text-2xl md:text-5xl font-serif font-bold mb-1 md:mb-2 text-brand-pink">{stat.value}</h3>
-                            <p className="text-sm md:text-xl font-medium mb-1 md:mb-2 leading-tight">{stat.label}</p>
-                            <p className="text-xs md:text-sm text-brand-ivory/60">{stat.detail}</p>
+                            <h3 className="text-4xl md:text-5xl font-serif font-bold mb-2 text-brand-pink">{stat.value}</h3>
+                            <p className="text-lg md:text-xl font-medium mb-2 leading-tight">{stat.label}</p>
+                            <p className="text-sm text-brand-ivory/60">{stat.detail}</p>
                         </motion.div>
                     ))}
                 </div>
