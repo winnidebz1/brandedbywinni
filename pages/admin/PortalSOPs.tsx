@@ -5,6 +5,155 @@ import { Card, Button, Badge, PageHeader } from '../../components/portal/UI';
 import { supabase } from '../../lib/supabase';
 import { useProfile } from '../../hooks/useProfile';
 
+
+const TEAM_RULES_SOP = {
+    id: 'team-rules',
+    title: 'Creative Agency Team Rules & Code of Conduct',
+    category: 'General',
+    content: `
+    <div class="space-y-6">
+        <section>
+            <h3 class="text-xl font-bold text-brand-pink mb-3">1. Professionalism & Work Ethic</h3>
+            <p class="text-brand-text mb-2">Every team member is expected to act professionally at all times when representing the agency.</p>
+            <p class="text-brand-text mb-2">Deadlines are non-negotiable. If a delay is unavoidable, it must be communicated at least 12–24 hours before the deadline.</p>
+            <p class="text-brand-text">Excuses without solutions are not acceptable. Always propose a fix or alternative.</p>
+        </section>
+
+        <section>
+            <h3 class="text-xl font-bold text-brand-pink mb-3">2. Communication Rules</h3>
+            <p class="text-brand-text mb-2">Official communication channels: WhatsApp / Slack / Notion / Email (as defined by management).</p>
+            <p class="text-brand-text mb-2">Messages must be clear, respectful, and professional—no sarcasm, insults, or passive-aggressive tone.</p>
+            <p class="text-brand-text mb-2">All work-related messages must be acknowledged within:</p>
+            <ul class="list-disc pl-5 text-brand-text space-y-1 mb-2">
+                <li>1–2 hours during work hours</li>
+                <li>12 hours outside work hours</li>
+            </ul>
+            <p class="text-brand-text">Voice notes should be under 60 seconds unless otherwise requested.</p>
+        </section>
+        
+        <section>
+            <h3 class="text-xl font-bold text-brand-pink mb-3">3. Availability & Working Hours</h3>
+            <ul class="list-disc pl-5 text-brand-text space-y-1">
+                <li>Team members must be available during agreed working hours.</li>
+                <li>If you will be unavailable (network issues, emergencies, personal reasons), notify the team beforehand.</li>
+                <li>Disappearing without notice is considered unprofessional and may lead to disciplinary action.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3 class="text-xl font-bold text-brand-pink mb-3">4. Task Management & Workflow</h3>
+            <ul class="list-disc pl-5 text-brand-text space-y-1 mb-2">
+                <li>All tasks must be tracked in the agency’s task management system (e.g., Notion, ClickUp).</li>
+                <li>Never start client work that is not officially assigned.</li>
+            </ul>
+            <p class="text-brand-text mb-2">Status updates are mandatory:</p>
+            <ul class="list-disc pl-5 text-brand-text space-y-1 mb-2">
+                <li>Task started</li>
+                <li>Task in progress</li>
+                <li>Task completed</li>
+            </ul>
+            <p class="text-brand-text">Submitting incomplete work without explanation is unacceptable.</p>
+        </section>
+
+        <section>
+            <h3 class="text-xl font-bold text-brand-pink mb-3">5. Quality & Standards</h3>
+            <p class="text-brand-text mb-2">All deliverables must meet the agency’s quality standards before submission.</p>
+            <p class="text-brand-text mb-2">Work must be:</p>
+            <ul class="list-disc pl-5 text-brand-text space-y-1 mb-2">
+                <li>Properly named</li>
+                <li>Organized into correct folders</li>
+                <li>Exported in the correct formats</li>
+            </ul>
+            <p class="text-brand-text">Sloppy, rushed, or copied work will be rejected.</p>
+        </section>
+
+        <section>
+            <h3 class="text-xl font-bold text-brand-pink mb-3">6. Revisions & Feedback</h3>
+            <ul class="list-disc pl-5 text-brand-text space-y-1">
+                <li>Feedback is part of the process—do not take it personally.</li>
+                <li>All revisions must be done promptly and according to instructions.</li>
+                <li>If feedback is unclear, ask questions before revising, not after.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3 class="text-xl font-bold text-brand-pink mb-3">7. Confidentiality & Client Protection</h3>
+            <p class="text-brand-text mb-2">Client information, files, and strategies are strictly confidential.</p>
+            <p class="text-brand-text mb-2">Do not share:</p>
+            <ul class="list-disc pl-5 text-brand-text space-y-1 mb-2">
+                <li>Client files</li>
+                <li>Pricing</li>
+                <li>Internal documents</li>
+                <li>Login credentials</li>
+            </ul>
+            <p class="text-brand-text">Contacting agency clients privately without permission is strictly prohibited.</p>
+        </section>
+
+        <section>
+            <h3 class="text-xl font-bold text-brand-pink mb-3">8. Ownership & Intellectual Property</h3>
+            <ul class="list-disc pl-5 text-brand-text space-y-1">
+                <li>All work done for the agency belongs to the agency unless stated otherwise.</li>
+                <li>Do not reuse client work for personal projects without written approval.</li>
+                <li>Portfolio use must be approved.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3 class="text-xl font-bold text-brand-pink mb-3">9. Attendance, Meetings & Training</h3>
+            <ul class="list-disc pl-5 text-brand-text space-y-1">
+                <li>Attendance at scheduled meetings, trainings, and check-ins is mandatory.</li>
+                <li>Joining meetings late without notice is unacceptable.</li>
+                <li>Missing meetings repeatedly may result in removal from the team.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3 class="text-xl font-bold text-brand-pink mb-3">10. Tools & Resources Usage</h3>
+            <ul class="list-disc pl-5 text-brand-text space-y-1">
+                <li>Agency tools (Canva, Adobe, Notion, AI tools, etc.) must be used responsibly.</li>
+                <li>Do not misuse, overshare, or abuse access to paid tools.</li>
+                <li>Any technical issues must be reported immediately.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3 class="text-xl font-bold text-brand-pink mb-3">11. Accountability & Discipline</h3>
+            <p class="text-brand-text mb-2">The following actions may result in warnings, suspension, or termination:</p>
+            <ul class="list-disc pl-5 text-brand-text space-y-1 mb-2">
+                <li>Repeated missed deadlines</li>
+                <li>Poor communication</li>
+                <li>Disrespectful behavior</li>
+                <li>Plagiarism</li>
+                <li>Client poaching</li>
+                <li>Ghosting the team</li>
+            </ul>
+            <p class="text-brand-text">Three strikes rule applies unless the offense is severe.</p>
+        </section>
+
+        <section>
+            <h3 class="text-xl font-bold text-brand-pink mb-3">12. Growth, Learning & Initiative</h3>
+            <ul class="list-disc pl-5 text-brand-text space-y-1">
+                <li>Team members are encouraged to improve their skills continuously.</li>
+                <li>Suggestions and creative ideas are welcome—but must align with agency goals.</li>
+                <li>Everyone is expected to grow, not stagnate.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h3 class="text-xl font-bold text-brand-pink mb-3">13. Final Agreement</h3>
+            <p class="text-brand-text mb-2">By joining the agency, you agree to:</p>
+            <ul class="list-disc pl-5 text-brand-text space-y-1 mb-2">
+                <li>Follow these rules</li>
+                <li>Respect the team</li>
+                <li>Protect the brand</li>
+                <li>Deliver excellence consistently</li>
+            </ul>
+            <p class="text-brand-text text-red-500 font-medium">Failure to comply may result in immediate removal from the team.</p>
+        </section>
+    </div>
+    `
+};
+
 const PortalSOPs = () => {
     const { slug } = useParams();
     const { profile, isAdmin } = useProfile();
@@ -19,8 +168,13 @@ const PortalSOPs = () => {
     const fetchSOPs = async () => {
         try {
             const { data, error } = await supabase.from('sops').select('*').order('category');
-            if (error) throw error;
-            setSops(data || []);
+
+            let fetchedSops = data || [];
+            // Remove any existing team-rules to allow our hardcoded one to take precedence
+            fetchedSops = fetchedSops.filter(s => s.id !== 'team-rules');
+
+            // Combine hardcoded + fetched
+            setSops([TEAM_RULES_SOP, ...fetchedSops]);
         } catch (error) {
             console.error('Error fetching SOPs:', error);
         } finally {
