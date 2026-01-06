@@ -26,7 +26,6 @@ const PortalDashboard = React.lazy(() => import('./pages/admin/PortalDashboard')
 const PortalTasks = React.lazy(() => import('./pages/admin/PortalTasks'));
 const PortalProjects = React.lazy(() => import('./pages/admin/PortalProjects'));
 const PortalSOPs = React.lazy(() => import('./pages/admin/PortalSOPs'));
-const PortalAssets = React.lazy(() => import('./pages/admin/PortalAssets'));
 const PortalFeedback = React.lazy(() => import('./pages/admin/PortalFeedback'));
 const PortalRules = React.lazy(() => import('./pages/admin/PortalRules'));
 const PortalAnnouncements = React.lazy(() => import('./pages/admin/PortalAnnouncements'));
@@ -135,7 +134,6 @@ const App: React.FC = () => {
                 <Route path="projects" element={<PortalProjects />} />
                 <Route path="sops" element={<PortalSOPs />} />
                 <Route path="sops/:slug" element={<PortalSOPs />} />
-                <Route path="assets" element={<PortalAssets />} />
                 <Route path="feedback" element={<PortalFeedback />} />
                 <Route path="rules" element={<PortalRules />} />
                 <Route path="announcements" element={<PortalAnnouncements />} />

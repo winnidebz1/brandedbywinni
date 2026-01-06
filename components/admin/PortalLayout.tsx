@@ -72,7 +72,6 @@ const PortalLayout = () => {
         { name: 'My Tasks', path: '/portal/tasks', icon: <CheckSquare size={20} /> },
         { name: 'Projects', path: '/portal/projects', icon: <FolderOpen size={20} /> },
         // SOPs handled separately for dropdown
-        { name: 'Brand Assets', path: '/portal/assets', icon: <ImageIcon size={20} /> },
         { name: 'Feedback', path: '/portal/feedback', icon: <MessageSquare size={20} /> },
         { name: 'Team Rules', path: '/portal/rules', icon: <Users size={20} /> },
         { name: 'Announcements', path: '/portal/announcements', icon: <Bell size={20} /> },

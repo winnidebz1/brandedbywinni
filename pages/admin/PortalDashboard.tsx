@@ -12,15 +12,32 @@ const PortalDashboard = () => {
     const [recentTasks, setRecentTasks] = React.useState<any[]>([]);
     const [announcements, setAnnouncements] = React.useState<any[]>([]);
     const [loading, setLoading] = React.useState(true);
+    const [quote, setQuote] = React.useState({ text: '', author: '' });
+
+    const quotes = [
+        { text: "Design is the silent ambassador of your brand.", author: "Paul Rand" },
+        { text: "Simplicity is the ultimate sophistication.", author: "Leonardo da Vinci" },
+        { text: "Make it simple, but significant.", author: "Don Draper" },
+        { text: "The details are not the details. They make the design.", author: "Charles Eames" },
+        { text: "Good design is obvious. Great design is transparent.", author: "Joe Sparano" },
+        { text: "Everything has beauty, but not everyone sees it.", author: "Confucius" },
+        { text: "Creativity is intelligence having fun.", author: "Albert Einstein" }
+    ];
 
     React.useEffect(() => {
+        // Set Daily Quote based on date
+        const today = new Date();
+        const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / 1000 / 60 / 60 / 24);
+        const quoteIndex = dayOfYear % quotes.length;
+        setQuote(quotes[quoteIndex]);
+
         const fetchDashboardData = async () => {
             try {
                 // 1. Fetch Stats
                 const { count: pendingCount } = await supabase
                     .from('tasks')
                     .select('*', { count: 'exact', head: true })
-                    .neq('status', 'approved'); // Assuming 'approved' is completed
+                    .neq('status', 'approved');
 
                 const { count: completedCount } = await supabase
                     .from('tasks')
@@ -38,9 +55,7 @@ const PortalDashboard = () => {
                     activeProjects: projectCount || 0
                 });
 
-                // 2. Fetch Priority Tasks (Urgent/High first, then by deadline)
-                // Note: sorting by multiple columns in Supabase JS client can be tricky if not indexed, but basic order works.
-                // We'll just order by deadline for "Coming Up"
+                // 2. Fetch Priority Tasks
                 const { data: tasksData } = await supabase
                     .from('tasks')
                     .select('*')
@@ -50,8 +65,7 @@ const PortalDashboard = () => {
 
                 setRecentTasks(tasksData || []);
 
-                // 3. Fetch New Announcements (for Notification Count)
-                // If founder, they don't see notifications
+                // 3. Fetch New Announcements
                 if (profile.role === 'founder') {
                     setAnnouncements([]);
                 } else {
@@ -74,13 +88,12 @@ const PortalDashboard = () => {
         };
 
         fetchDashboardData();
-        fetchDashboardData();
     }, [profile]);
 
     const statCards = [
-        { label: 'Pending Tasks', value: stats.pending, icon: <Clock size={24} />, color: 'bg-brand-ivory text-brand-pink border border-brand-pink/20' },
-        { label: 'Completed', value: stats.completed, icon: <CheckSquare size={24} />, color: 'bg-green-50 text-green-600 border border-green-200' },
-        { label: 'Active Projects', value: stats.activeProjects, icon: <LayoutDashboard size={24} />, color: 'bg-blue-50 text-blue-600 border border-blue-200' },
+        { label: 'Pending Tasks', value: stats.pending, icon: <Clock size={24} />, color: 'bg-brand-ivory text-brand-pink border border-brand-pink/20', path: '/portal/tasks' },
+        { label: 'Completed', value: stats.completed, icon: <CheckSquare size={24} />, color: 'bg-green-50 text-green-600 border border-green-200', path: '/portal/tasks' },
+        { label: 'Active Projects', value: stats.activeProjects, icon: <LayoutDashboard size={24} />, color: 'bg-blue-50 text-blue-600 border border-blue-200', path: '/portal/projects' },
     ];
 
     return (
@@ -118,15 +131,17 @@ const PortalDashboard = () => {
             {/* Quick Stats */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 {statCards.map((stat) => (
-                    <Card key={stat.label} className="flex items-center space-x-4 hover:scale-105 transition-transform">
-                        <div className={`p-4 rounded-xl ${stat.color}`}>
-                            {stat.icon}
-                        </div>
-                        <div>
-                            <p className="text-xs text-brand-muted font-bold uppercase tracking-widest">{stat.label}</p>
-                            <p className="text-3xl font-bold text-brand-dark">{stat.value}</p>
-                        </div>
-                    </Card>
+                    <Link to={stat.path} key={stat.label}>
+                        <Card className="flex items-center space-x-4 hover:scale-105 transition-transform cursor-pointer h-full">
+                            <div className={`p-4 rounded-xl ${stat.color}`}>
+                                {stat.icon}
+                            </div>
+                            <div>
+                                <p className="text-xs text-brand-muted font-bold uppercase tracking-widest">{stat.label}</p>
+                                <p className="text-3xl font-bold text-brand-dark">{stat.value}</p>
+                            </div>
+                        </Card>
+                    </Link>
                 ))}
             </div>
 
@@ -145,7 +160,9 @@ const PortalDashboard = () => {
                             </Card>
                         ) : (
                             recentTasks.map((task) => (
-                                <Card key={task.id} className="flex items-center justify-between p-4 cursor-pointer hover:bg-brand-ivory transition-colors group">
+                                <Card key={task.id}
+                                    onClick={() => navigate('/portal/tasks')}
+                                    className="flex items-center justify-between p-4 cursor-pointer hover:bg-brand-ivory transition-colors group">
                                     <div className="flex items-center space-x-3">
                                         <div className={`w-1.5 h-12 rounded-full ${task.priority === 'urgent' ? 'bg-red-500' : 'bg-brand-pink'}`}></div>
                                         <div>
@@ -167,9 +184,9 @@ const PortalDashboard = () => {
                     <Card className="border-l-4 border-l-brand-pink h-full flex flex-col justify-center p-8 bg-gradient-to-br from-white to-brand-ivory">
                         <h3 className="font-bold text-brand-dark mb-4 text-xl">Daily Inspiration</h3>
                         <blockquote className="italic text-brand-muted text-lg leading-relaxed font-serif">
-                            "Design is the silent ambassador of your brand."
+                            "{quote.text}"
                         </blockquote>
-                        <p className="text-sm font-bold text-brand-pink mt-4">- Paul Rand</p>
+                        <p className="text-sm font-bold text-brand-pink mt-4">- {quote.author}</p>
                     </Card>
                 </div>
             </div>

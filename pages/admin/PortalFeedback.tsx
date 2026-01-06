@@ -12,6 +12,7 @@ const PortalFeedback = () => {
     const [isAnonymous, setIsAnonymous] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
+    const [activeTab, setActiveTab] = useState('submit');
 
     const fetchFeedbacks = async () => {
         if (!isAdmin) return;
@@ -49,7 +50,30 @@ const PortalFeedback = () => {
         <div className="space-y-8 animate-fadeIn">
             <PageHeader title="Feedback & Reviews" subtitle="Constructive feedback to help us grow." />
 
-            {isAdmin ? (
+            {isAdmin && (
+                <div className="flex space-x-2 border-b border-brand-muted/20 mb-6">
+                    <button
+                        onClick={() => setActiveTab('submit')}
+                        className={`px-6 py-3 text-sm font-bold border-b-2 transition-colors ${activeTab === 'submit'
+                            ? 'border-brand-pink text-brand-pink'
+                            : 'border-transparent text-brand-muted hover:text-brand-dark'
+                            }`}
+                    >
+                        Submit Feedback
+                    </button>
+                    <button
+                        onClick={() => setActiveTab('review')}
+                        className={`px-6 py-3 text-sm font-bold border-b-2 transition-colors ${activeTab === 'review'
+                            ? 'border-brand-pink text-brand-pink'
+                            : 'border-transparent text-brand-muted hover:text-brand-dark'
+                            }`}
+                    >
+                        Review Feedback
+                    </button>
+                </div>
+            )}
+
+            {isAdmin && activeTab === 'review' ? (
                 <div className="grid grid-cols-1 gap-6">
                     {feedbacks.length === 0 ? (
                         <div className="text-center p-12 text-brand-muted">No feedback received yet.</div>

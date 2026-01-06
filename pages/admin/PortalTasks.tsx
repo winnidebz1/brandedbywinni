@@ -20,6 +20,7 @@ const PortalTasks = () => {
     const [deadline, setDeadline] = useState('');
     const [selectedProject, setSelectedProject] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [editingTask, setEditingTask] = useState<any>(null); // New state for editing
 
     const fetchTasks = async () => {
         try {
@@ -49,32 +50,64 @@ const PortalTasks = () => {
         fetchProjects();
     }, [filter]);
 
-    const handleCreateTask = async (e: React.FormEvent) => {
+    const resetForm = () => {
+        setTitle('');
+        setDescription('');
+        setPriority('medium');
+        setStatus('to_do');
+        setDeadline('');
+        setSelectedProject('');
+        setEditingTask(null);
+    };
+
+    const handleSaveTask = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
         try {
-            const { error } = await supabase.from('tasks').insert({
+            const taskData = {
                 title,
                 description,
                 priority,
                 status,
                 deadline: deadline || null,
                 project_id: selectedProject || null,
-                assigned_to: profile?.id // Auto-assign to self for now? Or leave null.
-            });
+                assigned_to: editingTask ? editingTask.assigned_to : profile?.id
+            };
 
-            if (error) throw error;
+            if (editingTask) {
+                // Update existing task
+                const { error } = await supabase
+                    .from('tasks')
+                    .update(taskData)
+                    .eq('id', editingTask.id);
+                if (error) throw error;
+            } else {
+                // Create new task
+                const { error } = await supabase
+                    .from('tasks')
+                    .insert(taskData);
+                if (error) throw error;
+            }
 
             setIsModalOpen(false);
-            setTitle('');
-            setDescription('');
-            setDeadline('');
+            resetForm();
             fetchTasks();
         } catch (error: any) {
-            alert('Error creating task: ' + error.getMessage());
+            alert('Error saving task: ' + error.message);
         } finally {
             setIsSubmitting(false);
         }
+    };
+
+    const handleEditTask = (task: any) => {
+        setEditingTask(task);
+        setTitle(task.title);
+        setDescription(task.description || '');
+        setPriority(task.priority);
+        setStatus(task.status);
+        setDeadline(task.deadline ? task.deadline.split('T')[0] : '');
+        setSelectedProject(task.project_id || '');
+        setIsModalOpen(true);
     };
 
     const getStatusColor = (status: string) => {
@@ -92,7 +125,7 @@ const PortalTasks = () => {
                 title={isAdmin ? "Task Overview" : "My Assignments"}
                 subtitle={isAdmin ? "Manage team tasks and approvals" : "Stay on top of your deadlines"}
                 action={isAdmin && (
-                    <Button onClick={() => setIsModalOpen(true)}>
+                    <Button onClick={() => { resetForm(); setIsModalOpen(true); }}>
                         <Plus size={20} />
                         <span>New Task</span>
                     </Button>
@@ -127,7 +160,9 @@ const PortalTasks = () => {
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {tasks.map((task) => (
-                        <Card key={task.id} className="cursor-pointer group hover:border-brand-pink/50 transition-all">
+                        <Card key={task.id}
+                            onClick={() => handleEditTask(task)} // Click to edit
+                            className="cursor-pointer group hover:border-brand-pink/50 transition-all hover:shadow-lg hover:shadow-brand-pink/10">
                             <div className="flex justify-between items-start mb-4">
                                 <Badge variant={getStatusColor(task.status)}>{task.status.replace(/_/g, ' ')}</Badge>
                                 <span className={`text-xs font-bold ${task.priority === 'high' ? 'text-red-500' : 'text-brand-muted'}`}>
@@ -162,8 +197,10 @@ const PortalTasks = () => {
             {isModalOpen && (
                 <div className="fixed inset-0 bg-brand-dark/50 z-50 flex items-center justify-center p-4 backdrop-blur-sm">
                     <div className="bg-white rounded-2xl shadow-2xl p-8 w-full max-w-lg animate-fadeIn max-h-[90vh] overflow-y-auto">
-                        <h2 className="text-2xl font-serif font-bold text-brand-dark mb-6">Create New Task</h2>
-                        <form onSubmit={handleCreateTask} className="space-y-4">
+                        <h2 className="text-2xl font-serif font-bold text-brand-dark mb-6">
+                            {editingTask ? 'Edit Task' : 'Create New Task'}
+                        </h2>
+                        <form onSubmit={handleSaveTask} className="space-y-4">
                             <div>
                                 <label className="block text-sm font-bold text-brand-muted mb-1">Task Title</label>
                                 <input
@@ -251,7 +288,7 @@ const PortalTasks = () => {
                                     disabled={isSubmitting}
                                     className="flex-1 px-4 py-2 rounded-xl bg-brand-pink text-white font-bold hover:shadow-lg hover:shadow-brand-pink/30 hover:-translate-y-0.5 transition-all"
                                 >
-                                    {isSubmitting ? 'Creating...' : 'Create Task'}
+                                    {isSubmitting ? 'Saving...' : (editingTask ? 'Update Task' : 'Create Task')}
                                 </button>
                             </div>
                         </form>
