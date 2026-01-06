@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { Navigate, Outlet } from 'react-router-dom';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { supabase } from '../../lib/supabase';
 
 const ProtectedRoute = () => {
     const [loading, setLoading] = useState(true);
     const [authenticated, setAuthenticated] = useState(false);
+    const location = useLocation();
 
     useEffect(() => {
         const checkAuth = async () => {
@@ -35,7 +36,9 @@ const ProtectedRoute = () => {
         );
     }
 
-    return authenticated ? <Outlet /> : <Navigate to="/admin/login" replace />;
+    const loginPath = location.pathname.startsWith('/portal') ? '/portal/login' : '/admin/login';
+
+    return authenticated ? <Outlet /> : <Navigate to={loginPath} replace />;
 };
 
 export default ProtectedRoute;
