@@ -63,7 +63,7 @@ const Services: React.FC = () => {
           <h2 className="font-serif text-4xl md:text-5xl text-brand-dark mb-4">Our Expertise</h2>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6 items-start">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 items-start">
           {services.map((service, index) => (
             <Link
               to={`/services/${service.slug}`}
