@@ -1,9 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Clock, MessageCircle, FileText, Heart, Plus, Edit2, Save, Trash2 } from 'lucide-react';
-import { Card, PageHeader, Button } from '../../components/portal/UI';
-import { supabase } from '../../lib/supabase';
-import { useProfile } from '../../hooks/useProfile';
-
+import React, { useState } from 'react';
+import { Card, PageHeader } from '../../components/portal/UI';
 const INITIAL_RULES = [
     {
         title: "1. Professionalism & Work Ethic",
@@ -134,150 +130,33 @@ Failure to comply may result in immediate removal from the team.`
 ];
 
 const PortalRules = () => {
-    const { isAdmin } = useProfile();
-    const [rules, setRules] = useState<any[]>([]);
-    const [loading, setLoading] = useState(true);
-    const [editingId, setEditingId] = useState<string | null>(null);
-    const [editForm, setEditForm] = useState({ title: '', content: '' });
-    const [isCreating, setIsCreating] = useState(false);
+    // const { isAdmin } = useProfile(); // Unused if we remove editing
+    const [rules, setRules] = useState<any[]>(INITIAL_RULES);
+    // const [loading, setLoading] = useState(true); // No longer async loading
 
-    const fetchRules = async () => {
-        try {
-            const { data, error } = await supabase.from('team_rules').select('*').order('created_at');
-            if (error) throw error;
-
-            if ((!data || data.length === 0) && isAdmin) {
-                // Initialize default rules
-                const { error: insertError } = await supabase.from('team_rules').insert(INITIAL_RULES);
-                if (insertError) throw insertError;
-                // Refetch
-                const { data: newData } = await supabase.from('team_rules').select('*').order('created_at');
-                setRules(newData || []);
-            } else {
-                setRules(data || []);
-            }
-        } catch (error) {
-            console.error('Error fetching rules:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    useEffect(() => {
-        fetchRules();
-    }, []);
-
-    const handleCreate = async () => {
-        try {
-            const { error } = await supabase.from('team_rules').insert({
-                title: 'New Rule',
-                content: 'Description here...'
-            });
-            if (error) throw error;
-            fetchRules();
-            setIsCreating(false);
-        } catch (error: any) {
-            alert('Error creating rule: ' + error.message);
-        }
-    };
-
-    const handleSave = async (id: string) => {
-        try {
-            const { error } = await supabase.from('team_rules').update({
-                title: editForm.title,
-                content: editForm.content
-            }).eq('id', id);
-
-            if (error) throw error;
-            setEditingId(null);
-            fetchRules();
-        } catch (error: any) {
-            alert('Error saving rule: ' + error.message);
-        }
-    };
-
-    const handleDelete = async (id: string) => {
-        if (!confirm('Are you sure you want to delete this rule?')) return;
-        try {
-            const { error } = await supabase.from('team_rules').delete().eq('id', id);
-            if (error) throw error;
-            fetchRules();
-        } catch (error: any) {
-            alert('Error deleting rule: ' + error.message);
-        }
-    };
-
-    const startEditing = (rule: any) => {
-        setEditingId(rule.id);
-        setEditForm({ title: rule.title, content: rule.content });
-    };
+    // Database features temporarily disabled due to missing table 'team_rules'
+    // To restore, ensure 'team_rules' table exists in Supabase with (id, title, content, created_at)
 
     return (
         <div className="space-y-8 animate-fadeIn">
             <PageHeader
                 title="Team Rules & Culture"
                 subtitle="How we work together effectively."
-                action={isAdmin && (
-                    <Button onClick={handleCreate}>
-                        <Plus size={20} />
-                        <span>Add Section</span>
-                    </Button>
-                )}
             />
 
-            {loading ? (
-                <div>Loading rules...</div>
-            ) : rules.length === 0 ? (
-                <div className="text-center p-12 bg-white rounded-2xl border border-dashed text-brand-muted">
-                    No rules defined yet.
-                </div>
-            ) : (
-                <div className="grid grid-cols-1 gap-8 max-w-4xl mx-auto">
-                    {rules.map((rule, index) => (
-                        <Card key={rule.id} className="relative group">
-                            {isAdmin && !editingId && (
-                                <div className="absolute top-4 right-4 flex space-x-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <button onClick={() => startEditing(rule)} className="p-1 hover:text-brand-pink text-brand-muted">
-                                        <Edit2 size={16} />
-                                    </button>
-                                    <button onClick={() => handleDelete(rule.id)} className="p-1 hover:text-red-500 text-brand-muted">
-                                        <Trash2 size={16} />
-                                    </button>
-                                </div>
-                            )}
-
-                            {editingId === rule.id ? (
-                                <div className="space-y-4">
-                                    <input
-                                        className="w-full font-bold text-xl p-2 border rounded"
-                                        value={editForm.title}
-                                        onChange={(e) => setEditForm({ ...editForm, title: e.target.value })}
-                                    />
-                                    <textarea
-                                        className="w-full h-96 p-2 border rounded text-sm font-mono"
-                                        value={editForm.content}
-                                        onChange={(e) => setEditForm({ ...editForm, content: e.target.value })}
-                                    />
-                                    <div className="flex justify-end space-x-2">
-                                        <Button size="sm" variant="outline" onClick={() => setEditingId(null)}>Cancel</Button>
-                                        <Button size="sm" onClick={() => handleSave(rule.id)}>Save</Button>
-                                    </div>
-                                </div>
-                            ) : (
-                                <>
-                                    <div className="flex items-center space-x-3 mb-4 text-brand-pink border-b border-brand-pink/10 pb-2">
-                                        <span className="text-2xl font-serif font-bold text-brand-pink/20">{(index + 1).toString().padStart(2, '0')}</span>
-                                        <h3 className="text-xl font-bold text-brand-dark">{rule.title}</h3>
-                                    </div>
-                                    <div className="whitespace-pre-wrap text-brand-text leading-relaxed prose prose-pink max-w-none">
-                                        {rule.content}
-                                    </div>
-                                </>
-                            )}
-                        </Card>
-                    ))}
-                </div>
-            )}
+            <div className="grid grid-cols-1 gap-8 max-w-4xl mx-auto">
+                {rules.map((rule, index) => (
+                    <Card key={index} className="relative group">
+                        <div className="flex items-center space-x-3 mb-4 text-brand-pink border-b border-brand-pink/10 pb-2">
+                            <span className="text-2xl font-serif font-bold text-brand-pink/20">{(index + 1).toString().padStart(2, '0')}</span>
+                            <h3 className="text-xl font-bold text-brand-dark">{rule.title}</h3>
+                        </div>
+                        <div className="whitespace-pre-wrap text-brand-text leading-relaxed prose prose-pink max-w-none">
+                            {rule.content}
+                        </div>
+                    </Card>
+                ))}
+            </div>
         </div>
     );
 };
