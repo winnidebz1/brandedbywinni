@@ -23,19 +23,12 @@ const services = [
   {
     slug: "seo-services-ghana",
     icon: <TrendingUp strokeWidth={1.5} />,
-    title: "SEO Services in Ghana",
-    description: "Stop being invisible. We implement on-page, technical, and off-page SEO strategies to help you rank on Google for competitive keywords.",
+    title: "SEO Services",
+    description: "Stop being invisible. We implement on-page, technical, and off-page SEO strategies to help your business climb the search rankings and dominate your local market.",
     whatYouGet: "Higher search engine rankings, increased organic traffic, and more qualified leads.",
     components: ["Keyword Research & Strategy", "On-Page Optimization", "Technical SEO Audits", "Link Building Support"]
   },
-  {
-    slug: "local-seo-google-business",
-    icon: <MapPin strokeWidth={1.5} />,
-    title: "Local SEO & Google Business",
-    description: "Dominate your local market. We optimize your Google Business Profile so customers in your area find you first on Maps and Search.",
-    whatYouGet: "Enhanced local visibility and more foot traffic or calls from nearby customers.",
-    components: ["Google Maps Optimization", "Local Citation Building", "Review Management Strategy", "NAP Consistency"]
-  },
+
   {
     slug: "content-strategy-copywriting",
     icon: <PenTool strokeWidth={1.5} />,
