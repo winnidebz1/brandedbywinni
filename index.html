@@ -54,12 +54,112 @@
     }
   </script>
   <div id="root">
-    <div
-      style="display: flex; justify-content: center; align-items: center; height: 100vh; font-family: sans-serif; font-size: 24px; color: #4A3B40;">
-      Loading...
+    <!-- Instant-Render Hero Content - Shows BEFORE JavaScript Loads -->
+    <div class="hero-instant" style="
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(to bottom right, #FAF9F6, #FFFFFF, rgba(232, 155, 167, 0.05));
+      padding: 6rem 1.5rem 4rem;
+    ">
+      <div style="max-width: 1280px; width: 100%; margin: 0 auto; text-align: center;">
+        <!-- Headline -->
+        <h1 style="
+          font-family: 'Playfair Display', serif;
+          font-size: clamp(2.5rem, 5vw, 4rem);
+          line-height: 1.1;
+          color: #4A3B40;
+          margin-bottom: 1.5rem;
+          font-weight: 600;
+        ">
+          We Build Brands That Look <span style="color: #E89BA7; font-style: italic;">Premium</span><br>
+          and Sell <span style="color: #E89BA7; font-style: italic;">Confidently</span>
+        </h1>
+
+        <!-- Sub-headline -->
+        <p style="
+          font-family: 'Inter', sans-serif;
+          font-size: clamp(1.125rem, 2vw, 1.5rem);
+          color: #5D4E53;
+          max-width: 48rem;
+          margin: 0 auto 2.5rem;
+          font-weight: 300;
+          line-height: 1.6;
+        ">
+          Branding, visual identity, and creative strategy for bold businesses ready to stand out.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div style="
+          display: flex;
+          flex-direction: column;
+          gap: 1.25rem;
+          align-items: center;
+          margin-bottom: 2.5rem;
+        ">
+          <a href="https://wa.me/233244591777?text=Hi!%20I'd%20like%20to%20book%20a%20free%20brand%20audit"
+            target="_blank" rel="noopener noreferrer" style="
+               display: inline-flex;
+               align-items: center;
+               gap: 0.75rem;
+               padding: 1rem 2rem;
+               background-color: #E89BA7;
+               color: white;
+               font-family: 'Inter', sans-serif;
+               font-weight: 500;
+               font-size: 1.125rem;
+               border-radius: 0.375rem;
+               text-decoration: none;
+               box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+               transition: all 0.3s;
+             ">
+            📱 Book a Free Brand Audit
+          </a>
+
+          <a href="#portfolio" style="
+               display: inline-flex;
+               align-items: center;
+               gap: 0.75rem;
+               padding: 1rem 2rem;
+               border: 2px solid #4A3B40;
+               color: #4A3B40;
+               font-family: 'Inter', sans-serif;
+               font-weight: 500;
+               font-size: 1.125rem;
+               border-radius: 0.375rem;
+               text-decoration: none;
+               transition: all 0.3s;
+             ">
+            View Our Work →
+          </a>
+        </div>
+
+        <!-- Trust Indicator -->
+        <p style="
+          font-family: 'Inter', sans-serif;
+          font-size: 0.875rem;
+          color: #9C8C91;
+          margin-top: 2rem;
+        ">
+          <strong style="color: #4A3B40;">50+ brands</strong> transformed in Ghana & beyond
+        </p>
+      </div>
     </div>
   </div>
   <script type="module" src="/index.tsx"></script>
+
+  <!-- Hide instant hero once React loads -->
+  <style>
+    .hero-instant {
+      transition: opacity 0.3s ease-out;
+    }
+
+    /* Once React loads, this will be replaced smoothly */
+    #root:has(> :not(.hero-instant)) .hero-instant {
+      display: none;
+    }
+  </style>
 
   <!-- Register Service Worker AFTER app loads -->
   <script>
