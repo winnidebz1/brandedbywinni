@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import OptimizedImage from './OptimizedImage';
+
 
 const messages = [
   "Helping Brands increase traffic, credibility and online sales in under 90 days.",
@@ -82,15 +84,26 @@ const Hero: React.FC = () => {
         >
           {/* Decorative collage using simple divs and images */}
           <div className="absolute top-10 left-1/2 -translate-x-1/2 lg:translate-x-0 lg:left-auto lg:top-10 lg:right-0 w-64 h-80 bg-gray-200 overflow-hidden rounded-lg shadow-xl lg:rotate-3 transition-transform duration-700">
-            <img
+            <OptimizedImage
               src="/hero-1.jpg"
               alt="Team Collaboration"
-              className="w-full h-full object-cover opacity-90"
-              fetchPriority="high"
+              className="w-full h-full opacity-90"
+              width={256}
+              height={320}
+              priority={true}
+              objectFit="cover"
             />
           </div>
           <div className="hidden lg:block absolute bottom-10 left-10 lg:bottom-20 lg:left-10 w-48 h-64 lg:w-56 lg:h-72 bg-gray-300 overflow-hidden rounded-lg shadow-2xl lg:-rotate-6 hover:rotate-0 transition-transform duration-700 z-10">
-            <img src="/hero-2.jpg" alt="Creative Meeting" className="w-full h-full object-cover opacity-90" />
+            <OptimizedImage
+              src="/hero-2.jpg"
+              alt="Creative Meeting"
+              className="w-full h-full opacity-90"
+              width={224}
+              height={288}
+              priority={false}
+              objectFit="cover"
+            />
           </div>
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 rounded-full bg-brand-pink/20 blur-3xl z-0"></div>
         </motion.div>

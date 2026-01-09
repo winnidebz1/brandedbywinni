@@ -6,7 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "build:analyze": "vite build --mode analyze",
+    "preview": "vite preview",
+    "optimize:images": "node scripts/optimize-images.js",
+    "optimize:all": "npm run optimize:images && npm run build"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.87.1",
@@ -24,8 +27,14 @@
     "uuid": "^13.0.0"
   },
   "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.18",
     "@types/node": "^22.19.1",
     "@vitejs/plugin-react": "^5.1.1",
+    "autoprefixer": "^10.4.23",
+    "postcss": "^8.5.6",
+    "sharp": "^0.34.5",
+    "tailwindcss": "^4.1.18",
+    "terser": "^5.44.1",
     "typescript": "~5.8.2",
     "vite": "^6.4.1",
     "vite-plugin-sitemap": "^0.8.2"

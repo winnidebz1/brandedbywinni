@@ -1,0 +1,52 @@
+/* Tailwind CSS V4 Format */
+@import "tailwindcss";
+
+/* Custom CSS Variables for Brand Colors */
+@theme {
+  --color-brand-pink: #E89BA7;
+  --color-brand-ivory: #FAF9F6;
+  --color-brand-dark: #4A3B40;
+  --color-brand-text: #5D4E53;
+  --color-brand-muted: #9C8C91;
+  --color-brand-primary-pink: #E89BA7;
+  --color-brand-soft-blush: #FAF9F6;
+  --color-brand-deep-plum: #4A3B40;
+  --color-brand-neutral-white: #FFFFFF;
+  --color-brand-soft-gray: #E5E7EB;
+  --color-brand-accent-gold: #F59E0B;
+}
+
+/* Global Base Styles */
+body {
+  background-color: var(--color-brand-ivory);
+  color: var(--color-brand-dark);
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-brand-ivory);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-brand-pink);
+  border-radius: 4px;
+}
+
+/* Performance: Disable animations for users who prefer reduced motion */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

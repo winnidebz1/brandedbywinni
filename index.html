@@ -12,66 +12,24 @@
   <meta name="apple-mobile-web-app-title" content="Winni Admin">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Branded By Winni | Digital Branding Studio</title>
-  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Optimized Font Loading with Preconnect -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&display=swap"
     rel="stylesheet">
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            brand: {
-              pink: '#E89BA7',
-              ivory: '#FAF9F6',
-              dark: '#4A3B40',
-              text: '#5D4E53',
-              muted: '#9C8C91',
-              // Mapped Portal Colors to Website Brand Colors
-              primaryPink: '#E89BA7', // Was Hot Pink #F472B6
-              softBlush: '#FAF9F6',   // Was #FCE7F3
-              deepPlum: '#4A3B40',    // Was #4A044E
-              neutralWhite: '#FFFFFF',
-              softGray: '#E5E7EB',
-              accentGold: '#F59E0B',
-            }
-          },
-          fontFamily: {
-            sans: ['Inter', 'sans-serif'],
-            serif: ['Playfair Display', 'serif'],
-          },
-          backgroundImage: {
-            'soft-gradient': 'linear-gradient(to right bottom, #FAF9F6, #FFF5F7, #FAF9F6)',
-            'portal-gradient': 'linear-gradient(135deg, #FDF2F8 0%, #FCE7F3 100%)', // Soft blush gradient
-          }
-        }
-      }
-    }
-  </script>
-  <style>
-    body {
-      background-color: #FAF9F6;
-      color: #4A3B40;
-      scroll-behavior: smooth;
-    }
 
-    /* Hide scrollbar for clean look */
-    ::-webkit-scrollbar {
-      width: 8px;
-    }
+  <!-- DNS Prefetch for faster external resource loading -->
+  <link rel="dns-prefetch" href="https://fonts.googleapis.com">
+  <link rel="dns-prefetch" href="https://fonts.gstatic.com">
 
-    ::-webkit-scrollbar-track {
-      background: #FAF9F6;
-    }
+  <!-- Preload Critical Hero Image (LCP Optimization) -->
+  <link rel="preload" as="image" href="/hero-1.avif" type="image/avif">
+  <link rel="preload" as="image" href="/hero-1.webp" type="image/webp">
 
-    ::-webkit-scrollbar-thumb {
-      background: #E89BA7;
-      border-radius: 4px;
-    }
-  </style>
   <link rel="stylesheet" href="/index.css">
+
 </head>
 
 <body>
