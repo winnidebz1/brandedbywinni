@@ -73,7 +73,6 @@
             ]
         }
     ],
-    "buildImage": "vercel-build-image",
     "github": {
         "silent": true
     }
