@@ -13,6 +13,8 @@
     "generate:sitemap": "node scripts/generate-sitemap.js"
   },
   "dependencies": {
+    "@fontsource/inter": "^5.2.8",
+    "@fontsource/playfair-display": "^5.2.8",
     "@supabase/supabase-js": "^2.87.1",
     "@types/papaparse": "^5.5.1",
     "@types/uuid": "^10.0.0",
