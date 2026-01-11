@@ -9,7 +9,8 @@
     "build:analyze": "vite build --mode analyze",
     "preview": "vite preview",
     "optimize:images": "node scripts/optimize-images.js",
-    "optimize:all": "npm run optimize:images && npm run build"
+    "optimize:all": "npm run optimize:images && npm run build",
+    "generate:sitemap": "node scripts/generate-sitemap.js"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.87.1",
