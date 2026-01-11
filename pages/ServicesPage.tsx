@@ -46,8 +46,8 @@ const ServicesPage: React.FC = () => {
     return (
         <div className="pt-24 bg-brand-ivory min-h-screen">
             <SEO
-                title="Our Services"
-                description="Professional web design, branding, and SEO services tailored for your business growth."
+                title="Best Web Development & SEO Services in Ghana"
+                description="Top-rated web design and SEO services in Ghana. Branded By Winni offers responsive design, branding, and local SEO to rank your business #1."
                 url="/services"
             />
             {/* Header */}

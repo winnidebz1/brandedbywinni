@@ -17,9 +17,9 @@ const Home: React.FC = () => {
         <>
             <PromoPopup />
             <SEO
-                title="Web Design & SEO Services in Ghana"
-                description="Branded by Winni is a Ghana-based web design studio delivering high-converting, SEO-optimized websites. We specialize in web design, local SEO Ghana, search optimization, and digital marketing for businesses in Accra and beyond."
-                keywords={['web design ghana', 'seo services ghana', 'digital marketing accra', 'local seo', 'search optimization', 'ecommerce website design']}
+                title="Best Website Designer in Ghana | Web Design Services"
+                description="Looking for the Best Web Designer in Ghana? Branded By Winni creates high-converting, SEO-optimized, and premium websites to grow your business in Accra."
+                keywords={['Best Website Designer in Ghana', 'Best Web Designer in Ghana', 'Web Design Ghana', 'SEO Services Ghana', 'Digital Marketing Accra', 'Branding Agency Ghana']}
             />
             <Hero />
             <WhyWebsite />

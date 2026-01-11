@@ -86,7 +86,7 @@ const Footer: React.FC = () => {
 
         <div className="border-t border-brand-dark/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-brand-muted text-sm font-light">
-            &copy; {new Date().getFullYear()} Branded By Winni. All rights reserved.
+            &copy; 2024 Branded By Winni. All rights reserved.
           </p>
           <div className="flex gap-6 text-sm text-brand-muted">
             <Link to="/privacy" className="hover:text-brand-pink">Privacy Policy</Link>

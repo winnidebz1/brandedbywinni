@@ -86,7 +86,7 @@ const Hero: React.FC = () => {
           <div className="absolute top-10 left-1/2 -translate-x-1/2 lg:translate-x-0 lg:left-auto lg:top-10 lg:right-0 w-64 h-80 bg-gray-200 overflow-hidden rounded-lg shadow-xl lg:rotate-3 transition-transform duration-700">
             <OptimizedImage
               src="/hero-1.jpg"
-              alt="Team Collaboration"
+              alt="Best Website Designer in Ghana - Team Strategy"
               className="w-full h-full opacity-90"
               width={256}
               height={320}
@@ -97,7 +97,7 @@ const Hero: React.FC = () => {
           <div className="hidden lg:block absolute bottom-10 left-10 lg:bottom-20 lg:left-10 w-48 h-64 lg:w-56 lg:h-72 bg-gray-300 overflow-hidden rounded-lg shadow-2xl lg:-rotate-6 hover:rotate-0 transition-transform duration-700 z-10">
             <OptimizedImage
               src="/hero-2.jpg"
-              alt="Creative Meeting"
+              alt="Creative Web Design Meeting in Accra"
               className="w-full h-full opacity-90"
               width={224}
               height={288}

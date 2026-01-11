@@ -62,8 +62,8 @@ const AboutPage: React.FC = () => {
     return (
         <div className="pt-24 bg-brand-ivory min-h-screen">
             <SEO
-                title="About Us"
-                description="Learn about Branded By Winni's journey and passion for digital design and branding."
+                title="About the Best Web Designer in Ghana"
+                description="Meet the creative team behind the best web design agency in Ghana. We combine passion, global perspective, and efficiency to build websites that convert."
                 url="/about"
             />
 
