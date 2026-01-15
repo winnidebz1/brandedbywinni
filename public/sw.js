@@ -39,6 +39,10 @@ self.addEventListener('fetch', (event) => {
     // Skip API calls to Supabase
     if (event.request.url.includes('supabase')) return;
 
+    // Skip unsupported schemes (chrome-extension, etc.)
+    const url = new URL(event.request.url);
+    if (!url.protocol.startsWith('http')) return;
+
     event.respondWith(
         fetch(event.request)
             .then((response) => {
