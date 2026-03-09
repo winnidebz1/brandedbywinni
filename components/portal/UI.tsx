@@ -26,13 +26,14 @@ export const Button = ({ children, variant = 'primary', className = '', ...props
     );
 };
 
-export const Badge = ({ children, variant = 'default', className = '' }: { children: React.ReactNode, variant?: 'default' | 'success' | 'warning' | 'error' | 'pink', className?: string }) => {
+export const Badge = ({ children, variant = 'default', className = '' }: { children: React.ReactNode, variant?: 'default' | 'success' | 'warning' | 'error' | 'pink' | 'outline', className?: string }) => {
     const variants = {
         default: "bg-brand-muted/20 text-brand-text",
         success: "bg-green-100 text-green-700",
         warning: "bg-yellow-100 text-yellow-700",
         error: "bg-red-100 text-red-700",
-        pink: "bg-brand-ivory text-brand-dark border border-brand-pink/20"
+        pink: "bg-brand-ivory text-brand-dark border border-brand-pink/20",
+        outline: "bg-transparent border border-brand-pink/30 text-brand-dark"
     };
 
     return (

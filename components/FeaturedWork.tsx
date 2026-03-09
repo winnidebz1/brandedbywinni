@@ -151,7 +151,7 @@ const FeaturedWork: React.FC = () => {
                         <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                     </a>
                     <p className="mt-4 text-sm text-brand-muted">
-                        50+ projects delivered • Ghana & International clients
+                        50+ projects delivered | Ghana and International clients
                     </p>
                 </div>
             </div>
@@ -160,3 +160,4 @@ const FeaturedWork: React.FC = () => {
 };
 
 export default FeaturedWork;
+

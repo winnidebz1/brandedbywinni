@@ -65,7 +65,7 @@ const PromoPopup: React.FC = () => {
                                 Special Offer!
                             </h3>
                             <p className="text-brand-muted text-lg mb-6 leading-relaxed">
-                                Get <span className="font-bold text-brand-pink">15% OFF</span> your website design project when you book with us this January!
+                                Get <span className="font-bold text-brand-pink">15% OFF</span> your website design project when you book with us this month.
                             </p>
 
                             <div className="space-y-3">

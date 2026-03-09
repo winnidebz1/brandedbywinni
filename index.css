@@ -8,6 +8,10 @@
   --color-brand-dark: #4A3B40;
   --color-brand-text: #5D4E53;
   --color-brand-muted: #9C8C91;
+  --color-brand-charcoal: #2f2529;
+  --color-brand-rose: #f7d4db;
+  --color-brand-shell: #fffdf9;
+  --color-brand-border: #d9cfd3;
   --color-brand-primary-pink: #E89BA7;
   --color-brand-soft-blush: #FAF9F6;
   --color-brand-deep-plum: #4A3B40;
@@ -17,12 +21,51 @@
 }
 
 /* Global Base Styles */
+:root {
+  --gradient-warm: radial-gradient(circle at 18% 20%, rgba(232, 155, 167, 0.24), transparent 46%),
+    radial-gradient(circle at 83% 12%, rgba(244, 196, 205, 0.34), transparent 44%),
+    linear-gradient(165deg, #fffdf9 0%, #fff8f6 55%, #fdf4f7 100%);
+  --shadow-soft: 0 16px 48px rgba(74, 59, 64, 0.09);
+}
+
 body {
-  background-color: var(--color-brand-ivory);
+  background-color: var(--color-brand-shell);
+  background-image: var(--gradient-warm);
+  background-attachment: fixed;
   color: var(--color-brand-dark);
   scroll-behavior: smooth;
+  font-family: "Inter", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h1,
+h2,
+h3,
+h4,
+.font-serif {
+  font-family: "Playfair Display", serif;
+}
+
+.font-sans {
+  font-family: "Inter", sans-serif;
+}
+
+.bg-soft-gradient {
+  background: radial-gradient(circle at 8% 10%, rgba(232, 155, 167, 0.3), transparent 35%),
+    radial-gradient(circle at 88% 0%, rgba(244, 196, 205, 0.28), transparent 32%),
+    linear-gradient(135deg, #fffdf9 0%, #fff8f6 58%, #fef3f6 100%);
+}
+
+.section-surface {
+  background-color: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(4px);
+  box-shadow: var(--shadow-soft);
+}
+
+a,
+button {
+  transition: transform 220ms ease, box-shadow 220ms ease, color 220ms ease, background-color 220ms ease, border-color 220ms ease;
 }
 
 /* Scrollbar Styling */

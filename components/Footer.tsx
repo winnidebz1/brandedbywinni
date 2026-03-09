@@ -2,8 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Instagram, Twitter, Mail, Phone } from 'lucide-react';
 
-// Custom TikTok Icon since lucide-react might vary in availability
-const TikTokIcon = ({ size = 18, className = "" }) => (
+const TikTokIcon = ({ size = 18, className = '' }) => (
   <svg
     width={size}
     height={size}
@@ -20,16 +19,15 @@ const TikTokIcon = ({ size = 18, className = "" }) => (
 );
 
 const Footer: React.FC = () => {
+  const year = new Date().getFullYear();
+
   return (
-    <footer className="bg-brand-pink/10 pt-24 pb-12 px-6 md:px-12 border-t border-brand-pink/20">
+    <footer className="bg-brand-shell/95 pt-24 pb-12 px-6 md:px-12 border-t border-brand-border/70">
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
-
-          {/* Brand Info */}
           <div className="col-span-1 md:col-span-2">
-
-            <p className="inline-block bg-brand-pink text-white text-sm font-medium px-3 py-1 rounded-full mb-6 animate-pulse">
-              🎉 15% discount for January bookings
+            <p className="inline-block bg-brand-pink text-white text-xs uppercase tracking-[0.18em] font-semibold px-4 py-1.5 rounded-full mb-6">
+              Now booking 2026 projects
             </p>
 
             <div className="mb-6">
@@ -53,7 +51,6 @@ const Footer: React.FC = () => {
             </div>
           </div>
 
-          {/* Services Links */}
           <div>
             <h4 className="text-sm uppercase tracking-widest text-brand-dark mb-6 font-medium border-b border-brand-dark/20 pb-2 inline-block">Services</h4>
             <ul className="space-y-4">
@@ -64,7 +61,6 @@ const Footer: React.FC = () => {
             </ul>
           </div>
 
-          {/* Contact */}
           <div>
             <h4 className="text-sm uppercase tracking-widest text-brand-dark mb-6 font-medium border-b border-brand-dark/20 pb-2 inline-block">Contact</h4>
             <ul className="space-y-4">
@@ -86,12 +82,11 @@ const Footer: React.FC = () => {
 
         <div className="border-t border-brand-dark/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-brand-muted text-sm font-light">
-            &copy; 2024 Branded By Winni. All rights reserved.
+            &copy; {year} Branded By Winni. All rights reserved.
           </p>
           <div className="flex gap-6 text-sm text-brand-muted">
             <Link to="/privacy" className="hover:text-brand-pink">Privacy Policy</Link>
             <Link to="/terms" className="hover:text-brand-pink">Terms of Service</Link>
-
           </div>
         </div>
       </div>

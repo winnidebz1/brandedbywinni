@@ -57,7 +57,7 @@ const services = [
 
 const Services: React.FC = () => {
   return (
-    <section id="services" className="py-32 px-6 md:px-12 bg-white">
+    <section id="services" className="py-32 px-6 md:px-12 bg-white/75">
       <div className="container mx-auto">
         <div className="text-center max-w-2xl mx-auto mb-20">
           <h2 className="font-serif text-4xl md:text-5xl text-brand-dark mb-4">Our Expertise</h2>
@@ -75,7 +75,7 @@ const Services: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.5 }}
-                className="group h-full p-4 md:p-8 border border-brand-dark/10 hover:border-brand-pink rounded-lg transition-all duration-500 hover:shadow-lg hover:shadow-brand-pink/5 flex flex-col items-center text-center bg-white cursor-pointer"
+                className="group h-full p-4 md:p-8 border border-brand-dark/10 hover:border-brand-pink rounded-xl transition-all duration-500 hover:shadow-lg hover:shadow-brand-pink/5 flex flex-col items-center text-center bg-white/85 section-surface cursor-pointer"
               >
                 <div className="w-10 h-10 md:w-16 md:h-16 bg-brand-ivory text-brand-pink rounded-full flex items-center justify-center mb-3 md:mb-6 group-hover:scale-110 transition-transform duration-300 shadow-sm group-hover:bg-brand-pink group-hover:text-white">
                   {React.cloneElement(service.icon as React.ReactElement, { size: undefined, className: "w-5 h-5 md:w-8 md:h-8" })}

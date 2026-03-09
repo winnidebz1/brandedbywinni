@@ -15,20 +15,34 @@ type Project = {
 const Portfolio: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
     fetchProjects();
   }, []);
 
   const fetchProjects = async () => {
-    const { data } = await supabase
-      .from('projects')
-      .select('id, title, category, cover_image, slug')
-      .order('created_at', { ascending: false })
-      .limit(12);
+    try {
+      setHasError(false);
+      const { data, error } = await supabase
+        .from('projects')
+        .select('id, title, category, cover_image, slug')
+        .order('created_at', { ascending: false })
+        .limit(12);
 
-    if (data) setProjects(data);
-    setLoading(false);
+      if (error) {
+        throw error;
+      }
+
+      if (data) {
+        setProjects(data);
+      }
+    } catch (error) {
+      console.error('Failed to load projects:', error);
+      setHasError(true);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const websiteProjects = projects.filter(p =>
@@ -44,6 +58,22 @@ const Portfolio: React.FC = () => {
       <section id="portfolio" className="py-32 px-6 md:px-12 bg-brand-ivory">
         <div className="container mx-auto text-center">
           <p className="text-brand-text">Loading projects...</p>
+        </div>
+      </section>
+    );
+  }
+
+  if (hasError) {
+    return (
+      <section id="portfolio" className="py-32 px-6 md:px-12 bg-brand-ivory">
+        <div className="container mx-auto text-center">
+          <p className="text-brand-text mb-4">We could not load projects right now.</p>
+          <button
+            onClick={fetchProjects}
+            className="px-6 py-3 bg-brand-dark text-white rounded-full hover:bg-brand-pink transition-colors"
+          >
+            Try Again
+          </button>
         </div>
       </section>
     );

@@ -15,21 +15,35 @@ type Testimonial = {
 const Testimonials: React.FC = () => {
   const [reviews, setReviews] = useState<Testimonial[]>([]);
   const [loading, setLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
 
   useEffect(() => {
     fetchReviews();
   }, []);
 
   const fetchReviews = async () => {
-    const { data } = await supabase
-      .from('testimonials')
-      .select('*')
-      .eq('status', 'Approved')
-      .order('created_at', { ascending: false })
-      .limit(6);
+    try {
+      setHasError(false);
+      const { data, error } = await supabase
+        .from('testimonials')
+        .select('*')
+        .eq('status', 'Approved')
+        .order('created_at', { ascending: false })
+        .limit(6);
 
-    if (data) setReviews(data);
-    setLoading(false);
+      if (error) {
+        throw error;
+      }
+
+      if (data) {
+        setReviews(data);
+      }
+    } catch (error) {
+      console.error('Failed to load testimonials:', error);
+      setHasError(true);
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (loading) {
@@ -37,6 +51,22 @@ const Testimonials: React.FC = () => {
       <section className="py-32 px-6 md:px-12 bg-white">
         <div className="container mx-auto text-center">
           <p className="text-brand-text">Loading reviews...</p>
+        </div>
+      </section>
+    );
+  }
+
+  if (hasError) {
+    return (
+      <section className="py-32 px-6 md:px-12 bg-white">
+        <div className="container mx-auto text-center">
+          <p className="text-brand-text mb-4">We could not load reviews right now.</p>
+          <button
+            onClick={fetchReviews}
+            className="px-6 py-3 bg-brand-dark text-white rounded-full hover:bg-brand-pink transition-colors"
+          >
+            Try Again
+          </button>
         </div>
       </section>
     );

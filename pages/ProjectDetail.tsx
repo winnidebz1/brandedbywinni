@@ -24,20 +24,34 @@ const ProjectDetail: React.FC = () => {
     const { slug } = useParams<{ slug: string }>();
     const [project, setProject] = useState<Project | null>(null);
     const [loading, setLoading] = useState(true);
+    const [hasError, setHasError] = useState(false);
 
     useEffect(() => {
         fetchProject();
     }, [slug]);
 
     const fetchProject = async () => {
-        const { data } = await supabase
-            .from('projects')
-            .select('*')
-            .eq('slug', slug)
-            .single();
+        try {
+            setHasError(false);
+            const { data, error } = await supabase
+                .from('projects')
+                .select('*')
+                .eq('slug', slug)
+                .single();
 
-        if (data) setProject(data);
-        setLoading(false);
+            if (error) {
+                throw error;
+            }
+
+            if (data) {
+                setProject(data);
+            }
+        } catch (error) {
+            console.error('Failed to load project details:', error);
+            setHasError(true);
+        } finally {
+            setLoading(false);
+        }
     };
 
     if (loading) {
@@ -52,7 +66,16 @@ const ProjectDetail: React.FC = () => {
         return (
             <div className="min-h-screen flex items-center justify-center bg-brand-ivory">
                 <div className="text-center">
-                    <h1 className="font-serif text-4xl text-brand-dark mb-4">Project Not Found</h1>
+                    <h1 className="font-serif text-4xl text-brand-dark mb-4">{hasError ? 'Unable to Load Project' : 'Project Not Found'}</h1>
+                    {hasError && (
+                        <button
+                            onClick={fetchProject}
+                            className="px-6 py-3 bg-brand-dark text-white rounded-full hover:bg-brand-pink transition-colors mb-4"
+                        >
+                            Try Again
+                        </button>
+                    )}
+                    <br />
                     <Link to="/" className="text-brand-pink hover:underline">Return Home</Link>
                 </div>
             </div>

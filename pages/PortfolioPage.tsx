@@ -22,6 +22,7 @@ const PortfolioPage: React.FC = () => {
     const categoryParam = searchParams.get('category');
     const [projects, setProjects] = useState<Project[]>([]);
     const [loading, setLoading] = useState(true);
+    const [hasError, setHasError] = useState(false);
     const [activeCategory, setActiveCategory] = useState("All");
 
     useEffect(() => {
@@ -38,13 +39,26 @@ const PortfolioPage: React.FC = () => {
     }, []);
 
     const fetchProjects = async () => {
-        const { data } = await supabase
-            .from('projects')
-            .select('id, title, slug, category, cover_image, client_industry, problem, created_at')
-            .order('created_at', { ascending: false });
+        try {
+            setHasError(false);
+            const { data, error } = await supabase
+                .from('projects')
+                .select('id, title, slug, category, cover_image, client_industry, problem, created_at')
+                .order('created_at', { ascending: false });
 
-        if (data) setProjects(data);
-        setLoading(false);
+            if (error) {
+                throw error;
+            }
+
+            if (data) {
+                setProjects(data);
+            }
+        } catch (error) {
+            console.error('Failed to load portfolio page projects:', error);
+            setHasError(true);
+        } finally {
+            setLoading(false);
+        }
     };
 
     const categories = ["All", "Web Design", "Branding", "Packaging Design", "Social Media"];
@@ -71,6 +85,25 @@ const PortfolioPage: React.FC = () => {
         return (
             <div className="min-h-screen flex items-center justify-center bg-brand-ivory">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-brand-dark"></div>
+            </div>
+        );
+    }
+
+    if (hasError) {
+        return (
+            <div className="min-h-screen flex items-center justify-center bg-brand-ivory px-6">
+                <div className="text-center max-w-lg">
+                    <h2 className="font-serif text-3xl text-brand-dark mb-4">Unable to load portfolio</h2>
+                    <p className="text-brand-muted mb-8">
+                        There was a network or database issue while loading this page.
+                    </p>
+                    <button
+                        onClick={fetchProjects}
+                        className="px-8 py-4 bg-brand-dark text-white rounded-full hover:bg-brand-pink transition-colors"
+                    >
+                        Try Again
+                    </button>
+                </div>
             </div>
         );
     }

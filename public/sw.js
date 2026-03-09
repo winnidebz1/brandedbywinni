@@ -43,11 +43,15 @@ self.addEventListener('fetch', (event) => {
     const url = new URL(event.request.url);
     if (!url.protocol.startsWith('http')) return;
 
+    const isSameOrigin = url.origin === self.location.origin;
+    const cacheableDestinations = ['style', 'script', 'worker', 'image', 'font', 'manifest'];
+    const shouldCache = isSameOrigin && cacheableDestinations.includes(event.request.destination);
+
     event.respondWith(
         fetch(event.request)
             .then((response) => {
-                // If we got a valid response, cache it for next time
-                if (response && response.status === 200) {
+                // Cache only safe same-origin static assets.
+                if (shouldCache && response && response.status === 200) {
                     const responseToCache = response.clone();
                     caches.open(CACHE_NAME).then((cache) => {
                         cache.put(event.request, responseToCache);
