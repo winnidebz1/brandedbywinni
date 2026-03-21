@@ -1,160 +1,177 @@
-
-import React, { useState } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 import SEO from '../components/seo/SEO';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Monitor, TrendingUp, PenTool, Settings, ArrowRight, ChevronUp } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { Monitor, TrendingUp, PenTool, Settings } from 'lucide-react';
+import { servicesData } from '../data/services';
+import { useCart } from '../context/CartContext';
+import { usePricing } from '../context/PricingContext';
 import FinalCTA from '../components/FinalCTA';
 
-const services = [
-    {
-        icon: <Monitor strokeWidth={1.5} />,
-        title: "Website Design",
-        description: "Your website is often the first interaction a potential client has with your business. If it's clunky, outdated, or hard to navigate, you're losing money. We create bespoke, user-friendly websites that not only look incredible but are built to convert. We focus on storytelling and intuitive user flows to ensure your visitors stay longer and take action.",
-        whatYouGet: "A fully responsive, custom-designed website that elevates your credibility and turns visitors into clients.",
-        components: ["Strategic UI/UX Design", "Mobile & Tablet Responsiveness", "Conversion-Focused Layouts", "CMS Integration"]
-    },
-    {
-        icon: <Settings strokeWidth={1.5} />,
-        title: "Website Maintenance & Optimization",
-        description: "Nothing kills a sale faster than a broken link or a slow-loading page. But keeping up with technical updates, security patches, and backups is a headache you don't have time for. We handle all the technical details—keeping your site secure, fast, and glitch-free—so you can focus on running your business.",
-        whatYouGet: "Total peace of mind with a website that is always secure, up-to-date, and running at lightning speed.",
-        components: ["24/7 Security Monitoring", "Regular Software Updates", "Performance Speed Tuning", "Daily Cloud Backups"]
-    },
-    {
-        icon: <TrendingUp strokeWidth={1.5} />,
-        title: "SEO Ranking",
-        description: "You have an amazing business, but does Google know that? Being buried on page 2 (or 10) means your ideal clients never find you. Invisibility is costing you growth. We implement data-driven SEO strategies to help your business climb the search rankings and dominate your local market. Stop being the best-kept secret in your industry.",
-        whatYouGet: "Increased visibility and a steady stream of organic traffic from people actively searching for your services.",
-        components: ["Advanced Keyword Research", "On-Page Optimization", "Technical SEO Audits", "Competitor Analysis"]
-    },
-    {
-        icon: <PenTool strokeWidth={1.5} />,
-        title: "Branding",
-        description: "First impressions stick. If your visual identity looks amateurish or inconsistent, customers will trust you less. A logo is not a brand; a brand is a feeling. We craft unique brand identities that resonate with your target audience and tell your unique story. From logos to color palettes, we ensure every touchpoint communicates professionalism and trust.",
-        whatYouGet: "A polished, professional brand identity that commands authority and builds immediate trust with your audience.",
-        components: ["Logo Design & Variations", "Curated Color Palettes", "Typography Systems", "Brand Style Guidelines"]
+const getIcon = (type: string) => {
+    switch (type) {
+        case 'Monitor': return <Monitor strokeWidth={1.5} size={32} />;
+        case 'Settings': return <Settings strokeWidth={1.5} size={32} />;
+        case 'TrendingUp': return <TrendingUp strokeWidth={1.5} size={32} />;
+        case 'PenTool': return <PenTool strokeWidth={1.5} size={32} />;
+        default: return <Monitor strokeWidth={1.5} size={32} />;
     }
-];
+};
 
 const ServicesPage: React.FC = () => {
-    const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+    const { addItem } = useCart();
+    const { getServicePrice, formatPrice, currencyCode, countryCode } = usePricing();
 
-    const toggleService = (index: number) => {
-        setExpandedIndex(expandedIndex === index ? null : index);
+    const handleAddToCart = (e: React.MouseEvent, service: typeof servicesData[0]) => {
+        e.preventDefault();
+        e.stopPropagation();
+        
+        // If it has options, it might be better to direct them to the view details page
+        if (service.options && service.options.length > 0) {
+            const defaultOption = service.options[0];
+            const optionPrice = getServicePrice(service.id, defaultOption.price, defaultOption.id);
+
+            // we could either add default, or just let them go to details
+            addItem({
+                productId: service.id,
+                title: service.title,
+                price: optionPrice,
+                quantity: 1,
+                currencyCode,
+                countryCode,
+                optionId: defaultOption.id,
+                optionName: defaultOption.name
+            });
+        } else {
+            const basePrice = getServicePrice(service.id, service.basePrice);
+
+            addItem({
+                productId: service.id,
+                title: service.title,
+                price: basePrice,
+                quantity: 1,
+                currencyCode,
+                countryCode
+            });
+        }
     };
 
     return (
         <div className="pt-24 bg-brand-ivory min-h-screen">
             <SEO
-                title="Best Web Development & SEO Services in Ghana"
-                description="Top-rated web design and SEO services in Ghana. Branded By Winni offers responsive design, branding, and local SEO to rank your business #1."
+                title="Branding & Graphic Design Services | Logo Design, Brand Identity | Branded By Winni"
+                description="Professional branding and graphic design services in Ghana. Logo design, brand identity, marketing materials, and web design for beauty, fashion, food & skincare brands."
                 url="/services"
             />
             {/* Header */}
             <div className="container mx-auto px-6 md:px-12 mb-20 text-center">
-                <motion.h1
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="text-4xl md:text-6xl font-serif text-brand-dark mb-6"
-                >
-                    Our Expertise
-                </motion.h1>
-                <motion.p
+
+                <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
-                    className="text-xl text-brand-muted max-w-2xl mx-auto"
+                    className="max-w-4xl mx-auto mt-8 text-left bg-white p-8 md:p-10 rounded-2xl border border-brand-dark/10 shadow-sm"
                 >
-                    Comprehensive digital solutions designed to elevate your brand and grow your business.
-                </motion.p>
+
+
+                    <p className="text-brand-dark text-lg mb-8 leading-relaxed">
+                        Welcome! we are excited to work with you and help bring your vision to life. If you need any services not listed here, please email us at <a href="mailto:brandedbywinnistudio@gmail.com" className="text-brand-pink hover:underline font-medium">brandedbywinnistudio@gmail.com</a>. We're happy to accommodate your needs. <br/><span className="inline-block mt-2 font-medium bg-brand-pink/10 text-brand-pink px-2 py-1 rounded">Please note that all services are non-refundable.</span>
+                    </p>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
+                        <div>
+                            <h3 className="font-serif text-xl text-brand-dark mb-4 pb-2 border-b border-brand-dark/10">Important Details</h3>
+                            <ul className="space-y-4 text-brand-muted text-[15px]">
+                                <li className="flex gap-2">
+                                    <span className="text-brand-pink font-bold">•</span>
+                                    <span><strong className="text-brand-dark">Information Submission:</strong> Must be provided within 24 hours via email.</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 className="font-serif text-xl text-brand-dark mb-4 pb-2 border-b border-brand-dark/10">How to Order</h3>
+                            <ol className="space-y-3 text-brand-muted text-[15px] list-decimal list-inside ml-1">
+                                <li>Add your chosen service to the cart.</li>
+                                <li>Read the entire service page and fill out the checkout form.</li>
+                                <li>Complete your payment securely.</li>
+                                <li>An automatic email confirmation with your order number will be sent.</li>
+                                <li>Email any additional information or specific assets to <a href="mailto:brandedbywinnistudio@gmail.com" className="text-brand-pink hover:underline">brandedbywinnistudio@gmail.com</a></li>
+                            </ol>
+                        </div>
+                    </div>
+                </motion.div>
             </div>
 
             {/* Services Grid */}
             <div className="container mx-auto px-6 md:px-12 mb-32">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {services.map((service, index) => (
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-8 max-w-5xl mx-auto">
+                    {servicesData.map((service, index) => (
                         <motion.div
-                            key={index}
+                            key={service.id}
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: index * 0.1, duration: 0.5 }}
-                            onClick={() => toggleService(index)}
-                            className={`group p-8 border border-brand-dark/10 hover:border-brand-pink rounded-lg transition-all duration-500 hover:shadow-lg hover:shadow-brand-pink/5 flex flex-col items-center text-center bg-white cursor-pointer ${expandedIndex === index ? 'border-brand-pink shadow-lg shadow-brand-pink/5' : ''}`}
+                            className="group flex flex-col h-full relative max-w-[320px] w-full mx-auto"
                         >
-                            <div className="w-16 h-16 bg-brand-ivory text-brand-pink rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300 shadow-sm group-hover:bg-brand-pink group-hover:text-white">
-                                {service.icon}
+                            {/* Image Header */}
+                            <div className="w-full aspect-square bg-brand-ivory overflow-hidden relative group/image mb-6">
+                                <img 
+                                    src={service.imageUrl} 
+                                    alt={service.title} 
+                                    className="w-full h-full object-cover" 
+                                />
+                                {/* Hover Overlay */}
+                                <Link 
+                                    to={`/services/${service.slug}`} 
+                                    className="absolute inset-0 bg-white/50 opacity-0 group-hover/image:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]"
+                                >
+                                    <span className="text-brand-dark font-medium uppercase tracking-widest text-xs bg-white px-6 py-3 rounded-full hover:bg-brand-dark hover:text-white transition-colors shadow-sm">
+                                        Quick View
+                                    </span>
+                                </Link>
                             </div>
-                            <h3 className="font-serif text-2xl text-brand-dark group-hover:text-brand-pink transition-colors mb-4">{service.title}</h3>
+                            
+                            {/* Card Content */}
+                            <div className="flex flex-col flex-grow items-center text-center px-4 mb-8">
+                                <h3 className="text-[17px] text-brand-dark mb-2 font-medium tracking-wide">{service.title}</h3>
+                                
+                                <div className="mb-6 flex-grow">
+                                    <div className="text-[15px] text-brand-dark/80 font-normal">
+                                        {formatPrice(getServicePrice(service.id, service.basePrice))}
+                                    </div>
+                                </div>
 
-                            <AnimatePresence>
-                                {expandedIndex === index && (
-                                    <motion.div
-                                        initial={{ opacity: 0, height: 0, paddingBottom: 0 }}
-                                        animate={{ opacity: 1, height: 'auto', paddingBottom: 16 }}
-                                        exit={{ opacity: 0, height: 0, paddingBottom: 0 }}
-                                        className="overflow-hidden w-full text-left"
-                                    >
-                                        <div className="space-y-4">
-                                            <p className="text-brand-muted text-sm leading-relaxed">
-                                                {service.description}
-                                            </p>
-
-                                            <div>
-                                                <h4 className="font-semibold text-brand-dark text-sm mb-1">What You Get:</h4>
-                                                <p className="text-brand-muted text-sm">{service.whatYouGet}</p>
-                                            </div>
-
-                                            <div>
-                                                <h4 className="font-semibold text-brand-dark text-sm mb-1">Components:</h4>
-                                                <ul className="text-brand-muted text-sm space-y-1">
-                                                    {service.components.map((c, i) => (
-                                                        <li key={i} className="flex items-start gap-2">
-                                                            <span className="text-brand-pink mt-1.5 w-1 h-1 rounded-full bg-current shrink-0" />
-                                                            {c}
-                                                        </li>
-                                                    ))}
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </motion.div>
-                                )}
-                            </AnimatePresence>
-
-                            <div className="mt-auto transition-opacity duration-300 transform">
-                                <span className="flex items-center gap-2 text-sm text-brand-pink font-medium uppercase tracking-wider">
-                                    {expandedIndex === index ? (
-                                        <>Show less <ChevronUp size={14} /></>
-                                    ) : (
-                                        <>Learn more <ArrowRight size={14} /></>
-                                    )}
-                                </span>
+                                <button 
+                                    onClick={(e) => handleAddToCart(e, service)}
+                                    className="px-10 py-[10px] border border-brand-dark text-brand-dark text-sm uppercase tracking-widest rounded-full flex items-center justify-center hover:bg-brand-dark hover:text-white transition-colors font-medium bg-transparent"
+                                >
+                                    {service.options?.length ? 'Add Basic' : 'Add to Cart'}
+                                </button>
                             </div>
                         </motion.div>
                     ))}
                 </div>
             </div>
 
-            {/* Get Quote Section */}
-            <div className="bg-white py-24">
+            {/* Custom Project Section */}
+            <div className="bg-brand-rose/30 py-24">
                 <div className="container mx-auto px-6 md:px-12 text-center max-w-3xl">
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                     >
-                        <h2 className="text-4xl font-serif text-brand-dark mb-6">Ready to Get Started?</h2>
+                        <h2 className="text-4xl font-serif text-brand-dark mb-6">Need Something Custom?</h2>
                         <p className="text-lg text-brand-muted mb-10">
-                            Every project is unique. Let's discuss your specific needs and create a custom solution that fits your budget and goals.
+                            Don't see exactly what you're looking for? We also offer fully customized solutions tailored specifically to your unique requirements.
                         </p>
-                        <a
-                            href="https://docs.google.com/forms/d/e/1FAIpQLSffhowT-hhYtbkTPll8hDwopZrNitJf9GqQchwEn6XTwSbMDg/viewform?usp=header"
-                            target="_blank"
-                            rel="noopener noreferrer"
+                        <Link
+                            to="/contact"
                             className="inline-block px-12 py-4 bg-brand-pink text-white font-medium tracking-wide rounded-full hover:bg-brand-dark transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1"
                         >
-                            Get a Quote
-                        </a>
+                            Request a Custom Quote
+                        </Link>
                     </motion.div>
                 </div>
             </div>

@@ -1,82 +1,79 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Search, Monitor, MapPin, Bot, BarChart3, Layout } from 'lucide-react';
-
-const benefits = [
-  {
-    icon: <Monitor size={32} />,
-    title: 'Conversion-Focused Design',
-    description: 'Built to turn visitors into customers. We focus on user journeys that drive sales and inquiries.'
-  },
-  {
-    icon: <Bot size={32} />,
-    title: 'Advanced SEO Strategy',
-    description: 'Optimized for Google and major search engines. We structure content for maximizing organic reach and visibility.'
-  },
-  {
-    icon: <Search size={32} />,
-    title: 'Country-Targeted Keywords',
-    description: 'Dominate search in your target region with localized keyword strategies based on your location.'
-  },
-  {
-    icon: <Layout size={32} />,
-    title: 'Structured Content',
-    description: 'Website content organized and tagged for maximum visibility in search engines.'
-  },
-  {
-    icon: <MapPin size={32} />,
-    title: 'Local SEO Integration',
-    description: 'Expert optimization of Google Business Profile to rank higher in local Maps and search results.'
-  },
-  {
-    icon: <BarChart3 size={32} />,
-    title: 'Data-Driven Decisions',
-    description: 'We use Google Search Console, Analytics and rank trackers to continually refine and improve performance.'
-  }
-];
+import { Link } from 'react-router-dom';
+import { servicesData } from '../data/services';
+import { usePricing } from '../context/PricingContext';
 
 const WhyWebsite: React.FC = () => {
+  const { getServicePrice, formatPrice } = usePricing();
+  // Show only the first 3 services as a featured teaser
+  const featured = servicesData.slice(0, 3);
+
   return (
-    <section className="py-24 bg-white/70 relative overflow-hidden">
+    <section className="py-24 md:py-32 bg-brand-ivory overflow-hidden" id="services">
       <div className="container mx-auto px-6 md:px-12">
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-4xl md:text-5xl font-serif text-brand-dark mb-6"
-          >
-            Our Web-First Approach
-          </motion.h2>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ delay: 0.2 }}
-            className="text-lg text-brand-muted"
-          >
-            We deliver results through a web design-first strategy, ensuring every website is designed to rank, convert, and scale.
-          </motion.p>
+
+        {/* Blair-style section header */}
+        <div className="text-center mb-16">
+          <h2 className="text-4xl sm:text-5xl md:text-6xl font-sans font-black text-brand-charcoal uppercase tracking-tight leading-none">
+            Choose Your <span className="font-serif italic text-brand-pink lowercase font-medium">next move</span>
+          </h2>
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6">
-          {benefits.map((item, index) => (
+        {/* Service Thumbnails */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-8 max-w-5xl mx-auto mb-20">
+          {featured.map((service, index) => (
             <motion.div
-              key={index}
+              key={service.id}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              className="p-4 md:p-8 bg-white/80 rounded-2xl border border-brand-pink/10 hover:border-brand-pink/40 transition-colors group cursor-default flex flex-col items-center text-center h-full hover:shadow-lg hover:shadow-brand-pink/5 section-surface"
+              transition={{ delay: index * 0.1, duration: 0.5 }}
+              className="group flex flex-col items-center text-center max-w-[320px] w-full mx-auto"
             >
-              <div className="w-10 h-10 md:w-14 md:h-14 rounded-full bg-brand-pink/10 flex items-center justify-center text-brand-pink mb-3 md:mb-6 group-hover:scale-110 transition-transform duration-300">
-                {React.cloneElement(item.icon as React.ReactElement, { size: undefined, className: 'w-5 h-5 md:w-8 md:h-8' })}
+              {/* Image */}
+              <div className="w-full aspect-square overflow-hidden relative group/image mb-5">
+                <img
+                  src={service.imageUrl}
+                  alt={service.title}
+                  className="w-full h-full object-cover"
+                />
+                {/* Quick View Overlay */}
+                <Link
+                  to={`/services/${service.slug}`}
+                  className="absolute inset-0 bg-white/50 opacity-0 group-hover/image:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px]"
+                >
+                  <span className="text-brand-dark font-medium uppercase tracking-widest text-xs bg-white px-6 py-3 rounded-full hover:bg-brand-dark hover:text-white transition-colors shadow-sm">
+                    Quick View
+                  </span>
+                </Link>
               </div>
-              <h3 className="text-sm md:text-xl font-serif text-brand-dark mb-2 md:mb-4 leading-tight">{item.title}</h3>
-              <p className="text-brand-muted text-xs md:text-sm leading-relaxed">{item.description}</p>
+
+              <h3 className="text-[17px] text-brand-dark font-medium tracking-wide mb-1">{service.title}</h3>
+              <p className="text-[14px] text-brand-dark/70 mb-5">
+                {formatPrice(getServicePrice(service.id, service.basePrice))}
+              </p>
+
+              <Link
+                to={`/services/${service.slug}`}
+                className="px-8 py-[10px] border border-brand-dark text-brand-dark text-xs uppercase tracking-widest rounded-full hover:bg-brand-dark hover:text-white transition-colors font-medium"
+              >
+                View Details
+              </Link>
             </motion.div>
           ))}
         </div>
+
+        {/* See All Services CTA */}
+        <div className="text-center">
+          <Link
+            to="/services"
+            className="inline-block px-10 py-4 border-2 border-brand-dark text-brand-dark font-bold uppercase tracking-wider rounded-full hover:bg-brand-pink hover:border-brand-pink hover:text-white transition-all duration-300 text-sm md:text-base"
+          >
+            View All Services
+          </Link>
+        </div>
+
       </div>
     </section>
   );

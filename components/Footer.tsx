@@ -19,8 +19,6 @@ const TikTokIcon = ({ size = 18, className = '' }) => (
 );
 
 const Footer: React.FC = () => {
-  const year = new Date().getFullYear();
-
   return (
     <footer className="bg-brand-shell/95 pt-24 pb-12 px-6 md:px-12 border-t border-brand-border/70">
       <div className="container mx-auto">
@@ -82,7 +80,7 @@ const Footer: React.FC = () => {
 
         <div className="border-t border-brand-dark/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-brand-muted text-sm font-light">
-            &copy; {year} Branded By Winni. All rights reserved.
+            &copy; 2020 Branded By Winni. All rights reserved.
           </p>
           <div className="flex gap-6 text-sm text-brand-muted">
             <Link to="/privacy" className="hover:text-brand-pink">Privacy Policy</Link>

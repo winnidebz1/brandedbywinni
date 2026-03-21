@@ -7,25 +7,25 @@ const steps = [
         icon: <MessageSquare size={24} />,
         step: "01",
         title: "Discovery",
-        description: "We dive deep into your brand, goals, and audience to build a strategy that sets you apart."
+        description: "We dive into your brand, goals, audience, and offers to define the right creative direction."
     },
     {
         icon: <PenTool size={24} />,
         step: "02",
-        title: "Design",
-        description: "Crafting visual concepts and high-fidelity mockups that align with your unique brand identity."
+        title: "Strategy & Concept",
+        description: "We map ideas into a clear concept for your selected services, from identity to marketing assets."
     },
     {
         icon: <Code2 size={24} />,
         step: "03",
-        title: "Development",
-        description: "Turning designs into pixel-perfect, responsive code using the latest web technologies."
+        title: "Creation",
+        description: "We design and produce your deliverables with consistency, quality, and attention to detail."
     },
     {
         icon: <Rocket size={24} />,
         step: "04",
-        title: "Launch",
-        description: "Testing, optimization, and liftoff. We ensure everything is perfect before your big reveal."
+        title: "Delivery & Support",
+        description: "You receive polished final files, rollout guidance, and support to help your brand perform."
     }
 ];
 
@@ -51,16 +51,14 @@ const Process: React.FC = () => {
                             transition={{ delay: 0.2 }}
                             className="text-lg text-brand-muted mb-8"
                         >
-                            From a simple idea to a fully functioning masterpiece, we guide you through every step of the journey with transparency and expertise.
+                            From brand identity and design assets to websites and campaigns, our process keeps every project strategic, smooth, and results-focused.
                         </motion.p>
                         <motion.a
                             initial={{ opacity: 0 }}
                             whileInView={{ opacity: 1 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.4 }}
-                            href="https://docs.google.com/forms/d/e/1FAIpQLSffhowT-hhYtbkTPll8hDwopZrNitJf9GqQchwEn6XTwSbMDg/viewform?usp=header"
-                            target="_blank"
-                            rel="noopener noreferrer"
+                            href="/services"
                             className="inline-block px-8 py-3 bg-brand-dark text-white rounded-full hover:bg-brand-pink transition-colors duration-300"
                         >
                             Start Your Project

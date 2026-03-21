@@ -1,7 +1,7 @@
 
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import SEO from '../components/seo/SEO';
-import { motion, useInView, animate } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Heart, Globe, Zap, Instagram, Twitter } from 'lucide-react';
 import FinalCTA from '../components/FinalCTA';
 
@@ -41,29 +41,12 @@ const values = [
 ];
 
 const AboutPage: React.FC = () => {
-    const countRef = useRef<HTMLSpanElement>(null);
-    const inView = useInView(countRef, { once: true });
-
-    useEffect(() => {
-        if (inView && countRef.current) {
-            const controls = animate(0, 205, {
-                duration: 2.5,
-                ease: "easeOut",
-                onUpdate(value) {
-                    if (countRef.current) {
-                        countRef.current.textContent = value.toFixed(0) + "+";
-                    }
-                }
-            });
-            return () => controls.stop();
-        }
-    }, [inView]);
 
     return (
         <div className="pt-24 bg-brand-ivory min-h-screen">
             <SEO
-                title="About the Best Web Designer in Ghana"
-                description="Meet the creative team behind the best web design agency in Ghana. We combine passion, global perspective, and efficiency to build websites that convert."
+                title="Premium Branding & Graphic Design Agency in Ghana | About Branded By Winni"
+                description="Learn about Ghana's leading branding and graphic design studio. We specialize in brand identity, logo design, visual branding, and web design for beauty, fashion, and food brands."
                 url="/about"
             />
 
@@ -80,18 +63,12 @@ const AboutPage: React.FC = () => {
                             <span className="text-brand-pink">Branded By Winni</span> is your digital growth partner.
                         </h1>
                         <p className="text-xl text-brand-muted leading-relaxed mb-8">
-                            We help visionaries and businesses translate their ideas into stunning digital reality. Our mission is to empower brands with websites that don't just look good—they convert, engage, and grow your business.
+                            We help visionaries and businesses translate their ideas into stunning visual identities and digital experiences. Our mission is to empower brands with premium graphic design, branding, and websites that don't just look good—they convert, engage, and grow your business.
                         </p>
                         <div className="flex gap-4 justify-center md:justify-start">
                             <div className="px-6 py-4 bg-white rounded-xl shadow-sm border border-brand-pink/10">
                                 <div className="text-3xl font-bold text-brand-pink mb-1">5+</div>
                                 <div className="text-xs uppercase tracking-wider text-brand-muted">Years Exp</div>
-                            </div>
-                            <div className="px-6 py-4 bg-white rounded-xl shadow-sm border border-brand-pink/10">
-                                <div className="text-3xl font-bold text-brand-pink mb-1">
-                                    <span ref={countRef}>0+</span>
-                                </div>
-                                <div className="text-xs uppercase tracking-wider text-brand-muted">Brands Served</div>
                             </div>
                             <div className="px-6 py-4 bg-white rounded-xl shadow-sm border border-brand-pink/10">
                                 <div className="text-3xl font-bold text-brand-pink mb-1">100%</div>
@@ -135,7 +112,7 @@ const AboutPage: React.FC = () => {
                             It all started with a curiosity for how things work on the internet. That curiosity quickly turned into an obsession with digital design and development. We realized that a website is more than just information; it's a digital home, a brand ambassador, and a storytelling platform.
                         </p>
                         <p className="mb-6">
-                            Over the years, we've honed our skills in <strong>React, TypeScript, Modern UI Design, SEO, and Conversion Optimization</strong>. We don't just write code; we solve problems. Whether it's a small portfolio for a creative or a complex e-commerce platform for a growing brand, we approach every project with the same level of dedication and detail.
+                            Over the years, we've honed our skills in <strong>brand identity design, logo creation, graphic design, React, TypeScript, Modern UI Design, SEO, and Conversion Optimization</strong>. We don't just create visuals; we solve problems. Whether it's a complete brand identity for a startup or a stunning website for an established business, we approach every project with the same level of dedication and detail.
                         </p>
                         <p>
                             Our philosophy is simple: <strong>Your success is our success</strong>. We believe in building long-term partnerships with our clients, helping them grow their digital presence and achieve their business goals. When you work with us, you're not just getting a website—you're getting a strategic partner invested in your growth.

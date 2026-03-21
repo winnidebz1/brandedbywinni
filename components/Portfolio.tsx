@@ -98,7 +98,7 @@ const Portfolio: React.FC = () => {
             </Link>
           </div>
 
-          <div className="grid grid-cols-3 gap-3 md:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-8 max-w-5xl mx-auto">
             {websiteProjects.map((project, index) => (
               <motion.div
                 key={project.id}
@@ -106,9 +106,10 @@ const Portfolio: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.6 }}
+                className="max-w-[320px] w-full mx-auto"
               >
                 <Link to={`/project/${project.slug}`} className="group relative overflow-hidden rounded-lg cursor-pointer block">
-                  <div className="aspect-[4/5] md:aspect-[3/4] overflow-hidden bg-gray-200">
+                  <div className="aspect-square overflow-hidden bg-gray-200">
                     <img
                       src={project.cover_image || 'https://picsum.photos/800/600'}
                       alt={project.title}
@@ -145,7 +146,7 @@ const Portfolio: React.FC = () => {
             </Link>
           </div>
 
-          <div className="grid grid-cols-3 gap-3 md:gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-8 max-w-5xl mx-auto">
             {brandingProjects.map((project, index) => (
               <motion.div
                 key={project.id}
@@ -153,9 +154,10 @@ const Portfolio: React.FC = () => {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.1, duration: 0.6 }}
+                className="max-w-[320px] w-full mx-auto"
               >
                 <Link to={`/project/${project.slug}`} className="group relative overflow-hidden rounded-lg cursor-pointer block">
-                  <div className="aspect-[4/5] md:aspect-[3/4] overflow-hidden bg-gray-200">
+                  <div className="aspect-square overflow-hidden bg-gray-200">
                     <img
                       src={project.cover_image || 'https://picsum.photos/800/600'}
                       alt={project.title}

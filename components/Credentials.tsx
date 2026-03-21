@@ -36,7 +36,7 @@ const Credentials: React.FC = () => {
           </div>
           <div className="h-[1px] w-24 bg-brand-dark/20 md:h-24 md:w-[1px] hidden md:block"></div>
           <div className="text-center md:text-left max-w-lg">
-             <p className="text-2xl font-serif text-brand-dark mb-2">Brands Served Globally</p>
+             <p className="text-2xl font-serif text-brand-dark mb-2">Global Partnerships</p>
              <p className="text-brand-muted font-light">
                Partnering with visionaries worldwide to define their digital presence across industries from Beauty to Corporate Finance.
              </p>

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink, Link, useLocation } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, ShoppingBag } from 'lucide-react';
+import { useCart } from '../context/CartContext';
 
 const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { itemCount, setIsCartOpen } = useCart();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -55,21 +57,45 @@ const Navbar: React.FC = () => {
               {link.name}
             </NavLink>
           ))}
+          <button
+            onClick={() => setIsCartOpen(true)}
+            className="relative p-2 text-brand-dark hover:text-brand-pink transition-colors"
+          >
+            <ShoppingBag size={24} />
+            {itemCount > 0 && (
+              <span className="absolute top-0 right-0 bg-brand-pink text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full transform translate-x-1/4 -translate-y-1/4 shadow-sm border border-white">
+                {itemCount}
+              </span>
+            )}
+          </button>
           <Link
             to="/contact"
-            className="px-7 py-2.5 border border-brand-pink text-brand-pink bg-brand-rose/35 hover:bg-brand-pink hover:text-white hover:-translate-y-0.5 text-sm tracking-wide rounded-full font-semibold shadow-sm"
+            className="px-7 py-2.5 border border-brand-pink text-brand-pink bg-brand-rose/35 hover:bg-brand-pink hover:text-white hover:-translate-y-0.5 text-sm tracking-wide rounded-full font-semibold shadow-sm ml-2"
           >
             Let's Talk
           </Link>
         </div>
 
-        {/* Mobile Toggle */}
-        <button
-          className="md:hidden text-brand-dark hover:text-brand-pink transition-colors"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-        >
-          {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
-        </button>
+        {/* Mobile Toggle & Cart */}
+        <div className="md:hidden flex items-center gap-4">
+          <button
+            onClick={() => setIsCartOpen(true)}
+            className="relative p-2 text-brand-dark hover:text-brand-pink transition-colors"
+          >
+            <ShoppingBag size={24} />
+            {itemCount > 0 && (
+              <span className="absolute top-0 right-0 bg-brand-pink text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full transform translate-x-1/4 -translate-y-1/4 shadow-sm border border-white">
+                {itemCount}
+              </span>
+            )}
+          </button>
+          <button
+            className="text-brand-dark hover:text-brand-pink transition-colors"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            {isMobileMenuOpen ? <X size={28} /> : <Menu size={28} />}
+          </button>
+        </div>
       </div>
 
       {/* Mobile Menu */}

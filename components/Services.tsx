@@ -1,99 +1,54 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Monitor, TrendingUp, PenTool, ShoppingCart, MapPin, Share2, BarChart, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-
-const services = [
-  {
-    slug: "website-design-development",
-    icon: <Monitor strokeWidth={1.5} />,
-    title: "Website Design & Development",
-    description: "Your website is your digital HQ. We build custom, mobile-responsive business websites and landing pages that capture attention.",
-    whatYouGet: "A unique, high-performance website that elevates your brand and turns visitors into leads.",
-    components: ["Custom UI/UX Design", "Responsive & Mobile-First", "Lead Generation Forms", "Fast Loading Speed"]
-  },
-  {
-    slug: "ecommerce-website-design",
-    icon: <ShoppingCart strokeWidth={1.5} />,
-    title: "E-commerce Website Design",
-    description: "Sell more online with a robust e-commerce store. We design online shops optimized for trust, speed, and seamless checkout.",
-    whatYouGet: "An automated sales machine that looks great and functions perfectly on all devices.",
-    components: ["Secure Payment Gateways", "Product Inventory Management", "User-Friendly Checkout", "Sales Analytics Dashboard"]
-  },
-  {
-    slug: "seo-services-ghana",
-    icon: <TrendingUp strokeWidth={1.5} />,
-    title: "SEO Services",
-    description: "Stop being invisible. We implement on-page, technical, and off-page SEO strategies to help your business climb the search rankings and dominate your local market.",
-    whatYouGet: "Higher search engine rankings, increased organic traffic, and more qualified leads.",
-    components: ["Keyword Research & Strategy", "On-Page Optimization", "Technical SEO Audits", "Link Building Support"]
-  },
-
-  {
-    slug: "content-strategy-copywriting",
-    icon: <PenTool strokeWidth={1.5} />,
-    title: "Content Strategy & Copywriting",
-    description: "Content is king. We create and structure SEO-friendly copy that appeals to human readers while being fully optimized for search.",
-    whatYouGet: "Compelling content that ranks well and positions you as an industry authority.",
-    components: ["SEO Copywriting", "Search Optimization", "Blog Content Strategy", "Voice Search Readiness"]
-  },
-  {
-    slug: "social-media-support",
-    icon: <Share2 strokeWidth={1.5} />,
-    title: "Social Media Support",
-    description: "Extend your website's reach with consistent social media branding. We design campaign visuals tailored for Ghanaian audiences.",
-    whatYouGet: "A cohesive brand presence across web and social channels that engages your community.",
-    components: ["Social Media Graphics", "Campaign Landing Pages", "Brand Consistency Check", "Engagement Strategy"]
-  },
-  {
-    slug: "analytics-reporting",
-    icon: <BarChart strokeWidth={1.5} />,
-    title: "Analytics & Reporting",
-    description: "Don't fly blind. We provide transparent reports on your traffic, rankings, and conversions so you know exactly what's working.",
-    whatYouGet: "Actionable insights and data-backed recommendations to grow your business.",
-    components: ["Google Analytics Setup", "Search Console Monitoring", "Monthly Performance Reports", "Conversion Tracking"]
-  }
-];
 
 const Services: React.FC = () => {
   return (
-    <section id="services" className="py-32 px-6 md:px-12 bg-white/75">
-      <div className="container mx-auto">
-        <div className="text-center max-w-2xl mx-auto mb-20">
-          <h2 className="font-serif text-4xl md:text-5xl text-brand-dark mb-4">Our Expertise</h2>
-        </div>
+    <section className="py-28 bg-brand-dark text-white overflow-hidden" id="about-us">
+      <div className="container mx-auto px-6 md:px-12">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
 
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-6 items-start">
-          {services.map((service, index) => (
+          {/* Left: Big text */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7 }}
+          >
+            <h2 className="text-4xl sm:text-5xl md:text-6xl font-sans font-black uppercase leading-none tracking-tight mb-8">
+              We Make<br />
+              <span className="font-serif italic text-brand-pink lowercase font-medium text-5xl sm:text-6xl md:text-7xl">brands sell.</span>
+            </h2>
+            <p className="text-white/70 text-lg font-light leading-relaxed max-w-lg mb-10">
+              Branded By Winni is a premium branding and graphic design studio built for Food/Beverage, Skincare, Beauty and Fashion brands. We create stunning visual identities, logos, marketing materials, and conversion-focused websites that command attention and convert customers.
+            </p>
             <Link
-              to={`/services/${service.slug}`}
-              key={index}
-              className="block h-full"
+              to="/about"
+              className="inline-block px-8 py-4 border-2 border-white text-white font-bold uppercase tracking-wider rounded-full hover:bg-brand-pink hover:border-brand-pink transition-all duration-300 text-sm"
             >
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1, duration: 0.5 }}
-                className="group h-full p-4 md:p-8 border border-brand-dark/10 hover:border-brand-pink rounded-xl transition-all duration-500 hover:shadow-lg hover:shadow-brand-pink/5 flex flex-col items-center text-center bg-white/85 section-surface cursor-pointer"
-              >
-                <div className="w-10 h-10 md:w-16 md:h-16 bg-brand-ivory text-brand-pink rounded-full flex items-center justify-center mb-3 md:mb-6 group-hover:scale-110 transition-transform duration-300 shadow-sm group-hover:bg-brand-pink group-hover:text-white">
-                  {React.cloneElement(service.icon as React.ReactElement, { size: undefined, className: "w-5 h-5 md:w-8 md:h-8" })}
-                </div>
-                <h3 className="font-serif text-sm md:text-2xl text-brand-dark group-hover:text-brand-pink transition-colors mb-2 md:mb-4 leading-tight">{service.title}</h3>
-
-                <p className="text-brand-muted text-xs md:text-sm leading-relaxed mb-4 line-clamp-3">
-                  {service.description}
-                </p>
-
-                <div className="mt-auto transition-opacity duration-300 transform">
-                  <span className="flex items-center gap-2 text-sm text-brand-pink font-medium uppercase tracking-wider group-hover:translate-x-1 transition-transform">
-                    Learn more <ArrowRight size={14} />
-                  </span>
-                </div>
-              </motion.div>
+              Our Story
             </Link>
-          ))}
+          </motion.div>
+
+          {/* Right: Stats / Highlights */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+            className="grid grid-cols-2 gap-6"
+          >
+            {[
+              { number: '6+', label: 'Years of Experience' },
+              { number: '100%', label: 'Client Satisfaction' },
+            ].map((stat, i) => (
+              <div key={i} className="bg-white/5 border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-colors">
+                <div className="text-4xl md:text-5xl font-black text-white mb-2 tracking-tight">{stat.number}</div>
+                <div className="text-white/50 text-sm uppercase tracking-widest">{stat.label}</div>
+              </div>
+            ))}
+          </motion.div>
+
         </div>
       </div>
     </section>

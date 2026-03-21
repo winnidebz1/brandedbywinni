@@ -5,12 +5,16 @@ import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import AnalyticsTracker from './components/AnalyticsTracker';
 import ChatWidget from './components/ChatWidget';
+import { CartProvider } from './context/CartContext';
+import CartDrawer from './components/CartDrawer';
+import { PricingProvider } from './context/PricingContext';
 
 // Public Pages
 const Home = React.lazy(() => import('./pages/Home'));
 const AboutPage = React.lazy(() => import('./pages/AboutPage'));
 const ServicesPage = React.lazy(() => import('./pages/ServicesPage'));
 const ServiceDetail = React.lazy(() => import('./pages/ServiceDetail'));
+const CheckoutPage = React.lazy(() => import('./pages/CheckoutPage'));
 const ContactPage = React.lazy(() => import('./pages/ContactPage'));
 const PrivacyPolicy = React.lazy(() => import('./pages/PrivacyPolicy'));
 const TermsOfService = React.lazy(() => import('./pages/TermsOfService'));
@@ -71,6 +75,7 @@ const PublicLayout = () => {
   return (
     <div className="font-sans antialiased text-brand-text bg-brand-ivory selection:bg-brand-pink selection:text-white">
       <Navbar />
+      <CartDrawer />
       <main className="w-full flex-grow min-h-screen">
         <Outlet />
       </main>
@@ -83,72 +88,77 @@ const PublicLayout = () => {
 const App: React.FC = () => {
   return (
     <HelmetProvider>
-      <Router>
-        <ScrollToTop />
-        <AnalyticsTracker />
-        <React.Suspense fallback={<LoadingSpinner />}>
-          <Routes>
-            {/* Public Routes */}
-            <Route element={<PublicLayout />}>
-              <Route path="/" element={<Home />} />
-              <Route path="/about" element={<AboutPage />} />
-              <Route path="/services" element={<ServicesPage />} />
-              <Route path="/services/:slug" element={<ServiceDetail />} />
-              <Route path="/contact" element={<ContactPage />} />
-              <Route path="/privacy" element={<PrivacyPolicy />} />
-              <Route path="/terms" element={<TermsOfService />} />
-              <Route path="/project/:slug" element={<ProjectDetail />} />
-              <Route path="/portfolio" element={<PortfolioPage />} />
-              <Route path="/review-us" element={<ReviewsPublic />} />
-            </Route>
+      <PricingProvider>
+        <CartProvider>
+          <Router>
+            <ScrollToTop />
+            <AnalyticsTracker />
+            <React.Suspense fallback={<LoadingSpinner />}>
+              <Routes>
+                {/* Public Routes */}
+                <Route element={<PublicLayout />}>
+                  <Route path="/" element={<Home />} />
+                  <Route path="/about" element={<AboutPage />} />
+                  <Route path="/services" element={<ServicesPage />} />
+                  <Route path="/services/:slug" element={<ServiceDetail />} />
+                  <Route path="/checkout" element={<CheckoutPage />} />
+                  <Route path="/contact" element={<ContactPage />} />
+                  <Route path="/privacy" element={<PrivacyPolicy />} />
+                  <Route path="/terms" element={<TermsOfService />} />
+                  <Route path="/project/:slug" element={<ProjectDetail />} />
+                  <Route path="/portfolio" element={<PortfolioPage />} />
+                  <Route path="/review-us" element={<ReviewsPublic />} />
+                </Route>
 
-            {/* Legacy Admin Routes (Restored) */}
-            <Route path="/admin/login" element={<Login />} />
-            <Route path="/admin/test" element={<TestConnection />} />
+                {/* Legacy Admin Routes (Restored) */}
+                <Route path="/admin/login" element={<Login />} />
+                <Route path="/admin/test" element={<TestConnection />} />
 
-            <Route path="/admin" element={<ProtectedRoute />}>
-              <Route element={<AdminLayout />}>
-                <Route index element={<Dashboard />} /> {/* Default to Dashboard */}
-                {/* Re-mapping legacy routes */}
-                <Route path="projects" element={<PortfolioProjects />} />
-                <Route path="leads" element={<Leads />} />
-                <Route path="clients" element={<Clients />} />
-                <Route path="analytics" element={<Analytics />} />
-                <Route path="reviews" element={<Reviews />} />
-                <Route path="settings" element={<Settings />} />
-                <Route path="testimonials" element={<Testimonials />} />
-              </Route>
-            </Route>
+                <Route path="/admin" element={<ProtectedRoute />}>
+                  <Route element={<AdminLayout />}>
+                    <Route index element={<Dashboard />} /> {/* Default to Dashboard */}
+                    {/* Re-mapping legacy routes */}
+                    <Route path="projects" element={<PortfolioProjects />} />
+                    <Route path="leads" element={<Leads />} />
+                    <Route path="clients" element={<Clients />} />
+                    <Route path="analytics" element={<Analytics />} />
+                    <Route path="reviews" element={<Reviews />} />
+                    <Route path="settings" element={<Settings />} />
+                    <Route path="testimonials" element={<Testimonials />} />
+                  </Route>
+                </Route>
 
-            {/* New Portal Routes */}
-            <Route path="/portal/login" element={<PortalLogin />} />
-            <Route path="/portal/forgot-password" element={<PortalForgotPassword />} />
-            <Route path="/portal/update-password" element={<PortalUpdatePassword />} />
+                {/* New Portal Routes */}
+                <Route path="/portal/login" element={<PortalLogin />} />
+                <Route path="/portal/forgot-password" element={<PortalForgotPassword />} />
+                <Route path="/portal/update-password" element={<PortalUpdatePassword />} />
 
-            <Route path="/portal" element={<ProtectedRoute />}>
-              <Route element={<PortalLayout />}>
-                <Route index element={<PortalDashboard />} />
+                <Route path="/portal" element={<ProtectedRoute />}>
+                  <Route element={<PortalLayout />}>
+                    <Route index element={<PortalDashboard />} />
 
-                {/* Portal Modules */}
-                <Route path="tasks" element={<PortalTasks />} />
-                <Route path="projects" element={<PortalProjects />} />
-                <Route path="sops" element={<PortalSOPs />} />
-                <Route path="sops/:slug" element={<PortalSOPs />} />
-                <Route path="feedback" element={<PortalFeedback />} />
-                <Route path="rules" element={<PortalRules />} />
-                <Route path="announcements" element={<PortalAnnouncements />} />
-                <Route path="finance" element={<PortalFinance />} />
-                <Route path="finance/goals" element={<PortalFinanceGoals />} />
-                <Route path="finance/income" element={<PortalFinanceIncome />} />
-                <Route path="finance/expenses" element={<PortalFinanceExpenses />} />
-                <Route path="finance/reports" element={<PortalFinanceReports />} />
-                <Route path="settings" element={<Settings />} />
-              </Route>
-            </Route>
+                    {/* Portal Modules */}
+                    <Route path="tasks" element={<PortalTasks />} />
+                    <Route path="projects" element={<PortalProjects />} />
+                    <Route path="sops" element={<PortalSOPs />} />
+                    <Route path="sops/:slug" element={<PortalSOPs />} />
+                    <Route path="feedback" element={<PortalFeedback />} />
+                    <Route path="rules" element={<PortalRules />} />
+                    <Route path="announcements" element={<PortalAnnouncements />} />
+                    <Route path="finance" element={<PortalFinance />} />
+                    <Route path="finance/goals" element={<PortalFinanceGoals />} />
+                    <Route path="finance/income" element={<PortalFinanceIncome />} />
+                    <Route path="finance/expenses" element={<PortalFinanceExpenses />} />
+                    <Route path="finance/reports" element={<PortalFinanceReports />} />
+                    <Route path="settings" element={<Settings />} />
+                  </Route>
+                </Route>
 
-          </Routes>
-        </React.Suspense>
-      </Router>
+              </Routes>
+            </React.Suspense>
+          </Router>
+        </CartProvider>
+      </PricingProvider>
     </HelmetProvider>
   );
 };

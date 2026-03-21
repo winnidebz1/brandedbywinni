@@ -63,7 +63,7 @@ const About: React.FC = () => {
                 Our work sits at the intersection of aesthetic brilliance and efficient performance. We believe your website should feel like luxury, function with clarity and work overtime to boost <span className="text-brand-pink font-medium">visibility</span>, <span className="text-brand-pink font-medium">conversions</span> and <span className="text-brand-pink font-medium">profit</span>. Clean layouts, intuitive user flows, fast load speeds and SEO-driven structure in every detail is crafted with strategy, intention and results in mind.
               </p>
               <p>
-                With 205+ brands served across Africa, the U.S, U.K and beyond, we bring a polished global perspective while staying deeply committed to elevating African businesses to world-class status. Whether you’re launching a bold Beauty line, scaling a Food/Beverage brand or refreshing your digital identity, we create online experiences designed to help you grow smarter, faster and more profitably.
+                With extensive experience across Africa, the U.S, U.K and beyond, we bring a polished global perspective while staying deeply committed to elevating African businesses to world-class status. Whether you're launching a bold Beauty line, scaling a Food/Beverage brand or refreshing your digital identity, we create online experiences designed to help you grow smarter and more profitably.
               </p>
             </div>
           </motion.div>

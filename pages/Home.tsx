@@ -9,7 +9,6 @@ import Testimonials from '../components/Testimonials';
 import FAQ from '../components/FAQ';
 import FinalCTA from '../components/FinalCTA';
 import Results from '../components/Results';
-import Tools from '../components/Tools';
 import PromoPopup from '../components/PromoPopup';
 
 const Home: React.FC = () => {
@@ -17,9 +16,9 @@ const Home: React.FC = () => {
         <>
             <PromoPopup />
             <SEO
-                title="Best Website Designer in Ghana | Web Design Services"
-                description="Looking for the Best Web Designer in Ghana? Branded By Winni creates high-converting, SEO-optimized, and premium websites to grow your business in Accra."
-                keywords={['Best Website Designer in Ghana', 'Best Web Designer in Ghana', 'Web Design Ghana', 'SEO Services Ghana', 'Digital Marketing Accra', 'Branding Agency Ghana']}
+                title="Premium Branding & Graphic Design Studio in Ghana | Branded By Winni"
+                description="Leading branding and graphic design agency in Ghana. We create premium brand identities, logos, websites, and marketing materials for Food, Beauty, Fashion & Skincare brands."
+                keywords={['Branding Agency Ghana', 'Graphic Design Ghana', 'Logo Design Accra', 'Brand Identity Design', 'Website Design Ghana', 'Digital Marketing Accra', 'Creative Agency Ghana', 'Visual Branding']}
             />
             <Hero />
             <WhyWebsite />
@@ -28,7 +27,6 @@ const Home: React.FC = () => {
             <Process />
             <Portfolio />
             <Testimonials />
-            <Tools />
             <FAQ />
             <FinalCTA />
         </>

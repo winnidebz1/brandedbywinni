@@ -19,9 +19,9 @@ const reasons = [
     },
     {
         icon: Zap,
-        title: 'Fast Turnaround',
-        description: 'We understand deadlines matter. Get initial concepts within 48 hours and final deliverables in days, not weeks.',
-        stat: '48-Hour First Draft'
+        title: 'Expert Craftsmanship',
+        description: 'Years of experience in branding and design, combined with cutting-edge tools and techniques to deliver exceptional results.',
+        stat: 'Expert Designers'
     },
     {
         icon: Heart,

@@ -38,7 +38,7 @@ const testimonials: Testimonial[] = [
     business: 'Buernix Tech',
     role: 'Co-Founder',
     rating: 5,
-    text: "As a tech startup, we needed a modern brand that stood out. Winni delivered beyond expectations, with fast turnaround, unlimited revisions, and a brand we're proud to show investors.",
+    text: "As a tech startup, we needed a modern brand that stood out. Winni delivered beyond expectations, with unlimited revisions, and a brand we're proud to show investors.",
     avatar: 'DA'
   },
   {
