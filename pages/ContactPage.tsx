@@ -96,34 +96,34 @@ const ContactPage: React.FC = () => {
     };
 
     return (
-        <div className="pt-32 pb-20 bg-brand-ivory min-h-screen">
+        <div className="pt-24 md:pt-32 pb-16 md:pb-20 bg-brand-ivory min-h-screen">
             <SEO
                 title="Contact Us"
                 description="Get in touch with Branded By Winni for your creative projects. We are ready to elevate your brand."
                 url="/contact"
             />
-            <div className="container mx-auto px-6 md:px-12">
-                <div className="max-w-4xl mx-auto text-center mb-16">
-                    <h1 className="text-4xl md:text-5xl font-serif text-brand-dark mb-6">Get in Touch</h1>
-                    <p className="text-lg text-brand-muted max-w-2xl mx-auto">
+            <div className="container mx-auto px-4 sm:px-6 md:px-12">
+                <div className="max-w-4xl mx-auto text-center mb-10 md:mb-16">
+                    <h1 className="text-3xl md:text-5xl font-serif text-brand-dark mb-5 md:mb-6">Get in Touch</h1>
+                    <p className="text-base md:text-lg text-brand-muted max-w-2xl mx-auto">
                         Ready to elevate your brand? We'd love to hear from you. Fill out the form below or reach out directly.
                     </p>
                 </div>
 
-                <div className="grid md:grid-cols-2 gap-12 max-w-6xl mx-auto">
+                <div className="grid md:grid-cols-2 gap-8 md:gap-12 max-w-6xl mx-auto">
                     {/* Contact Info */}
                     {/* Contact Info */}
-                    <div className="bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-brand-pink/10 text-center md:text-left">
-                        <h3 className="text-2xl font-serif text-brand-dark mb-8">Contact Information</h3>
+                    <div className="bg-white p-6 md:p-12 rounded-2xl shadow-sm border border-brand-pink/10 text-center md:text-left">
+                        <h3 className="text-2xl font-serif text-brand-dark mb-6 md:mb-8">Contact Information</h3>
 
-                        <div className="space-y-8">
+                        <div className="space-y-6 md:space-y-8">
                             <div className="flex flex-col md:flex-row items-center md:items-start gap-4">
                                 <div className="w-12 h-12 rounded-full bg-brand-pink/10 flex items-center justify-center text-brand-pink shrink-0">
                                     <Mail size={24} />
                                 </div>
                                 <div>
                                     <h4 className="text-sm uppercase tracking-wider text-brand-muted mb-1">Email</h4>
-                                    <a href="mailto:brandedbywinnistudio@gmail.com" className="text-lg text-brand-dark hover:text-brand-pink transition-colors">
+                                    <a href="mailto:brandedbywinnistudio@gmail.com" className="text-base md:text-lg text-brand-dark hover:text-brand-pink transition-colors break-all">
                                         brandedbywinnistudio@gmail.com
                                     </a>
                                 </div>
@@ -135,7 +135,7 @@ const ContactPage: React.FC = () => {
                                 </div>
                                 <div>
                                     <h4 className="text-sm uppercase tracking-wider text-brand-muted mb-1">Phone / WhatsApp</h4>
-                                    <a href="https://wa.me/233202326851" target="_blank" rel="noopener noreferrer" className="text-lg text-brand-dark hover:text-brand-pink transition-colors">
+                                    <a href="https://wa.me/233202326851" target="_blank" rel="noopener noreferrer" className="text-base md:text-lg text-brand-dark hover:text-brand-pink transition-colors">
                                         +233 202 326 851
                                     </a>
                                 </div>
@@ -147,7 +147,7 @@ const ContactPage: React.FC = () => {
                                 </div>
                                 <div>
                                     <h4 className="text-sm uppercase tracking-wider text-brand-muted mb-1">Location</h4>
-                                    <p className="text-lg text-brand-dark">
+                                    <p className="text-base md:text-lg text-brand-dark">
                                         Available Worldwide<br />
                                         Based in Ghana
                                     </p>
@@ -155,7 +155,7 @@ const ContactPage: React.FC = () => {
                             </div>
                         </div>
 
-                        <div className="mt-12 pt-8 border-t border-gray-100">
+                        <div className="mt-10 md:mt-12 pt-8 border-t border-gray-100">
                             <h4 className="text-sm uppercase tracking-wider text-brand-muted mb-6">Follow Us</h4>
                             <div className="flex gap-4 justify-center md:justify-start">
                                 <a href="https://instagram.com/brandedbywinni_" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-brand-pink/40 flex items-center justify-center text-brand-pink hover:bg-brand-pink hover:text-white transition-all">
@@ -172,8 +172,8 @@ const ContactPage: React.FC = () => {
                     </div>
 
                     {/* Contact Form */}
-                    <div className="bg-white p-8 md:p-12 rounded-2xl shadow-sm border border-brand-pink/10 text-center md:text-left">
-                        <h3 className="text-2xl font-serif text-brand-dark mb-8">Send a Message</h3>
+                    <div className="bg-white p-6 md:p-12 rounded-2xl shadow-sm border border-brand-pink/10 text-center md:text-left">
+                        <h3 className="text-2xl font-serif text-brand-dark mb-6 md:mb-8">Send a Message</h3>
                         <form className="space-y-6 text-left" onSubmit={handleSubmit}>
                             <div>
                                 <label htmlFor="name" className="block text-sm uppercase tracking-wider text-brand-muted mb-2">Name</label>

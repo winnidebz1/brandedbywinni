@@ -41,11 +41,11 @@ const FAQ: React.FC = () => {
     const [openIndex, setOpenIndex] = useState<number | null>(0);
 
     return (
-        <section className="py-24 bg-white">
-            <div className="container mx-auto px-6 md:px-12 max-w-4xl">
-                <div className="text-center mb-16">
-                    <h2 className="text-4xl md:text-5xl font-serif text-brand-dark mb-6">Frequently Asked Questions</h2>
-                    <p className="text-brand-muted">Everything you need to know about working with us.</p>
+        <section className="py-16 md:py-24 bg-white">
+            <div className="container mx-auto px-4 sm:px-6 md:px-12 max-w-4xl">
+                <div className="text-center mb-10 md:mb-16">
+                    <h2 className="text-3xl md:text-5xl font-serif text-brand-dark mb-4 md:mb-6">Frequently Asked Questions</h2>
+                    <p className="text-brand-muted text-sm md:text-base">Everything you need to know about working with us.</p>
                 </div>
 
                 <div className="space-y-4">
@@ -53,11 +53,11 @@ const FAQ: React.FC = () => {
                         <div key={index} className="border border-gray-200 rounded-xl overflow-hidden bg-brand-ivory/30">
                             <button
                                 onClick={() => setOpenIndex(openIndex === index ? null : index)}
-                                className="w-full flex justify-between items-center p-6 text-left hover:bg-brand-ivory transition-colors"
+                                className="w-full flex justify-between items-center p-4 md:p-6 text-left hover:bg-brand-ivory transition-colors"
                             >
-                                <span className="text-lg font-medium text-brand-dark font-serif">{faq.question}</span>
-                                <span className="text-brand-pink ml-4">
-                                    {openIndex === index ? <Minus size={20} /> : <Plus size={20} />}
+                                <span className="text-base md:text-lg font-medium text-brand-dark font-serif leading-tight">{faq.question}</span>
+                                <span className="text-brand-pink ml-4 shrink-0">
+                                    {openIndex === index ? <Minus size={18} /> : <Plus size={18} />}
                                 </span>
                             </button>
                             <AnimatePresence>
@@ -68,7 +68,7 @@ const FAQ: React.FC = () => {
                                         exit={{ height: 0, opacity: 0 }}
                                         transition={{ duration: 0.3, ease: "easeInOut" }}
                                     >
-                                        <div className="p-6 pt-0 text-brand-muted leading-relaxed border-t border-gray-100">
+                                        <div className="p-4 md:p-6 pt-0 text-brand-muted text-sm md:text-base leading-relaxed border-t border-gray-100">
                                             {faq.answer}
                                         </div>
                                     </motion.div>

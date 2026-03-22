@@ -179,7 +179,7 @@ const CheckoutPage: React.FC = () => {
   // ── Empty cart ─────────────────────────────────────────────────────────
   if (items.length === 0) {
     return (
-      <div className="pt-32 pb-24 min-h-screen bg-brand-ivory text-center flex flex-col items-center justify-center">
+      <div className="pt-24 md:pt-32 pb-20 md:pb-24 min-h-screen bg-brand-ivory text-center flex flex-col items-center justify-center px-4">
         <ShoppingBag size={64} className="text-brand-pink opacity-20 mb-6" />
         <h2 className="text-3xl font-serif text-brand-dark mb-4">Your cart is empty</h2>
         <p className="text-brand-muted mb-8 max-w-md">
@@ -200,31 +200,31 @@ const CheckoutPage: React.FC = () => {
   const isPaystack = activeGateway === 'paystack';
 
   return (
-    <div className="pt-24 min-h-screen bg-brand-ivory">
+    <div className="pt-20 md:pt-24 min-h-screen bg-brand-ivory">
       <SEO
         title="Secure Checkout | Branded By Winni"
         description="Secure payment processing for Branded By Winni services."
         url="/checkout"
       />
 
-      <div className="container mx-auto px-6 md:px-12 py-12 max-w-6xl">
+      <div className="container mx-auto px-4 sm:px-6 md:px-12 py-8 md:py-12 max-w-6xl">
         <Link
           to="/services"
-          className="inline-flex items-center text-brand-muted hover:text-brand-pink mb-8 transition-colors text-sm font-medium"
+          className="inline-flex items-center text-brand-muted hover:text-brand-pink mb-6 md:mb-8 transition-colors text-sm font-medium"
         >
           <ArrowLeft className="mr-2 w-4 h-4" /> Continue Shopping
         </Link>
 
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12">
           {/* ── Left: Checkout Form ── */}
           <div className="lg:col-span-7">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="bg-white p-8 rounded-2xl shadow-sm border border-brand-dark/5"
+              className="bg-white p-6 md:p-8 rounded-2xl shadow-sm border border-brand-dark/5"
             >
-              <h2 className="text-2xl font-serif text-brand-dark mb-6">Billing Details</h2>
+              <h2 className="text-xl md:text-2xl font-serif text-brand-dark mb-6">Billing Details</h2>
 
               <form onSubmit={handleSubmit} className="space-y-6" id="checkout-form">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -325,7 +325,7 @@ const CheckoutPage: React.FC = () => {
                     type="submit"
                     id="checkout-pay-button"
                     disabled={!canPay || isRedirectingToSelar}
-                    className="w-full py-4 text-center text-white rounded-xl transition-all duration-300 font-medium text-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg hover:shadow-xl hover:-translate-y-0.5 bg-brand-pink hover:bg-brand-dark"
+                    className="w-full py-4 text-center text-white rounded-xl transition-all duration-300 font-medium text-base md:text-lg disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-lg hover:shadow-xl hover:-translate-y-0.5 bg-brand-pink hover:bg-brand-dark"
                   >
                     {isRedirectingToSelar ? (
                       <>
@@ -358,7 +358,7 @@ const CheckoutPage: React.FC = () => {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1 }}
-              className="bg-brand-dark text-white p-8 rounded-2xl shadow-xl sticky top-32"
+              className="bg-brand-dark text-white p-6 md:p-8 rounded-2xl shadow-xl lg:sticky lg:top-32"
             >
               <div className="flex items-center justify-between mb-6">
                 <h3 className="text-xl font-serif">Your Order</h3>

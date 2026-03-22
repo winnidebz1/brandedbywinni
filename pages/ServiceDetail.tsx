@@ -58,7 +58,7 @@ const ServiceDetail: React.FC = () => {
     };
 
     return (
-        <div className="pt-24 min-h-screen bg-brand-ivory">
+        <div className="pt-20 md:pt-24 min-h-screen bg-brand-ivory">
             <SEO
                 title={`${service.title} | Services`}
                 description={service.description}
@@ -66,13 +66,13 @@ const ServiceDetail: React.FC = () => {
             />
 
             {/* Hero Section */}
-            <section className="relative px-6 md:px-12 py-12 overflow-hidden">
+            <section className="relative px-4 sm:px-6 md:px-12 py-10 md:py-12 overflow-hidden">
                 <div className="container mx-auto max-w-5xl">
-                    <Link to="/services" className="inline-flex items-center text-brand-muted hover:text-brand-pink mb-8 transition-colors">
+                    <Link to="/services" className="inline-flex items-center text-brand-muted hover:text-brand-pink mb-6 md:mb-8 transition-colors text-sm md:text-base">
                         <ArrowRight className="rotate-180 mr-2 w-4 h-4" /> Back to Services
                     </Link>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 items-start">
                         {/* Title & Description */}
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
@@ -80,13 +80,13 @@ const ServiceDetail: React.FC = () => {
                             transition={{ duration: 0.6 }}
                             className="lg:col-span-8"
                         >
-                            <div className="w-16 h-16 md:w-20 md:h-20 bg-brand-pink/10 rounded-full flex items-center justify-center text-brand-pink mb-6">
+                            <div className="w-14 h-14 md:w-20 md:h-20 bg-brand-pink/10 rounded-full flex items-center justify-center text-brand-pink mb-5 md:mb-6">
                                 {getIcon(service.iconType)}
                             </div>
-                            <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl text-brand-dark mb-6 leading-tight">
+                            <h1 className="font-serif text-3xl md:text-5xl lg:text-6xl text-brand-dark mb-4 md:mb-6 leading-tight">
                                 {service.title}
                             </h1>
-                            <p className="text-lg md:text-xl text-brand-muted leading-relaxed max-w-3xl">
+                            <p className="text-base md:text-xl text-brand-muted leading-relaxed max-w-3xl">
                                 {service.description}
                             </p>
                         </motion.div>
@@ -96,10 +96,10 @@ const ServiceDetail: React.FC = () => {
                             initial={{ opacity: 0, x: 20 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.6, delay: 0.2 }}
-                            className="lg:col-span-4 bg-white p-8 rounded-2xl shadow-xl shadow-brand-dark/5 border border-brand-dark/5 sticky top-32"
+                            className="lg:col-span-4 bg-white p-6 md:p-8 rounded-2xl shadow-xl shadow-brand-dark/5 border border-brand-dark/5 lg:sticky lg:top-32"
                         >
                             <h3 className="text-xl font-serif text-brand-dark mb-2">Order Summary</h3>
-                            <div className="text-4xl font-bold text-brand-pink mb-6">
+                            <div className="text-3xl md:text-4xl font-bold text-brand-pink mb-6">
                                 {formatPrice(currentPrice)}
                             </div>
 
@@ -113,7 +113,7 @@ const ServiceDetail: React.FC = () => {
                                         {service.options.map((option) => (
                                             <label 
                                                 key={option.id}
-                                                className={`flex items-center justify-between p-3 rounded-xl border cursor-pointer transition-colors ${
+                                                className={`flex items-center justify-between gap-3 p-3 rounded-xl border cursor-pointer transition-colors ${
                                                     selectedOption === option.id 
                                                     ? 'border-brand-pink bg-brand-pink/5 text-brand-pink' 
                                                     : 'border-brand-dark/10 hover:border-brand-pink/50 text-brand-dark'
@@ -162,18 +162,18 @@ const ServiceDetail: React.FC = () => {
             </section>
 
             {/* Details Section */}
-            <section className="px-6 md:px-12 py-16 bg-white rounded-t-[3rem] shadow-sm mt-12">
+            <section className="px-4 sm:px-6 md:px-12 py-12 md:py-16 bg-white rounded-t-[2rem] md:rounded-t-[3rem] shadow-sm mt-8 md:mt-12">
                 <div className="container mx-auto max-w-5xl">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-24">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-24">
                         {/* Left Column: What You Get */}
                         <motion.div
                             initial={{ opacity: 0, x: -20 }}
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                         >
-                            <h3 className="font-serif text-2xl md:text-3xl text-brand-dark mb-6">What You Get</h3>
-                            <div className="p-8 bg-brand-ivory rounded-2xl border border-brand-pink/10 h-full">
-                                <p className="text-brand-dark text-lg md:text-xl leading-relaxed font-medium">
+                            <h3 className="font-serif text-2xl md:text-3xl text-brand-dark mb-4 md:mb-6">What You Get</h3>
+                            <div className="p-6 md:p-8 bg-brand-ivory rounded-2xl border border-brand-pink/10 h-full">
+                                <p className="text-brand-dark text-base md:text-xl leading-relaxed font-medium">
                                     {service.whatYouGet}
                                 </p>
                             </div>
@@ -185,14 +185,14 @@ const ServiceDetail: React.FC = () => {
                             whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true }}
                         >
-                            <h3 className="font-serif text-2xl md:text-3xl text-brand-dark mb-6">Features Included</h3>
+                            <h3 className="font-serif text-2xl md:text-3xl text-brand-dark mb-4 md:mb-6">Features Included</h3>
                             <ul className="space-y-4">
                                 {service.features.map((feature, index) => (
                                     <li key={index} className="flex items-start gap-4 p-4 rounded-xl hover:bg-brand-ivory/50 transition-colors">
                                         <div className="mt-1 text-brand-pink shrink-0">
                                             <CheckCircle size={20} />
                                         </div>
-                                        <span className="text-brand-muted text-lg">{feature}</span>
+                                        <span className="text-brand-muted text-base md:text-lg">{feature}</span>
                                     </li>
                                 ))}
                             </ul>

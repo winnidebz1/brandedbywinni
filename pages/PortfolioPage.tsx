@@ -115,32 +115,32 @@ const PortfolioPage: React.FC = () => {
                 <meta name="description" content="Explore our portfolio of stunning website designs and creative branding projects" />
             </Helmet>
 
-            <div className="pt-24 bg-brand-ivory min-h-screen">
+            <div className="pt-20 md:pt-24 bg-brand-ivory min-h-screen">
                 {/* Header */}
-                <div className="container mx-auto px-6 md:px-12 mb-16">
+                <div className="container mx-auto px-4 sm:px-6 md:px-12 mb-10 md:mb-16">
                     <Link
                         to="/"
-                        className="inline-flex items-center gap-2 text-brand-dark hover:text-brand-pink transition-colors mb-8"
+                        className="inline-flex items-center gap-2 text-brand-dark hover:text-brand-pink transition-colors mb-6 md:mb-8 text-sm md:text-base"
                     >
                         <ArrowLeft size={20} />
                         <span>Back to Home</span>
                     </Link>
 
                     <div className="text-center">
-                        <h1 className="text-4xl md:text-6xl font-serif text-brand-dark mb-6">
+                        <h1 className="text-3xl md:text-6xl font-serif text-brand-dark mb-5 md:mb-6">
                             {getPageTitle()}
                         </h1>
-                        <p className="text-xl text-brand-muted max-w-2xl mx-auto mb-12">
+                        <p className="text-base md:text-xl text-brand-muted max-w-2xl mx-auto mb-8 md:mb-12">
                             A showcase of digital products crafted with passion and precision.
                         </p>
 
                         {/* Filters */}
-                        <div className="flex flex-wrap justify-center gap-4 mb-16">
+                        <div className="flex flex-wrap justify-center gap-2.5 md:gap-4 mb-12 md:mb-16">
                             {categories.map((cat) => (
                                 <button
                                     key={cat}
                                     onClick={() => setActiveCategory(cat)}
-                                    className={`px-6 py-2 rounded-full text-sm uppercase tracking-wider transition-all duration-300 ${activeCategory === cat
+                                    className={`px-4 md:px-6 py-2 rounded-full text-xs md:text-sm uppercase tracking-wider transition-all duration-300 ${activeCategory === cat
                                         ? 'bg-brand-dark text-white shadow-lg'
                                         : 'bg-white text-brand-muted hover:bg-gray-100 border border-gray-200'
                                         }`}
@@ -153,11 +153,11 @@ const PortfolioPage: React.FC = () => {
                 </div>
 
                 {/* Grid */}
-                <div className="container mx-auto px-6 md:px-12 mb-32">
+                <div className="container mx-auto px-4 sm:px-6 md:px-12 mb-20 md:mb-32">
                     {filteredProjects.length > 0 ? (
                         <motion.div
                             layout
-                            className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+                            className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8"
                         >
                             <AnimatePresence>
                                 {filteredProjects.map((project, index) => (
@@ -182,7 +182,7 @@ const PortfolioPage: React.FC = () => {
                                                 <div className="absolute inset-0 bg-black/5 group-hover:bg-black/0 transition-colors duration-500" />
 
                                                 {/* Overlay on hover */}
-                                                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                                                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 md:flex items-center justify-center hidden">
                                                     <div className="transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
                                                         <button className="px-6 py-3 bg-white text-brand-dark rounded-full font-medium flex items-center gap-2 hover:bg-brand-pink hover:text-white transition-colors">
                                                             View Project <ArrowRight size={16} />
@@ -191,7 +191,7 @@ const PortfolioPage: React.FC = () => {
                                                 </div>
                                             </div>
 
-                                            <div className="flex justify-between items-start">
+                                            <div className="flex justify-between items-start gap-3">
                                                 <div>
                                                     <h3 className="text-xl font-serif text-brand-dark mb-1 group-hover:text-brand-pink transition-colors">
                                                         {project.title}
@@ -200,7 +200,7 @@ const PortfolioPage: React.FC = () => {
                                                         {project.client_industry || project.problem?.substring(0, 80) + '...' || 'View project details'}
                                                     </p>
                                                 </div>
-                                                <span className="text-xs font-bold uppercase tracking-wider text-brand-pink/60 border border-brand-pink/20 px-2 py-1 rounded">
+                                                <span className="text-[10px] md:text-xs font-bold uppercase tracking-wider text-brand-pink/60 border border-brand-pink/20 px-2 py-1 rounded shrink-0">
                                                     {project.category}
                                                 </span>
                                             </div>

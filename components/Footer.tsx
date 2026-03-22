@@ -20,10 +20,10 @@ const TikTokIcon = ({ size = 18, className = '' }) => (
 
 const Footer: React.FC = () => {
   return (
-    <footer className="bg-brand-shell/95 pt-24 pb-12 px-6 md:px-12 border-t border-brand-border/70">
+    <footer className="bg-brand-shell/95 pt-16 md:pt-24 pb-10 md:pb-12 px-4 sm:px-6 md:px-12 border-t border-brand-border/70">
       <div className="container mx-auto">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
-          <div className="col-span-1 md:col-span-2">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-10 md:gap-12 mb-12 md:mb-20">
+          <div className="col-span-1 md:col-span-2 text-center md:text-left">
             <p className="inline-block bg-brand-pink text-white text-xs uppercase tracking-[0.18em] font-semibold px-4 py-1.5 rounded-full mb-6">
               Now booking for April
             </p>
@@ -36,7 +36,7 @@ const Footer: React.FC = () => {
               <p className="text-brand-pink text-sm font-medium mt-1">Closed on holidays</p>
             </div>
 
-            <div className="flex gap-4 mt-6">
+            <div className="flex gap-4 mt-6 justify-center md:justify-start">
               <a href="https://instagram.com/brandedbywinni_" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-brand-pink/40 flex items-center justify-center text-brand-pink hover:bg-brand-pink hover:text-white transition-all">
                 <Instagram size={18} />
               </a>
@@ -67,7 +67,7 @@ const Footer: React.FC = () => {
                 <div className="w-8 h-8 rounded-full bg-brand-pink/10 flex items-center justify-center shrink-0">
                   <Mail size={16} className="text-brand-pink" />
                 </div>
-                <a href="mailto:brandedbywinnistudio@gmail.com" className="hover:text-brand-pink transition-colors text-sm">brandedbywinnistudio@gmail.com</a>
+                <a href="mailto:brandedbywinnistudio@gmail.com" className="hover:text-brand-pink transition-colors text-sm break-all">brandedbywinnistudio@gmail.com</a>
               </li>
               <li className="flex items-center gap-3 text-brand-text font-light">
                 <div className="w-8 h-8 rounded-full bg-brand-pink/10 flex items-center justify-center shrink-0">
@@ -79,7 +79,7 @@ const Footer: React.FC = () => {
           </div>
         </div>
 
-        <div className="border-t border-brand-dark/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+        <div className="border-t border-brand-dark/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
           <p className="text-brand-muted text-sm font-light">
             &copy; 2020 Branded By Winni. All rights reserved.
           </p>

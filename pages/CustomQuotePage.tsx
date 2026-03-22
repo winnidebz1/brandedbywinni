@@ -67,7 +67,7 @@ ${data.hasAdditionalInfo === 'Yes' && data.additionalInfoDetails ? data.addition
 
   if (isSuccess) {
     return (
-      <div className="min-h-screen bg-brand-ivory pt-32 pb-24 flex items-center justify-center px-6">
+      <div className="min-h-screen bg-brand-ivory pt-24 md:pt-32 pb-16 md:pb-24 flex items-center justify-center px-4 sm:px-6">
         <div className="max-w-md w-full bg-white rounded-2xl p-8 text-center shadow-sm">
           <div className="w-16 h-16 bg-brand-pink/10 rounded-full flex items-center justify-center mx-auto mb-6">
              <CheckCircle className="text-brand-pink w-8 h-8" />
@@ -88,22 +88,22 @@ ${data.hasAdditionalInfo === 'Yes' && data.additionalInfoDetails ? data.addition
   }
 
   return (
-    <div className="min-h-screen bg-brand-ivory pt-32 pb-24">
+    <div className="min-h-screen bg-brand-ivory pt-24 md:pt-32 pb-16 md:pb-24">
       <SEO 
         title="Request Custom Quote | Branded By Winni" 
         description="Request a custom quote for branding, graphic design, and web design."
         url="/custom-quote" 
       />
       
-      <div className="container mx-auto px-6 max-w-3xl">
-        <div className="mb-12 text-center md:text-left">
-          <h1 className="font-serif text-4xl md:text-5xl text-brand-dark mb-4">ENQUIRY FORM</h1>
-          <p className="text-brand-muted text-lg">
+      <div className="container mx-auto px-4 sm:px-6 max-w-3xl">
+        <div className="mb-10 md:mb-12 text-center md:text-left">
+          <h1 className="font-serif text-3xl md:text-5xl text-brand-dark mb-4">ENQUIRY FORM</h1>
+          <p className="text-brand-muted text-base md:text-lg">
             Please ensure to fill out this form correctly and openly as possible. A team member will get back to you within 24–48 hours to discuss next steps. We can't wait to have you onboard.
           </p>
         </div>
 
-        <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-8 md:p-10 rounded-2xl shadow-sm border border-brand-dark/10 space-y-8">
+        <form onSubmit={handleSubmit(onSubmit)} className="bg-white p-6 md:p-10 rounded-2xl shadow-sm border border-brand-dark/10 space-y-8">
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
@@ -195,7 +195,7 @@ ${data.hasAdditionalInfo === 'Yes' && data.additionalInfoDetails ? data.addition
 
           <div>
             <label className="block text-sm font-medium text-brand-dark mb-3">Do you have an existing brand identity? *</label>
-            <div className="flex gap-6">
+            <div className="flex flex-wrap gap-5 md:gap-6">
               <label className="flex items-center gap-2 cursor-pointer">
                 <input type="radio" value="Yes" {...register("existingIdentity", { required: "Required" })} className="text-brand-pink focus:ring-brand-pink" />
                 <span>Yes</span>
@@ -270,7 +270,7 @@ ${data.hasAdditionalInfo === 'Yes' && data.additionalInfoDetails ? data.addition
 
           <div>
             <label className="block text-sm font-medium text-brand-dark mb-3">Any additional information you would like to share?</label>
-            <div className="flex gap-6 mb-4">
+            <div className="flex flex-wrap gap-5 md:gap-6 mb-4">
               <label className="flex items-center gap-2 cursor-pointer">
                 <input type="radio" value="Yes" {...register("hasAdditionalInfo")} className="text-brand-pink focus:ring-brand-pink" />
                 <span>Yes</span>

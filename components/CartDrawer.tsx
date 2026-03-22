@@ -39,13 +39,13 @@ const CartDrawer: React.FC = () => {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed top-0 right-0 w-full md:w-[400px] h-full bg-brand-ivory z-50 shadow-2xl flex flex-col"
+            className="fixed top-0 right-0 w-full sm:w-[420px] md:w-[400px] h-full bg-brand-ivory z-50 shadow-2xl flex flex-col"
           >
             {/* Header */}
-            <div className="p-6 border-b border-brand-dark/10 flex items-center justify-between bg-white">
+            <div className="p-4 md:p-6 border-b border-brand-dark/10 flex items-center justify-between bg-white">
               <div className="flex items-center gap-3">
                 <ShoppingBag className="text-brand-pink" size={24} />
-                <h2 className="text-2xl font-serif text-brand-dark m-0">Your Cart</h2>
+                <h2 className="text-xl md:text-2xl font-serif text-brand-dark m-0">Your Cart</h2>
               </div>
               <button
                 onClick={() => setIsCartOpen(false)}
@@ -56,7 +56,7 @@ const CartDrawer: React.FC = () => {
             </div>
 
             {/* Cart Items */}
-            <div className="flex-1 overflow-y-auto p-6 space-y-4">
+            <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-4">
               {items.length === 0 ? (
                 <div className="h-full flex flex-col items-center justify-center text-center space-y-4 text-brand-muted py-12">
                   <ShoppingBag size={48} className="opacity-20" />
@@ -120,7 +120,7 @@ const CartDrawer: React.FC = () => {
 
             {/* Footer / Checkout */}
             {items.length > 0 && (
-              <div className="p-6 bg-white border-t border-brand-dark/10 shrink-0">
+              <div className="p-4 md:p-6 bg-white border-t border-brand-dark/10 shrink-0">
               <div className="flex justify-between mb-4 items-center">
                   <span className="text-brand-muted">Subtotal</span>
                   <span className="text-2xl font-serif text-brand-dark">

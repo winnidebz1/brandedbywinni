@@ -25,7 +25,7 @@ const PromoPopup: React.FC = () => {
     return (
         <AnimatePresence>
             {isVisible && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+                <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center px-4 py-4">
                     {/* Backdrop */}
                     <motion.div
                         initial={{ opacity: 0 }}
@@ -41,7 +41,7 @@ const PromoPopup: React.FC = () => {
                         animate={{ opacity: 1, scale: 1, y: 0 }}
                         exit={{ opacity: 0, scale: 0.9, y: 20 }}
                         transition={{ type: "spring", duration: 0.5 }}
-                        className="relative w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden"
+                        className="relative w-full max-w-md max-h-[92vh] overflow-y-auto bg-white rounded-3xl shadow-2xl"
                     >
                         {/* Decorative background */}
                         <div className="absolute top-0 left-0 w-full h-32 bg-brand-pink/10 -z-0"></div>
@@ -56,15 +56,15 @@ const PromoPopup: React.FC = () => {
                             <X size={20} />
                         </button>
 
-                        <div className="p-8 text-center relative z-10">
+                        <div className="p-6 md:p-8 text-center relative z-10">
                             <div className="w-16 h-16 bg-brand-pink text-white rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg shadow-brand-pink/30 animate-bounce">
                                 <Gift size={32} />
                             </div>
 
-                            <h3 className="font-serif text-3xl text-brand-dark mb-2">
+                            <h3 className="font-serif text-2xl md:text-3xl text-brand-dark mb-2">
                                 Special Offer!
                             </h3>
-                            <p className="text-brand-muted text-lg mb-6 leading-relaxed">
+                            <p className="text-brand-muted text-base md:text-lg mb-6 leading-relaxed">
                                 Get <span className="font-bold text-brand-pink">15% OFF</span> your website design project when you book with us this month.
                             </p>
 

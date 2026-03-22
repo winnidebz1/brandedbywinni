@@ -39,6 +39,20 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
+html,
+body,
+#root {
+  min-height: 100%;
+  overflow-x: clip;
+}
+
+img,
+picture,
+video,
+canvas {
+  max-width: 100%;
+}
+
 h1,
 h2,
 h3,
@@ -112,6 +126,15 @@ button {
   animation: marquee 25s linear infinite;
 }
 
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
 ::-webkit-scrollbar-track {
   background: var(--color-brand-ivory);
 }
@@ -130,5 +153,11 @@ button {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+@media (max-width: 767px) {
+  body {
+    background-attachment: scroll;
   }
 }

@@ -90,12 +90,12 @@ const ProjectDetail: React.FC = () => {
                 {project.seo_keywords && <meta name="keywords" content={project.seo_keywords.join(', ')} />}
             </Helmet>
 
-            <div className="min-h-screen bg-brand-ivory">
+            <div className="min-h-screen bg-brand-ivory pt-20 md:pt-24">
                 {/* Header */}
-                <div className="container mx-auto px-6 md:px-12 py-12">
+                <div className="container mx-auto px-4 sm:px-6 md:px-12 py-8 md:py-12">
                     <Link
                         to="/"
-                        className="inline-flex items-center gap-2 text-brand-dark hover:text-brand-pink transition-colors mb-8"
+                        className="inline-flex items-center gap-2 text-brand-dark hover:text-brand-pink transition-colors mb-6 md:mb-8 text-sm md:text-base"
                     >
                         <ArrowLeft size={20} />
                         <span>Back to Home</span>
@@ -107,9 +107,9 @@ const ProjectDetail: React.FC = () => {
                         transition={{ duration: 0.6 }}
                     >
                         <p className="text-brand-pink text-sm uppercase tracking-widest mb-4">{project.category}</p>
-                        <h1 className="font-serif text-5xl md:text-6xl text-brand-dark mb-6">{project.title}</h1>
+                        <h1 className="font-serif text-3xl md:text-6xl text-brand-dark mb-4 md:mb-6">{project.title}</h1>
                         {project.client_industry && (
-                            <p className="text-brand-muted text-lg mb-8">{project.client_industry}</p>
+                            <p className="text-brand-muted text-base md:text-lg mb-6 md:mb-8">{project.client_industry}</p>
                         )}
                         {project.project_url && (
                             <a
@@ -130,7 +130,7 @@ const ProjectDetail: React.FC = () => {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.2, duration: 0.8 }}
-                    className="container mx-auto px-6 md:px-12 mb-16"
+                    className="container mx-auto px-4 sm:px-6 md:px-12 mb-12 md:mb-16"
                 >
                     <div className="w-full md:w-3/4 mx-auto rounded-2xl overflow-hidden shadow-2xl">
                         <img
@@ -143,8 +143,8 @@ const ProjectDetail: React.FC = () => {
 
                 {/* Problem & Solution */}
                 {(project.problem || project.solution) && (
-                    <div className="container mx-auto px-6 md:px-12 mb-20">
-                        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                    <div className="container mx-auto px-4 sm:px-6 md:px-12 mb-14 md:mb-20">
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
                             {project.problem && (
                                 <motion.div
                                     initial={{ opacity: 0, x: -20 }}
@@ -153,7 +153,7 @@ const ProjectDetail: React.FC = () => {
                                     transition={{ duration: 0.6 }}
                                 >
                                     <h2 className="font-serif text-3xl text-brand-dark mb-4">The Challenge</h2>
-                                    <p className="text-brand-text leading-relaxed">{project.problem}</p>
+                                    <p className="text-brand-text leading-relaxed text-sm md:text-base">{project.problem}</p>
                                 </motion.div>
                             )}
                             {project.solution && (
@@ -164,7 +164,7 @@ const ProjectDetail: React.FC = () => {
                                     transition={{ duration: 0.6 }}
                                 >
                                     <h2 className="font-serif text-3xl text-brand-dark mb-4">The Solution</h2>
-                                    <p className="text-brand-text leading-relaxed">{project.solution}</p>
+                                    <p className="text-brand-text leading-relaxed text-sm md:text-base">{project.solution}</p>
                                 </motion.div>
                             )}
                         </div>
@@ -173,9 +173,9 @@ const ProjectDetail: React.FC = () => {
 
                 {/* Additional Images Gallery */}
                 {project.images && project.images.length > 0 && (
-                    <div className="container mx-auto px-6 md:px-12 pb-20 max-w-6xl">
-                        <h2 className="font-serif text-3xl text-brand-dark mb-12 text-center">Project Gallery</h2>
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div className="container mx-auto px-4 sm:px-6 md:px-12 pb-16 md:pb-20 max-w-6xl">
+                        <h2 className="font-serif text-3xl text-brand-dark mb-8 md:mb-12 text-center">Project Gallery</h2>
+                        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
                             {project.images.map((image, idx) => (
                                 <motion.div
                                     key={idx}
@@ -197,9 +197,9 @@ const ProjectDetail: React.FC = () => {
                 )}
 
                 {/* CTA Section */}
-                <div className="bg-white py-20">
-                    <div className="container mx-auto px-6 md:px-12 text-center">
-                        <h2 className="font-serif text-4xl text-brand-dark mb-6">Ready to start your project?</h2>
+                <div className="bg-white py-16 md:py-20">
+                    <div className="container mx-auto px-4 sm:px-6 md:px-12 text-center">
+                        <h2 className="font-serif text-3xl md:text-4xl text-brand-dark mb-5 md:mb-6">Ready to start your project?</h2>
                         <p className="text-brand-text mb-8 max-w-2xl mx-auto">
                             Let's create something beautiful together. Get in touch to discuss your vision.
                         </p>

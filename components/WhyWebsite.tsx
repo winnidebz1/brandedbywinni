@@ -10,19 +10,19 @@ const WhyWebsite: React.FC = () => {
   const featured = servicesData.slice(0, 3);
 
   return (
-    <section className="py-24 md:py-32 bg-brand-ivory overflow-hidden" id="services">
-      <div className="container mx-auto px-6 md:px-12">
+    <section className="py-16 md:py-32 bg-brand-ivory overflow-hidden" id="services">
+      <div className="container mx-auto px-4 sm:px-6 md:px-12">
 
         {/* Blair-style section header */}
-        <div className="text-center mb-16">
-          <h2 className="text-5xl md:text-6xl lg:text-[4.8rem] font-sans font-black text-brand-charcoal uppercase tracking-tight leading-[0.9]">
+        <div className="text-center mb-12 md:mb-16">
+          <h2 className="text-[2.1rem] sm:text-4xl md:text-6xl lg:text-[4.8rem] font-sans font-black text-brand-charcoal uppercase tracking-tight leading-[0.95] md:leading-[0.9]">
             Choose Your <br className="hidden md:block"/>
-            <span className="font-serif italic text-brand-pink lowercase font-medium tracking-normal text-3xl md:text-4xl lg:text-5xl block -mt-1 md:-mt-2">next move</span>
+            <span className="font-serif italic text-brand-pink lowercase font-medium tracking-normal text-2xl sm:text-3xl md:text-4xl lg:text-5xl block -mt-0.5 md:-mt-2">next move</span>
           </h2>
         </div>
 
         {/* Service Thumbnails */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-8 max-w-5xl mx-auto mb-20">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-12 md:gap-y-16 gap-x-8 max-w-5xl mx-auto mb-14 md:mb-20">
           {featured.map((service, index) => (
             <motion.div
               key={service.id}
@@ -30,7 +30,7 @@ const WhyWebsite: React.FC = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.1, duration: 0.5 }}
-              className="group flex flex-col items-center text-center max-w-[320px] w-full mx-auto"
+              className="group flex flex-col items-center text-center w-full max-w-sm md:max-w-[320px] mx-auto"
             >
               {/* Image */}
               <div className="w-full aspect-square overflow-hidden relative group/image mb-5">
@@ -57,7 +57,7 @@ const WhyWebsite: React.FC = () => {
 
               <Link
                 to={`/services/${service.slug}`}
-                className="px-8 py-[10px] border border-brand-dark text-brand-dark text-xs uppercase tracking-widest rounded-full hover:bg-brand-dark hover:text-white transition-colors font-medium"
+                className="w-full sm:w-auto px-8 py-[10px] border border-brand-dark text-brand-dark text-xs uppercase tracking-widest rounded-full hover:bg-brand-dark hover:text-white transition-colors font-medium"
               >
                 View Details
               </Link>
@@ -69,7 +69,7 @@ const WhyWebsite: React.FC = () => {
         <div className="text-center">
           <Link
             to="/services"
-            className="inline-block px-10 py-4 border-2 border-brand-dark text-brand-dark font-bold uppercase tracking-wider rounded-full hover:bg-brand-pink hover:border-brand-pink hover:text-white transition-all duration-300 text-sm md:text-base"
+            className="inline-block w-full sm:w-auto px-8 md:px-10 py-3.5 md:py-4 border-2 border-brand-dark text-brand-dark font-bold uppercase tracking-wider rounded-full hover:bg-brand-pink hover:border-brand-pink hover:text-white transition-all duration-300 text-xs md:text-sm"
           >
             View All Services
           </Link>

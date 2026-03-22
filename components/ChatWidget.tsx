@@ -105,14 +105,14 @@ const ChatWidget = () => {
             {/* Floating Button */}
             <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="fixed bottom-6 right-6 bg-[#4A3B40] text-[#FAF9F6] p-4 rounded-full shadow-2xl hover:scale-110 transition-transform z-50 flex items-center justify-center"
+                className="fixed bottom-4 right-4 md:bottom-6 md:right-6 bg-[#4A3B40] text-[#FAF9F6] p-3.5 md:p-4 rounded-full shadow-2xl hover:scale-110 transition-transform z-50 flex items-center justify-center"
             >
                 {isOpen ? <X size={24} /> : <MessageCircle size={28} />}
             </button>
 
             {/* Chat Window */}
             {isOpen && (
-                <div className="fixed bottom-24 right-6 w-80 md:w-96 bg-white rounded-2xl shadow-2xl border border-gray-100 z-50 overflow-hidden flex flex-col max-h-[500px] animate-in slide-in-from-bottom-10 fade-in duration-300">
+                <div className="fixed bottom-20 md:bottom-24 left-3 right-3 sm:left-auto sm:right-4 md:right-6 sm:w-80 md:w-96 bg-white rounded-2xl shadow-2xl border border-gray-100 z-50 overflow-hidden flex flex-col max-h-[72vh] md:max-h-[500px] animate-in slide-in-from-bottom-10 fade-in duration-300">
                     <div className="bg-[#4A3B40] p-4 text-[#FAF9F6] flex items-center justify-between">
                         <div className="flex items-center space-x-2">
                             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>

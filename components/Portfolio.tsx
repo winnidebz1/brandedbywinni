@@ -55,7 +55,7 @@ const Portfolio: React.FC = () => {
 
   if (loading) {
     return (
-      <section id="portfolio" className="py-32 px-6 md:px-12 bg-brand-ivory">
+      <section id="portfolio" className="py-20 md:py-32 px-4 sm:px-6 md:px-12 bg-brand-ivory">
         <div className="container mx-auto text-center">
           <p className="text-brand-text">Loading projects...</p>
         </div>
@@ -65,7 +65,7 @@ const Portfolio: React.FC = () => {
 
   if (hasError) {
     return (
-      <section id="portfolio" className="py-32 px-6 md:px-12 bg-brand-ivory">
+      <section id="portfolio" className="py-20 md:py-32 px-4 sm:px-6 md:px-12 bg-brand-ivory">
         <div className="container mx-auto text-center">
           <p className="text-brand-text mb-4">We could not load projects right now.</p>
           <button
@@ -79,16 +79,16 @@ const Portfolio: React.FC = () => {
     );
   }
   return (
-    <section id="portfolio" className="py-32 px-6 md:px-12 bg-brand-ivory">
+    <section id="portfolio" className="py-20 md:py-32 px-4 sm:px-6 md:px-12 bg-brand-ivory">
       <div className="container mx-auto">
-        <div className="mb-20 text-center md:text-left">
-          <h2 className="font-serif text-4xl md:text-5xl text-brand-dark">Selected Works</h2>
+        <div className="mb-12 md:mb-20 text-center md:text-left">
+          <h2 className="font-serif text-3xl md:text-5xl text-brand-dark">Selected Works</h2>
         </div>
 
         {/* Website Designs Section */}
-        <div className="mb-24">
-          <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-4 text-center md:text-left">
-            <h3 className="font-serif text-3xl text-brand-dark">Website Designs</h3>
+        <div className="mb-16 md:mb-24">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 md:mb-12 gap-4 text-left md:text-left">
+            <h3 className="font-serif text-2xl md:text-3xl text-brand-dark">Website Designs</h3>
             <Link
               to="/portfolio?category=websites"
               className="group flex items-center gap-2 text-brand-pink hover:text-brand-dark transition-colors text-sm font-medium"
@@ -98,7 +98,7 @@ const Portfolio: React.FC = () => {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-16 gap-x-6 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-10 md:gap-y-16 gap-x-6 max-w-7xl mx-auto">
             {websiteProjects.map((project, index) => (
               <motion.div
                 key={project.id}
@@ -122,10 +122,10 @@ const Portfolio: React.FC = () => {
                     <span className="px-6 py-3 bg-white/20 backdrop-blur-md border border-white/30 text-white rounded-full text-sm font-medium tracking-wide shadow-lg hidden md:block">view</span>
                   </div>
 
-                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="absolute bottom-0 left-0 w-full p-2 md:p-8 translate-y-full group-hover:translate-y-0 transition-transform duration-500 bg-gradient-to-t from-black/60 to-transparent">
-                    <p className="text-brand-pink text-[10px] md:text-xs uppercase tracking-widest mb-1 md:mb-2 truncate">{project.category}</p>
-                    <h3 className="font-serif text-sm md:text-3xl text-white truncate">{project.title}</h3>
+                  <div className="absolute inset-0 bg-black/20 opacity-25 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute bottom-0 left-0 w-full p-3 md:p-8 translate-y-0 md:translate-y-full md:group-hover:translate-y-0 transition-transform duration-500 bg-gradient-to-t from-black/70 via-black/35 md:from-black/60 to-transparent">
+                    <p className="text-brand-pink text-[11px] md:text-xs uppercase tracking-widest mb-1 md:mb-2 truncate">{project.category}</p>
+                    <h3 className="font-serif text-base md:text-3xl text-white truncate">{project.title}</h3>
                   </div>
                 </Link>
               </motion.div>
@@ -135,8 +135,8 @@ const Portfolio: React.FC = () => {
 
         {/* Branding/Graphic Design Section */}
         <div>
-          <div className="flex flex-col md:flex-row justify-between items-center mb-12 gap-4 text-center md:text-left">
-            <h3 className="font-serif text-3xl text-brand-dark">Branding & Graphic Design</h3>
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 md:mb-12 gap-4 text-left md:text-left">
+            <h3 className="font-serif text-2xl md:text-3xl text-brand-dark">Branding & Graphic Design</h3>
             <Link
               to="/portfolio?category=branding"
               className="group flex items-center gap-2 text-brand-pink hover:text-brand-dark transition-colors text-sm font-medium"
@@ -146,7 +146,7 @@ const Portfolio: React.FC = () => {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-16 gap-x-6 max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-10 md:gap-y-16 gap-x-6 max-w-7xl mx-auto">
             {brandingProjects.map((project, index) => (
               <motion.div
                 key={project.id}
@@ -170,10 +170,10 @@ const Portfolio: React.FC = () => {
                     <span className="px-6 py-3 bg-white/20 backdrop-blur-md border border-white/30 text-white rounded-full text-sm font-medium tracking-wide shadow-lg hidden md:block">view</span>
                   </div>
 
-                  <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-                  <div className="absolute bottom-0 left-0 w-full p-2 md:p-8 translate-y-full group-hover:translate-y-0 transition-transform duration-500 bg-gradient-to-t from-black/60 to-transparent">
-                    <p className="text-brand-pink text-[10px] md:text-xs uppercase tracking-widest mb-1 md:mb-2 truncate">{project.category}</p>
-                    <h3 className="font-serif text-sm md:text-3xl text-white truncate">{project.title}</h3>
+                  <div className="absolute inset-0 bg-black/20 opacity-25 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-500"></div>
+                  <div className="absolute bottom-0 left-0 w-full p-3 md:p-8 translate-y-0 md:translate-y-full md:group-hover:translate-y-0 transition-transform duration-500 bg-gradient-to-t from-black/70 via-black/35 md:from-black/60 to-transparent">
+                    <p className="text-brand-pink text-[11px] md:text-xs uppercase tracking-widest mb-1 md:mb-2 truncate">{project.category}</p>
+                    <h3 className="font-serif text-base md:text-3xl text-white truncate">{project.title}</h3>
                   </div>
                 </Link>
               </motion.div>
