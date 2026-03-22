@@ -25,7 +25,7 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-20">
           <div className="col-span-1 md:col-span-2">
             <p className="inline-block bg-brand-pink text-white text-xs uppercase tracking-[0.18em] font-semibold px-4 py-1.5 rounded-full mb-6">
-              Now booking 2026 projects
+              Now booking for April
             </p>
 
             <div className="mb-6">
@@ -52,10 +52,11 @@ const Footer: React.FC = () => {
           <div>
             <h4 className="text-sm uppercase tracking-widest text-brand-dark mb-6 font-medium border-b border-brand-dark/20 pb-2 inline-block">Services</h4>
             <ul className="space-y-4">
-              <li><Link to="/services/website-design-development" className="text-brand-text hover:text-brand-pink transition-colors font-light">Website Design</Link></li>
-              <li><Link to="/services/ecommerce-website-design" className="text-brand-text hover:text-brand-pink transition-colors font-light">E-commerce</Link></li>
-              <li><Link to="/services/seo-services-ghana" className="text-brand-text hover:text-brand-pink transition-colors font-light">SEO Services</Link></li>
-              <li><Link to="/services/branding" className="text-brand-text hover:text-brand-pink transition-colors font-light">Branding</Link></li>
+              <li><Link to="/services" className="text-brand-text hover:text-brand-pink transition-colors font-light">Website Design</Link></li>
+              <li><Link to="/services" className="text-brand-text hover:text-brand-pink transition-colors font-light">Branding</Link></li>
+              <li><Link to="/services" className="text-brand-text hover:text-brand-pink transition-colors font-light">Graphic Design services</Link></li>
+              <li><Link to="/services" className="text-brand-text hover:text-brand-pink transition-colors font-light">Videography</Link></li>
+              <li><Link to="/services" className="text-brand-text hover:text-brand-pink transition-colors font-light">Video Editing</Link></li>
             </ul>
           </div>
 
@@ -72,7 +73,7 @@ const Footer: React.FC = () => {
                 <div className="w-8 h-8 rounded-full bg-brand-pink/10 flex items-center justify-center shrink-0">
                   <Phone size={16} className="text-brand-pink" />
                 </div>
-                <a href="tel:+233202326851" className="hover:text-brand-pink transition-colors text-sm">+233 202326851</a>
+                <a href="https://wa.me/233202326851" target="_blank" rel="noopener noreferrer" className="hover:text-brand-pink transition-colors text-sm">+233 202 326 851</a>
               </li>
             </ul>
           </div>

@@ -28,7 +28,7 @@ const Portfolio: React.FC = () => {
         .from('projects')
         .select('id, title, category, cover_image, slug')
         .order('created_at', { ascending: false })
-        .limit(12);
+        .limit(50);
 
       if (error) {
         throw error;
@@ -47,11 +47,11 @@ const Portfolio: React.FC = () => {
 
   const websiteProjects = projects.filter(p =>
     p.category === 'Web Design' || p.category === 'Website Design'
-  );
+  ).slice(0, 4);
 
   const brandingProjects = projects.filter(p =>
     p.category === 'Brand Identity' || p.category === 'Branding' || p.category === 'Packaging Design'
-  );
+  ).slice(0, 4);
 
   if (loading) {
     return (
@@ -98,7 +98,7 @@ const Portfolio: React.FC = () => {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-16 gap-x-6 max-w-7xl mx-auto">
             {websiteProjects.map((project, index) => (
               <motion.div
                 key={project.id}
@@ -146,7 +146,7 @@ const Portfolio: React.FC = () => {
             </Link>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-16 gap-x-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-16 gap-x-6 max-w-7xl mx-auto">
             {brandingProjects.map((project, index) => (
               <motion.div
                 key={project.id}

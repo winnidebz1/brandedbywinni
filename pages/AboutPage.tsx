@@ -26,7 +26,7 @@ const values = [
     {
         icon: <Heart size={24} />,
         title: "Passion Driven",
-        text: "We don't just build websites; we craft experiences. Every pixel is placed with purpose and love for the craft."
+        text: "We don't just create designs; we craft unforgettable brand experiences. Every pixel, logo mark, and layout is placed with purpose to elevate your business."
     },
     {
         icon: <Globe size={24} />,
@@ -59,15 +59,18 @@ const AboutPage: React.FC = () => {
                         transition={{ duration: 0.6 }}
                         className="text-center md:text-left"
                     >
-                        <h1 className="text-4xl md:text-6xl font-serif text-brand-dark mb-6 leading-tight">
-                            <span className="text-brand-pink">Branded By Winni</span> is your digital growth partner.
+                        <h1 className="text-5xl md:text-6xl lg:text-[4.8rem] font-sans font-black uppercase tracking-tight leading-[0.9] text-brand-dark mb-6">
+                            BRANDED BY WINNI <br className="hidden md:block"/>
+                            <span className="font-serif italic text-brand-pink lowercase font-medium tracking-normal text-3xl md:text-4xl lg:text-5xl block -mt-1 md:-mt-2">
+                                is your digital growth partner.
+                            </span>
                         </h1>
                         <p className="text-xl text-brand-muted leading-relaxed mb-8">
-                            We help visionaries and businesses translate their ideas into stunning visual identities and digital experiences. Our mission is to empower brands with premium graphic design, branding, and websites that don't just look good—they convert, engage, and grow your business.
+                            We help visionaries and businesses translate their ideas into stunning visual identities and digital experiences. Our mission is to empower brands with premium graphic design, branding, and websites that don't just look good, they convert, engage, and grow your business.
                         </p>
                         <div className="flex gap-4 justify-center md:justify-start">
                             <div className="px-6 py-4 bg-white rounded-xl shadow-sm border border-brand-pink/10">
-                                <div className="text-3xl font-bold text-brand-pink mb-1">5+</div>
+                                <div className="text-3xl font-bold text-brand-pink mb-1">6+</div>
                                 <div className="text-xs uppercase tracking-wider text-brand-muted">Years Exp</div>
                             </div>
                             <div className="px-6 py-4 bg-white rounded-xl shadow-sm border border-brand-pink/10">
@@ -85,7 +88,7 @@ const AboutPage: React.FC = () => {
                     >
                         <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl rotate-3 hover:rotate-0 transition-transform duration-500">
                             <img
-                                src="/image1.jpeg"
+                                src="/teamphoto.png"
                                 alt="Branded By Winni Team"
                                 className="w-full object-cover"
                             />
@@ -109,13 +112,13 @@ const AboutPage: React.FC = () => {
                         className="prose prose-lg mx-auto text-brand-muted"
                     >
                         <p className="mb-6">
-                            It all started with a curiosity for how things work on the internet. That curiosity quickly turned into an obsession with digital design and development. We realized that a website is more than just information; it's a digital home, a brand ambassador, and a storytelling platform.
+                            It all started with a simple belief: great design should do more than just look pretty—it should drive real business results. We noticed too many brands settling for generic visuals and websites that failed to turn scrolling visitors into paying customers. We wanted to change that.
                         </p>
                         <p className="mb-6">
-                            Over the years, we've honed our skills in <strong>brand identity design, logo creation, graphic design, React, TypeScript, Modern UI Design, SEO, and Conversion Optimization</strong>. We don't just create visuals; we solve problems. Whether it's a complete brand identity for a startup or a stunning website for an established business, we approach every project with the same level of dedication and detail.
+                            Over the last 6+ years, we've partnered with visionaries, startups, and established enterprises to build bold, unmistakable brand identities. Whether it's a memorable logo, premium packaging, or a high-converting e-commerce store, we focus entirely on your growth. We blend strategic thinking with striking visual design to ensure your business stands out and makes money.
                         </p>
                         <p>
-                            Our philosophy is simple: <strong>Your success is our success</strong>. We believe in building long-term partnerships with our clients, helping them grow their digital presence and achieve their business goals. When you work with us, you're not just getting a website—you're getting a strategic partner invested in your growth.
+                            Our philosophy is simple: <strong>Your success is our success</strong>. We believe in building long-term partnerships with our clients, helping them dominate their market and achieve their financial goals. When you work with us, you're not just getting a design service—you're getting a dedicated team invested in your brand's future.
                         </p>
                     </motion.div>
                 </div>

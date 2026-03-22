@@ -15,9 +15,9 @@ const Services: React.FC = () => {
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            <h2 className="text-4xl sm:text-5xl md:text-6xl font-sans font-black uppercase leading-none tracking-tight mb-8">
-              We Make<br />
-              <span className="font-serif italic text-brand-pink lowercase font-medium text-5xl sm:text-6xl md:text-7xl">brands sell.</span>
+            <h2 className="text-5xl md:text-6xl lg:text-[4.8rem] font-sans font-black uppercase tracking-tight leading-[0.9] mb-6">
+              We Make<br className="hidden md:block"/>
+              <span className="font-serif italic text-brand-pink lowercase font-medium tracking-normal text-3xl md:text-4xl lg:text-5xl block -mt-1 md:-mt-2">brands sell.</span>
             </h2>
             <p className="text-white/70 text-lg font-light leading-relaxed max-w-lg mb-10">
               Branded By Winni is a premium branding and graphic design studio built for Food/Beverage, Skincare, Beauty and Fashion brands. We create stunning visual identities, logos, marketing materials, and conversion-focused websites that command attention and convert customers.

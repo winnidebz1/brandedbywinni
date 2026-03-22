@@ -15,8 +15,9 @@ const WhyWebsite: React.FC = () => {
 
         {/* Blair-style section header */}
         <div className="text-center mb-16">
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-sans font-black text-brand-charcoal uppercase tracking-tight leading-none">
-            Choose Your <span className="font-serif italic text-brand-pink lowercase font-medium">next move</span>
+          <h2 className="text-5xl md:text-6xl lg:text-[4.8rem] font-sans font-black text-brand-charcoal uppercase tracking-tight leading-[0.9]">
+            Choose Your <br className="hidden md:block"/>
+            <span className="font-serif italic text-brand-pink lowercase font-medium tracking-normal text-3xl md:text-4xl lg:text-5xl block -mt-1 md:-mt-2">next move</span>
           </h2>
         </div>
 

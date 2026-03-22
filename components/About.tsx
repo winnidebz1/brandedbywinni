@@ -1,7 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useWebsiteContent } from '../hooks/useWebsiteContent';
 
 const About: React.FC = () => {
+  const { content } = useWebsiteContent();
+  const aboutData = content.about;
   return (
     <section id="about" className="py-32 px-6 md:px-12 bg-brand-ivory">
       <div className="container mx-auto">
@@ -17,7 +20,7 @@ const About: React.FC = () => {
                 transition={{ duration: 0.6 }}
                 className="col-span-2 aspect-[16/9] overflow-hidden rounded-lg shadow-sm"
               >
-                <img src="/image1.jpeg" alt="Workspace" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" />
+                <img src={aboutData.aboutImage || "/teamphoto.png"} alt="Workspace" className="w-full h-full object-cover grayscale hover:grayscale-0 transition-all duration-700" />
               </motion.div>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -57,10 +60,7 @@ const About: React.FC = () => {
             </h3>
             <div className="space-y-6 text-brand-text font-light leading-relaxed text-lg">
               <p>
-                Branded By Winni is a Ghanaian-based creative agency partnering with Beauty, Skincare, Food/Beverage, Ecommerce and lifestyle brands that want to stand out and scale profitably. We don’t just design websites, we build high-converting digital assets that become the engine of your brand’s growth and profitability.
-              </p>
-              <p>
-                Our work sits at the intersection of aesthetic brilliance and efficient performance. We believe your website should feel like luxury, function with clarity and work overtime to boost <span className="text-brand-pink font-medium">visibility</span>, <span className="text-brand-pink font-medium">conversions</span> and <span className="text-brand-pink font-medium">profit</span>. Clean layouts, intuitive user flows, fast load speeds and SEO-driven structure in every detail is crafted with strategy, intention and results in mind.
+                {aboutData.description}
               </p>
               <p>
                 With extensive experience across Africa, the U.S, U.K and beyond, we bring a polished global perspective while staying deeply committed to elevating African businesses to world-class status. Whether you're launching a bold Beauty line, scaling a Food/Beverage brand or refreshing your digital identity, we create online experiences designed to help you grow smarter and more profitably.

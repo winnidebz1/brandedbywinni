@@ -167,7 +167,7 @@ const ServicesPage: React.FC = () => {
                             Don't see exactly what you're looking for? We also offer fully customized solutions tailored specifically to your unique requirements.
                         </p>
                         <Link
-                            to="/contact"
+                            to="/custom-quote"
                             className="inline-block px-12 py-4 bg-brand-pink text-white font-medium tracking-wide rounded-full hover:bg-brand-dark transition-all duration-300 shadow-xl hover:shadow-2xl hover:-translate-y-1"
                         >
                             Request a Custom Quote

@@ -16,6 +16,7 @@ const ServicesPage = React.lazy(() => import('./pages/ServicesPage'));
 const ServiceDetail = React.lazy(() => import('./pages/ServiceDetail'));
 const CheckoutPage = React.lazy(() => import('./pages/CheckoutPage'));
 const ContactPage = React.lazy(() => import('./pages/ContactPage'));
+const CustomQuotePage = React.lazy(() => import('./pages/CustomQuotePage'));
 const PrivacyPolicy = React.lazy(() => import('./pages/PrivacyPolicy'));
 const TermsOfService = React.lazy(() => import('./pages/TermsOfService'));
 const ProjectDetail = React.lazy(() => import('./pages/ProjectDetail'));
@@ -38,6 +39,7 @@ const PortalFinanceGoals = React.lazy(() => import('./pages/admin/PortalFinanceG
 const PortalFinanceIncome = React.lazy(() => import('./pages/admin/PortalFinanceIncome'));
 const PortalFinanceExpenses = React.lazy(() => import('./pages/admin/PortalFinanceExpenses'));
 const PortalFinanceReports = React.lazy(() => import('./pages/admin/PortalFinanceReports'));
+const PortalSiteEditor = React.lazy(() => import('./pages/admin/PortalSiteEditor'));
 
 // Legacy/Website Admin Pages
 const Dashboard = React.lazy(() => import('./pages/admin/Dashboard'));
@@ -103,6 +105,7 @@ const App: React.FC = () => {
                   <Route path="/services/:slug" element={<ServiceDetail />} />
                   <Route path="/checkout" element={<CheckoutPage />} />
                   <Route path="/contact" element={<ContactPage />} />
+                  <Route path="/custom-quote" element={<CustomQuotePage />} />
                   <Route path="/privacy" element={<PrivacyPolicy />} />
                   <Route path="/terms" element={<TermsOfService />} />
                   <Route path="/project/:slug" element={<ProjectDetail />} />
@@ -136,6 +139,7 @@ const App: React.FC = () => {
                 <Route path="/portal" element={<ProtectedRoute />}>
                   <Route element={<PortalLayout />}>
                     <Route index element={<PortalDashboard />} />
+                    <Route path="editor" element={<PortalSiteEditor />} />
 
                     {/* Portal Modules */}
                     <Route path="tasks" element={<PortalTasks />} />

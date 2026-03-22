@@ -15,7 +15,8 @@ import {
     Settings,
     ChevronDown,
     ChevronRight,
-    PieChart // Added icon
+    PieChart, // Added icon
+    Edit3
 } from 'lucide-react';
 import { supabase } from '../../lib/supabase';
 import { useProfile } from '../../hooks/useProfile';
@@ -69,6 +70,7 @@ const PortalLayout = () => {
 
     const navItems = [
         { name: 'Dashboard', path: '/portal', icon: <LayoutDashboard size={20} /> },
+        { name: 'Site Editor', path: '/portal/editor', icon: <Edit3 size={20} /> },
         { name: 'My Tasks', path: '/portal/tasks', icon: <CheckSquare size={20} /> },
         { name: 'Projects', path: '/portal/projects', icon: <FolderOpen size={20} /> },
         // SOPs handled separately for dropdown

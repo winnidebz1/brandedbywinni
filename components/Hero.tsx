@@ -1,102 +1,66 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
-
-const metrics = [
-  { value: '370+', label: 'Designs Delivered' },
-  { value: '6+', label: 'Years Experience' },
-  { value: '800+', label: 'Hours in Strategy' },
-  { value: '250K+', label: 'Client Reach Impact' },
-];
+import React from "react";
+import { Link } from "react-router-dom";
+import { useWebsiteContent } from "../hooks/useWebsiteContent";
 
 const Hero: React.FC = () => {
+  const { content } = useWebsiteContent();
+  const heroData = content.hero;
   return (
-    <section className="relative overflow-hidden bg-[#040405] px-4 pb-20 pt-28 sm:px-6 lg:px-8 lg:pt-32">
+    <section className="relative overflow-hidden bg-brand-ivory pt-24 lg:pt-32">
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_8%,rgba(232,155,167,0.18),transparent_40%),radial-gradient(circle_at_82%_88%,rgba(232,155,167,0.14),transparent_42%)]" />
+      {/* soft background accents */}
+      <div className="absolute inset-0">
+        <div className="absolute left-0 top-0 h-72 w-72 rounded-full bg-[#E8C7C8]/30 blur-3xl" />
+        <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-[#D9B6AE]/25 blur-3xl" />
+      </div>
 
-      <div className="relative mx-auto max-w-7xl">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, ease: 'easeOut' }}
-          className="relative overflow-hidden rounded-[42px] border border-brand-border/50 bg-brand-shell px-4 pb-16 pt-8 shadow-[0_35px_90px_rgba(0,0,0,0.24)] sm:px-8 lg:px-12"
-        >
-          <div className="pointer-events-none absolute -left-7 top-20 hidden h-20 w-20 burst-shape md:block" />
-          <div className="pointer-events-none absolute -right-4 top-48 hidden h-16 w-16 burst-shape opacity-70 md:block" />
+      <div className="relative mx-auto grid min-h-[calc(100vh-8rem)] max-w-7xl items-center gap-12 px-6 py-12 md:px-10 lg:grid-cols-2 lg:gap-16 lg:px-12 lg:py-16">
+        {/* LEFT TEXT */}
+        <div className="max-w-2xl pt-8 lg:pt-0">
+          <h1 className="text-5xl md:text-6xl lg:text-[4.8rem] font-sans font-black uppercase tracking-tight leading-[0.9] text-brand-dark mb-6">
+            {heroData.headline || 'EMPOWERING BRANDS'} <br className="hidden md:block"/>
+            <span className="font-serif italic text-brand-pink lowercase font-medium tracking-normal text-3xl md:text-4xl lg:text-5xl block -mt-1 md:-mt-2">
+              {heroData.subheadline || 'through creative solutions.'}
+            </span>
+          </h1>
 
-          <div className="mx-auto max-w-5xl">
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.15 }}
-              className="text-center text-4xl font-sans font-black uppercase tracking-tight leading-none text-brand-charcoal sm:text-5xl md:text-6xl lg:text-7xl"
+          <div className="mt-8 h-px w-full max-w-xl bg-brand-dark/10" />
+
+          <p className="mt-6 max-w-lg text-base leading-relaxed text-brand-muted sm:text-lg">
+            {heroData.description || 'Every memorable brand begins with one clear idea and a lot of heart. We help you tell that story the right way, shaping your voice into visuals, websites, and campaigns that feel true to your brand and make customers trust you from the first look.'}
+          </p>
+
+          <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+            <Link
+              to="/services"
+              className="inline-flex items-center justify-center rounded-full bg-brand-pink px-8 py-4 text-sm font-medium uppercase tracking-widest text-white shadow-lg shadow-brand-pink/20 transition-all duration-300 hover:bg-brand-dark hover:-translate-y-1"
             >
-              Empowering Brands
-              <br />
-              <span className="font-serif italic text-brand-pink lowercase font-medium tracking-normal text-4xl sm:text-5xl md:text-6xl lg:text-7xl">
-                through creative solutions
-              </span>
-            </motion.h1>
+              {heroData.button1Text || 'View Services'}
+            </Link>
 
-            <motion.p
-              initial={{ opacity: 0, y: 22 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.65, delay: 0.22 }}
-              className="mx-auto mt-8 max-w-3xl text-center text-sm leading-7 text-brand-text md:text-base"
+            <Link
+              to="/portfolio"
+              className="inline-flex items-center justify-center rounded-full border-2 border-brand-dark/20 bg-transparent px-8 py-4 text-sm font-medium uppercase tracking-widest text-brand-dark transition-all duration-300 hover:border-brand-dark hover:bg-brand-dark/5"
             >
-              Every memorable brand begins with one clear idea and a lot of heart. We help you tell that story
-              the right way, shaping your voice into visuals, websites, and campaigns that feel true to your brand
-              and make customers trust you from the first look.
-            </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.3 }}
-              className="relative mx-auto mt-12 w-full max-w-[420px]"
-            >
-              <div className="absolute inset-x-6 top-8 h-[88%] rounded-[46%] bg-gradient-to-b from-brand-pink/18 via-brand-pink/8 to-transparent" />
-              <div className="hero-swoosh absolute -left-8 bottom-28 hidden lg:block" />
-
-              <img
-                src="/hero-2.jpg"
-                alt="Branded By Winni creative team"
-                className="relative z-10 h-[430px] w-full rounded-[34px] object-cover object-center shadow-[0_22px_45px_rgba(17,18,22,0.24)]"
-              />
-
-              <div className="absolute -bottom-7 left-1/2 z-20 flex w-[95%] -translate-x-1/2 items-center gap-2 rounded-full border border-white/35 bg-[#17181C]/75 p-2 backdrop-blur-lg sm:gap-3">
-                <Link
-                  to="/contact"
-                  className="flex-1 rounded-full bg-brand-pink px-4 py-3 text-center text-[11px] font-semibold uppercase tracking-[0.14em] text-white transition-colors hover:bg-brand-dark sm:text-xs"
-                >
-                  Start Your Project
-                </Link>
-                <Link
-                  to="/services"
-                  className="flex-1 rounded-full border border-white/40 px-4 py-3 text-center text-[11px] font-semibold uppercase tracking-[0.14em] text-white transition-colors hover:bg-white/12 sm:text-xs"
-                >
-                  Explore Services
-                </Link>
-              </div>
-            </motion.div>
+              {heroData.button2Text || 'View Portfolio'}
+            </Link>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 26 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.45 }}
-          className="mx-auto mt-8 max-w-6xl rounded-[30px] border border-white/15 bg-gradient-to-r from-white/12 to-white/6 p-5 shadow-[0_18px_45px_rgba(0,0,0,0.25)] backdrop-blur-sm sm:p-7"
-        >
-          <div className="grid grid-cols-2 gap-6 text-white md:grid-cols-4 md:gap-8">
-            {metrics.map((item) => (
-              <div key={item.label} className="text-center">
-                <p className="text-3xl font-semibold tracking-tight text-brand-pink sm:text-4xl">{item.value}</p>
-                <p className="mt-2 text-xs uppercase tracking-[0.18em] text-white/75 sm:text-sm">{item.label}</p>
-              </div>
-            ))}
+        {/* RIGHT IMAGE */}
+        <div className="relative mt-8 lg:mt-0">
+          {/* decorative frame */}
+          <div className="absolute -left-5 -top-5 hidden h-full w-full rounded-[2rem] border-2 border-brand-pink/20 lg:block" />
+
+          <div className="relative overflow-hidden rounded-[2rem] bg-brand-shell shadow-2xl">
+            <img
+              src={heroData.heroImage || "/team-hero.png"}
+              alt="Creative team collaborating on branding and design"
+              className="h-[460px] w-full object-cover object-[center_30%] sm:h-[560px] lg:h-[660px]"
+            />
           </div>
-        </motion.div>
+
+        </div>
       </div>
     </section>
   );

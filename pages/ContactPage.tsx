@@ -134,9 +134,9 @@ const ContactPage: React.FC = () => {
                                     <Phone size={24} />
                                 </div>
                                 <div>
-                                    <h4 className="text-sm uppercase tracking-wider text-brand-muted mb-1">Phone</h4>
-                                    <a href="tel:+233202326851" className="text-lg text-brand-dark hover:text-brand-pink transition-colors">
-                                        +233 202326851
+                                    <h4 className="text-sm uppercase tracking-wider text-brand-muted mb-1">Phone / WhatsApp</h4>
+                                    <a href="https://wa.me/233202326851" target="_blank" rel="noopener noreferrer" className="text-lg text-brand-dark hover:text-brand-pink transition-colors">
+                                        +233 202 326 851
                                     </a>
                                 </div>
                             </div>

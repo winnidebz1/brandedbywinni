@@ -17,12 +17,9 @@ const FinalCTA: React.FC = () => {
         >
           <p className="text-xs uppercase tracking-[0.3em] text-brand-pink font-medium mb-6">Ready To Glow Up?</p>
 
-          <h2 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-sans font-black text-brand-charcoal uppercase leading-none tracking-tight mb-6">
-            Let's Build
-            <br />
-            <span className="font-serif italic text-brand-pink lowercase font-medium text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-normal">
-              your brand.
-            </span>
+          <h2 className="text-5xl md:text-6xl lg:text-[4.8rem] font-sans font-black text-brand-charcoal uppercase tracking-tight leading-[0.9] mb-6">
+            Let's Build<br className="hidden md:block"/>
+            <span className="font-serif italic text-brand-pink lowercase font-medium tracking-normal text-3xl md:text-4xl lg:text-5xl block -mt-1 md:-mt-2">your brand.</span>
           </h2>
 
           <p className="text-lg text-brand-muted font-light max-w-xl mx-auto mb-12 leading-relaxed">
